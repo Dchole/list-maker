@@ -1,0 +1,11 @@
+{
+  "name": "list-maker",
+  "version": "1.0.0",
+  "description": "List maker app",
+  "main": "index.js",
+  "author": "Dchole <derekoware47@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^5.2.0"
+  }
+}
