@@ -1,7 +1,7 @@
 const { verify } = require("jsonwebtoken")
 
 function authenticate(req, res, next) {
-  const authHeader = req.headers.authorisation
+  const authHeader = req.headers.authorization
 
   if (authHeader) {
     const token = authHeader.split(" ")[1]
