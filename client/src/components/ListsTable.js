@@ -9,14 +9,15 @@ import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
 import { ItemContext } from "../context/ItemContext"
+import { Checkbox } from "@material-ui/core"
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650
+    minWidth: 650,
+    maxHeight: 650
   },
   rowHead: {
-    textTransform: "capitalize",
-    backgroundColor: "grey"
+    textTransform: "capitalize"
   }
 })
 
@@ -26,12 +27,19 @@ const ListsTable = () => {
 
   return (
     <Container>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="List Table">
-          <TableHead>
-            <TableRow className={classes.rowHead}>
+      <TableContainer className={classes.table} component={Paper}>
+        <Table stickyHeader aria-label="List Table">
+          <TableHead className={classes.rowHead}>
+            <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox
+                  // checked={isItemSelected}
+                  color="primary"
+                  inputProps={{ "aria-label": "select all" }}
+                />
+              </TableCell>
               {Object.keys(state[0]).map(item => (
-                <TableCell key={item} align="left" style={{ color: "white" }}>
+                <TableCell key={item} align="left">
                   {item}
                 </TableCell>
               ))}
@@ -39,7 +47,14 @@ const ListsTable = () => {
           </TableHead>
           <TableBody>
             {state.map(row => (
-              <TableRow key={row.id}>
+              <TableRow key={row.id} hover role="checkbox">
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    // checked={isItemSelected}
+                    color="primary"
+                    inputProps={{ "aria-labelledby": row.id }}
+                  />
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>

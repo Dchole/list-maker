@@ -3,11 +3,14 @@ import ReactDOM from "react-dom"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import ItemContextProvider from "./context/ItemContext"
+import { BrowserRouter } from "react-router-dom"
 
 ReactDOM.render(
   <React.StrictMode>
     <ItemContextProvider>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ItemContextProvider>
   </React.StrictMode>,
   document.getElementById("root")

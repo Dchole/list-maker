@@ -3,9 +3,20 @@
   "version": "1.0.0",
   "description": "List maker app",
   "main": "index.js",
-  "author": "Dchole <derekoware47@gmail.com>",
+  "author": "Bunny",
   "license": "MIT",
+  "scripts": {
+    "start": "concurrently \"yarn run client\" \"yarn run server\"",
+    "client": "cd client && yarn start",
+    "server": "cd server && yarn run dev"
+  },
   "devDependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "eslint": "^6.8.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "socket.io": "^2.3.0"
   }
 }
