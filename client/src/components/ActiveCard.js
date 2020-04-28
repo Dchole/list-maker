@@ -31,9 +31,17 @@ const ActiveCard = () => {
         }
       />
       <CardContent>
-        <Typography component="div" variant="body2">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rem dolore,
-          provident sequi cumque consequatur id.
+        <Typography component="h4" variant="body2">
+          There are no active lists.{" "}
+          <span role="img" aria-label="Oops">
+            ¯\_(ツ)_/¯
+          </span>
+          <br />
+          Click "Create List" on the previous card{" "}
+          <span role="img" aria-label="backwards arrow">
+            👈
+          </span>{" "}
+          to add an active list.
         </Typography>
       </CardContent>
       <CardActions className={classes.action}>

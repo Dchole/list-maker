@@ -41,7 +41,7 @@ const AboutCard = () => {
               </span>{" "}
             </li>
             <li>Add the fields you want your list to have</li>
-            <li>click Done</li>
+            <li>Click Done</li>
             <li>Copy the generated link and share with your members</li>
           </ul>
         </Typography>
