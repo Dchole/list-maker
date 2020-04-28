@@ -4,7 +4,7 @@ const options = token => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      authorization: token
+      authorization: `Bearer ${token}`
     }
   }
 
@@ -12,64 +12,37 @@ const options = token => {
 }
 
 export const fetchUser = async token => {
-  try {
-    const res = await Axios.get("/api/user/", options(token))
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.get("/api/user/", options(token))
+  const data = { res }
+  return data
 }
 
 export const register = async credentials => {
-  try {
-    const body = JSON.stringify(credentials)
-    const res = await Axios.post("/api/user/register", body)
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.post("/api/user/register", credentials)
+  const data = { res }
+  return data
 }
 
 export const login = async credentials => {
-  try {
-    const body = JSON.stringify(credentials)
-    const res = await Axios.post("/api/user/login", body)
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.post("/api/user/login", credentials)
+  const data = { res }
+  return data
 }
 
 export const getRefreshToken = async () => {
-  try {
-    const res = await Axios.get("/api/user/token", { withCredentials: true })
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.get("/api/user/token", { withCredentials: true })
+  const data = { res }
+  return data
 }
 
 export const updateUser = async (token, credentials) => {
-  try {
-    const body = JSON.stringify(credentials)
-    const res = await Axios.put("/api/user/", body, options(token))
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.put("/api/user/", credentials, options(token))
+  const data = { res }
+  return data
 }
 
 export const logout = async () => {
-  try {
-    const res = await Axios.post("/api/user/login", { withCredentials: true })
-    const data = { res }
-    return data
-  } catch (err) {
-    return err.response
-  }
+  const res = await Axios.post("/api/user/login", { withCredentials: true })
+  const data = { res }
+  return data
 }

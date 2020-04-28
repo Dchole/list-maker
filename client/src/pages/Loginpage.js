@@ -3,6 +3,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import { Grid, Container, Paper, Hidden } from "@material-ui/core"
 import Panel from "../components/Panel"
 import Login from "../components/Login"
+import { UserContext } from "../context/UserContext"
+import { Redirect } from "react-router-dom"
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,6 +21,9 @@ const pageVariants = {
 
 const LoginPage = () => {
   const classes = useStyles()
+  const { state: isAuthenticated } = useContext(UserContext)
+
+  if (isAuthenticated) return <Redirect to="/" />
 
   return (
     <Container maxWidth="md" className={classes.root}>

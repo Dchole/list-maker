@@ -20,6 +20,7 @@ import {
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import { Link as RouterLink } from "react-router-dom"
+import { UserContext } from "../context/UserContext"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -43,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn() {
   const classes = useStyles()
+  const { loginUser } = useContext(UserContext)
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -55,6 +57,7 @@ export default function SignIn() {
 
   const handleSubmit = event => {
     event.preventDefault()
+    loginUser(state)
   }
 
   return (
@@ -65,7 +68,7 @@ export default function SignIn() {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <form className={classes.form} noValidate onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
           margin="normal"

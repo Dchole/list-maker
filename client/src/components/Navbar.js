@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Avatar from "@material-ui/core/Avatar"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core"
+import { UserContext } from "../context/UserContext"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -13,6 +14,9 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles()
+  const {
+    state: { user }
+  } = useContext(UserContext)
 
   return (
     <AppBar position="sticky">
@@ -24,7 +28,7 @@ const Navbar = () => {
           </span>
         </Typography>
         <div>
-          <Avatar>A</Avatar>
+          <Avatar>{user.fullName?.charAt()}</Avatar>
         </div>
       </Toolbar>
     </AppBar>

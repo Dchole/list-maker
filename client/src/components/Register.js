@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import { Link as RouterLink } from "react-router-dom"
+import { UserContext } from "../context/UserContext"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -31,6 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles()
+  const { registerUser } = useContext(UserContext)
   const [state, setState] = useState({
     firstname: "",
     lastname: "",
@@ -45,6 +47,7 @@ export default function SignUp() {
 
   const handleSubmit = event => {
     event.preventDefault()
+    registerUser(state)
   }
 
   return (
@@ -59,12 +62,13 @@ export default function SignUp() {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              autoComplete="firstname"
-              name="firstname"
+              autoComplete="firstName"
+              name="firstName"
               variant="outlined"
+              type="text"
               required
               fullWidth
-              id="firstname"
+              id="firstName"
               label="First Name"
               autoFocus
               value={state.firstName}
@@ -73,14 +77,14 @@ export default function SignUp() {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              autoComplete="lastname"
-              name="lastname"
+              autoComplete="lastName"
+              name="lastName"
               variant="outlined"
+              type="text"
               required
               fullWidth
-              id="lastname"
+              id="lastName"
               label="Last Name"
-              autoFocus
               value={state.lastName}
               onChange={handleInput}
             />
@@ -90,6 +94,7 @@ export default function SignUp() {
               autoComplete="email"
               name="email"
               variant="outlined"
+              type="text"
               required
               fullWidth
               id="email"

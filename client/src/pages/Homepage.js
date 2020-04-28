@@ -1,7 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import Navbar from "../components/Navbar"
 import Main from "../components/Main"
 import { makeStyles } from "@material-ui/core"
+import { UserContext } from "../context/UserContext"
+import { Redirect } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +19,9 @@ const useStyles = makeStyles(theme => ({
 
 const Homepage = () => {
   const classes = useStyles()
+  const { state: isAuthenticated } = useContext(UserContext)
+
+  if (!isAuthenticated) return <Redirect to="/register" />
 
   return (
     <div className={classes.root}>

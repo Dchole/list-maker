@@ -18,10 +18,8 @@ router.get("/", authenticate, async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const userExists = await User.findOne({ email: req.body.email })
-    console.log(userExists)
     if (userExists)
       return res.status(400).json({ message: "User already exists" })
-
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
@@ -58,7 +56,7 @@ router.post("/login", async (req, res) => {
 
     res
       .cookie("refreshToken", refreshToken, { httpOnly: true })
-      .json({ accessToken })
+      .json({ accessToken, message: "Login successful" })
   } catch (err) {
     console.log(err)
   }
