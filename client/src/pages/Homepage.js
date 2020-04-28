@@ -1,15 +1,17 @@
 import React from "react"
-import ListsTable from "../components/ListsTable"
-import { makeStyles } from "@material-ui/core/styles"
+import Navbar from "../components/Navbar"
+import Main from "../components/Main"
+import { makeStyles } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    width: "100%",
+    backgroundColor: theme.palette.grey[200],
     height: "100vh",
-    paddingTop: theme.spacing(10),
-    backgroundColor: "#ccc"
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 }))
 
@@ -17,9 +19,11 @@ const Homepage = () => {
   const classes = useStyles()
 
   return (
-    <main className={classes.root}>
-      <ListsTable />
-    </main>
+    <div className={classes.root}>
+      <Navbar />
+      <Main />
+      <footer>&copy; Created by Derek Oware, 2020</footer>
+    </div>
   )
 }
 

@@ -14,6 +14,7 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
+app.disable("x-powered-by")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
