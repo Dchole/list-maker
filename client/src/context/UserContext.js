@@ -1,7 +1,9 @@
-import React from "react"
+import React, { createContext } from "react"
 
-const UserContext = () => {
-  return <div></div>
+export const UserContext = createContext()
+
+const UserContextProvider = ({ children }) => {
+  return <UserContext.Provider>{children}</UserContext.Provider>
 }
 
-export default UserContext
+export default UserContextProvider
