@@ -18,6 +18,12 @@ const ListSchema = new Schema(
       type: Schema.Types.Boolean,
       default: true
     },
+    members: [
+      {
+        fullName: { type: String, required: true },
+        info: [{ type: Schema.Types.Mixed, required: true }]
+      }
+    ],
     admin: {
       type: Schema.Types.ObjectId,
       ref: "User"

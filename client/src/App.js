@@ -4,6 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import Homepage from "./pages/Homepage"
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
+import Dashboard from "./pages/Dashboard"
 
 const App = () => (
   <>
@@ -11,6 +12,7 @@ const App = () => (
     <Route path="/" component={Homepage} exact />
     <Route path="/register" component={RegisterPage} />
     <Route path="/login" component={LoginPage} />
+    <Route path="/dashboard" component={Dashboard} />
   </>
 )
 

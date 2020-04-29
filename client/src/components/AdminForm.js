@@ -28,7 +28,12 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
   const handleSubmit = event => {
     event.preventDefault()
     const nonEmptyFields = addedFields.filter(field => field !== "")
-    createNewList({ title, fields: nonEmptyFields })
+    createNewList({
+      _id: Math.random() + Date.now(),
+      title,
+      fields: nonEmptyFields,
+      members: []
+    })
   }
 
   return (

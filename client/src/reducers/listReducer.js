@@ -4,7 +4,10 @@ export const listReducer = (state, action) => {
       return { ...state, lists: action.payload }
 
     case "CREATE_LIST":
-      return { ...state, lists: [...state.lists, action.payload] }
+      return {
+        feedback: action.payload.message,
+        lists: [...state.lists, action.payload.item]
+      }
 
     case "DELETE_LIST": {
       const lists = state.lists.filter(list => list !== action.payload)

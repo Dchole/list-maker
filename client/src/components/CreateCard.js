@@ -68,19 +68,18 @@ const CreateCard = () => {
           style={{ margin: "auto" }}
           className={expanded ? classes.actionHide : classes.actionShow}
         >
-          {display && (
-            <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={() => {
-                setExpanded(true)
-                setTimeout(() => setDisplay(false), 195)
-              }}
-            >
-              Create List
-            </Button>
-          )}
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            style={{ display: display ? "block" : "none" }}
+            onClick={() => {
+              setExpanded(true)
+              setTimeout(() => setDisplay(false), 195)
+            }}
+          >
+            Create List
+          </Button>
         </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

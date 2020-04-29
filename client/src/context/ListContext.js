@@ -8,7 +8,7 @@ export const ListContext = createContext()
 
 const ListContextProvider = ({ children }) => {
   const history = useHistory()
-  const initialState = []
+  const initialState = { feedback: null, lists: [] }
   const [state, dispatch] = useReducer(listReducer, initialState)
   const [listLoading, setListLoading] = useState(false)
 
@@ -33,8 +33,8 @@ const ListContextProvider = ({ children }) => {
       setListLoading(true)
       const { res } = await getRefreshToken()
       const { message } = await createList(res.data.accessToken, body)
-      dispatch({ type: "CREATE_LIST", payload: message })
-      history.push("/lists")
+      dispatch({ type: "CREATE_LIST", payload: { message, item: body } })
+      history.push("/dashboard")
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {

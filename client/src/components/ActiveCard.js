@@ -23,7 +23,7 @@ const ActiveCard = () => {
   const {
     state: { lists }
   } = useContext(ListContext)
-
+  console.log(lists)
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -37,11 +37,11 @@ const ActiveCard = () => {
         }
       />
       <CardContent>
-        {lists !== [] ? (
+        {lists.length !== 0 ? (
           <ul>
-            {lists.map(list => (
-              <li key={list._id}>
-                <Link component={RouterLink} to={`/lists/`}>
+            {lists.map((list, index) => (
+              <li key={index + Math.random()}>
+                <Link component={RouterLink} to={`/dashboard`}>
                   {list.title}
                 </Link>
               </li>

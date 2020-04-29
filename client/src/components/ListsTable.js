@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
@@ -33,7 +33,9 @@ const ListsTable = ({ fields, members }) => {
               <TableCell component="th" scope="row">
                 {member.fullName}
               </TableCell>
-              <TableCell align="right">something info</TableCell>
+              {member.info.map((info, index) => (
+                <TableCell key={index}>{info}</TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>
