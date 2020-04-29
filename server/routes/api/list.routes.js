@@ -1,10 +1,10 @@
 const router = require("express").Router()
 const authenticate = require("../middleware/auth")
-const Item = require("../../models/item.model")
+const List = require("../../models/list.model")
 
 router.get("/", authenticate, async (req, res) => {
   try {
-    const lists = await Item.find({ admin: req.user.userId })
+    const lists = await List.find({ admin: req.user.userId })
     res.json({ lists })
   } catch (err) {
     console.log(err)
@@ -13,7 +13,7 @@ router.get("/", authenticate, async (req, res) => {
 
 router.post("/", authenticate, async (req, res) => {
   try {
-    const list = new Item({
+    const list = new List({
       fields: req.body.fields,
       admin: req.user.userId
     })
@@ -26,7 +26,7 @@ router.post("/", authenticate, async (req, res) => {
 
 router.delete("/:id", authenticate, async (req, res) => {
   try {
-    await Item.findByIdAndDelete(req.params.id)
+    await List.findByIdAndDelete(req.params.id)
     res.json({ message: "List deleted successfully" })
   } catch (err) {
     console.log(err)

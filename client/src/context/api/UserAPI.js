@@ -1,15 +1,5 @@
 import Axios from "axios"
-
-const options = token => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token}`
-    }
-  }
-
-  return config
-}
+import { options } from "./util"
 
 export const fetchUser = async token => {
   const res = await Axios.get("/api/user/", options(token))

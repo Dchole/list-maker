@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const { Schema } = mongoose
 
-const ItemSchema = new Schema(
+const ListSchema = new Schema(
   {
     fields: [
       {
@@ -18,4 +18,4 @@ const ItemSchema = new Schema(
   { timestamps: true }
 )
 
-module.exports = mongoose.model("Item", ItemSchema)
+module.exports = mongoose.model("List", ListSchema)

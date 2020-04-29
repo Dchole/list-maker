@@ -1,11 +1,9 @@
-import React, { useContext } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { blue, cyan } from "@material-ui/core/colors"
-import { Typography, Button } from "@material-ui/core"
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    backgroundImage: `linear-gradient(-45deg,${blue["A700"]},${cyan.A200})`,
+    background: theme.palette.tonalOffset.light,
     height: "100%",
     display: "flex",
     flexDirection: "column",

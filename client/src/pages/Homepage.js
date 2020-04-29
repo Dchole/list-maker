@@ -19,7 +19,9 @@ const useStyles = makeStyles(theme => ({
 
 const Homepage = () => {
   const classes = useStyles()
-  const { state: isAuthenticated } = useContext(UserContext)
+  const {
+    state: { isAuthenticated }
+  } = useContext(UserContext)
 
   if (!isAuthenticated) return <Redirect to="/register" />
 

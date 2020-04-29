@@ -4,12 +4,15 @@ import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import { BrowserRouter } from "react-router-dom"
 import UserContextProvider from "./context/UserContext"
+import ListContextProvider from "./context/ListContext"
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserContextProvider>
-        <App />
+        <ListContextProvider>
+          <App />
+        </ListContextProvider>
       </UserContextProvider>
     </BrowserRouter>
   </React.StrictMode>,

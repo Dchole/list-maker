@@ -8,7 +8,7 @@ const cors = require("cors")
 
 const PORT = process.env.PORT
 const user = require("./routes/api/user.routes")
-const item = require("./routes/api/item.routes")
+const list = require("./routes/api/list.routes")
 
 const app = express()
 const server = http.createServer(app)
@@ -35,7 +35,7 @@ mongoose
   .catch(err => console.log(err))
 
 app.use("/api/user", user)
-app.use("/api/item", item)
+app.use("/api/list", list)
 
 io.on("connection", socket => {
   console.log("We have a connection")

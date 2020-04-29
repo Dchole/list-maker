@@ -14,14 +14,11 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-const pageVariants = {
-  in: { transform: "rotateY(0deg)" },
-  out: { transform: "rotateY(90deg)" }
-}
-
 const LoginPage = () => {
   const classes = useStyles()
-  const { state: isAuthenticated } = useContext(UserContext)
+  const {
+    state: { isAuthenticated }
+  } = useContext(UserContext)
 
   if (isAuthenticated) return <Redirect to="/" />
 
