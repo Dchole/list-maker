@@ -1,9 +1,10 @@
 import React, { useContext } from "react"
 import Navbar from "../components/Navbar"
 import Main from "../components/Main"
-import { makeStyles } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
 import { UserContext } from "../context/UserContext"
 import { Redirect } from "react-router-dom"
+import CircularProgress from "@material-ui/core/CircularProgress"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,8 +21,11 @@ const useStyles = makeStyles(theme => ({
 const Homepage = () => {
   const classes = useStyles()
   const {
-    state: { isAuthenticated }
+    state: { isAuthenticated },
+    userLoading
   } = useContext(UserContext)
+
+  if (userLoading) return <CircularProgress />
 
   if (!isAuthenticated) return <Redirect to="/register" />
 

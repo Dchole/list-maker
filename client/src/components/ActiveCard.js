@@ -41,7 +41,7 @@ const ActiveCard = () => {
           <ul>
             {lists.map(list => (
               <li key={list._id}>
-                <Link component={RouterLink} to={`/lists/${list._id}`}>
+                <Link component={RouterLink} to={`/lists/`}>
                   {list.title}
                 </Link>
               </li>

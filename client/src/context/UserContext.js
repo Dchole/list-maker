@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react"
+import React, { createContext, useEffect, useReducer, useState } from "react"
 import { userReducer } from "../reducers/userReducer"
 import { getRefreshToken, fetchUser, login, register } from "./api/UserAPI"
 import { useHistory } from "react-router-dom"
@@ -15,20 +15,25 @@ const UserContextProvider = ({ children }) => {
   }
 
   const [state, dispatch] = useReducer(userReducer, initialState)
+  const [userLoading, setUserLoading] = useState(true)
 
   const registerUser = async credentials => {
     try {
+      setUserLoading(true)
       const {
         res: { data }
       } = await register(credentials)
       dispatch({ type: "REGISTER_SUCCESSFUL", payload: data.message })
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setUserLoading(false)
     }
   }
 
   const loginUser = async credentials => {
     try {
+      setUserLoading(true)
       const {
         res: { data }
       } = await login(credentials)
@@ -38,12 +43,15 @@ const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error)
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setUserLoading(false)
     }
   }
 
   useEffect(() => {
     const updatedState = async () => {
       try {
+        setUserLoading(true)
         const { res: token } = await getRefreshToken()
         const { res: user } = await fetchUser(token.data.accessToken)
         dispatch({ type: "SET_TOKEN", payload: token.data.accessToken })
@@ -51,13 +59,17 @@ const UserContextProvider = ({ children }) => {
       } catch (error) {
         console.log(error.response)
         dispatch({ type: "FAILURE", payload: error.response })
+      } finally {
+        setUserLoading(false)
       }
     }
     updatedState()
   }, [])
 
   return (
-    <UserContext.Provider value={{ state, registerUser, loginUser }}>
+    <UserContext.Provider
+      value={{ state, registerUser, loginUser, userLoading }}
+    >
       {children}
     </UserContext.Provider>
   )

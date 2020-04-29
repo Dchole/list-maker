@@ -1,11 +1,9 @@
-import React, { lazy, Suspense } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import CreateCard from "./CreateCard"
 import AboutCard from "./AboutCard"
-import { CircularProgress } from "@material-ui/core"
-
-const ActiveCard = lazy(() => import("./ActiveCard"))
+import ActiveCard from "./ActiveCard"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,9 +25,9 @@ const Main = () => {
       <div>
         <CreateCard />
       </div>
-      <Suspense fallback={<CircularProgress />}>
+      <div>
         <ActiveCard />
-      </Suspense>
+      </div>
     </Container>
   )
 }
