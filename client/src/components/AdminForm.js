@@ -6,6 +6,7 @@ import { ListContext } from "../context/ListContext"
 
 const AdminForm = ({ setExpanded, setDisplay }) => {
   const [fields, setFields] = useState("Full Name, ")
+  const [title, setTitle] = useState("")
   const [addedFields, setAddedFields] = useState([])
   const { createNewList } = useContext(ListContext)
 
@@ -27,15 +28,24 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
   const handleSubmit = event => {
     event.preventDefault()
     const nonEmptyFields = addedFields.filter(field => field !== "")
-    createNewList({ fields: nonEmptyFields })
+    createNewList({ title, fields: nonEmptyFields })
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        size="small"
+        label="Title"
+        fullWidth
+        style={{ marginBottom: 20 }}
+      />
+      <TextField
         value={fields}
         onChange={e => setFields(e.target.value)}
         size="small"
+        label="fields"
         fullWidth
       />
       <div style={{ marginBottom: 25 }}>

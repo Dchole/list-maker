@@ -14,6 +14,7 @@ router.get("/", authenticate, async (req, res) => {
 router.post("/", authenticate, async (req, res) => {
   try {
     const list = new List({
+      title: req.body.title,
       fields: req.body.fields,
       admin: req.user.userId
     })

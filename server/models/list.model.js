@@ -3,6 +3,10 @@ const { Schema } = mongoose
 
 const ListSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: true
+    },
     fields: [
       {
         type: String,
@@ -10,6 +14,10 @@ const ListSchema = new Schema(
         min: 3
       }
     ],
+    active: {
+      type: Schema.Types.Boolean,
+      default: true
+    },
     admin: {
       type: Schema.Types.ObjectId,
       ref: "User"
