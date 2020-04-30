@@ -37,8 +37,10 @@ const UserContextProvider = ({ children }) => {
       const {
         res: { data }
       } = await login(credentials)
+      const { res: user } = await fetchUser(data.accessToken)
       dispatch({ type: "LOGIN_SUCCESSFUL", payload: data.message })
       dispatch({ type: "SET_TOKEN", payload: data.accessToken })
+      dispatch({ type: "FETCH_USER", payload: user.data.user })
       history.replace("/")
     } catch (error) {
       console.log(error)
