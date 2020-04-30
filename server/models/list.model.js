@@ -20,7 +20,6 @@ const ListSchema = new Schema(
     },
     members: [
       {
-        _id: mongoose.ObjectId,
         fullName: { type: String, required: true },
         info: [{ type: Schema.Types.Mixed, required: true }],
         time: { type: Date, default: Date.now }
