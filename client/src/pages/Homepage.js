@@ -1,22 +1,10 @@
 import React, { useContext } from "react"
 import Navbar from "../components/Navbar"
 import Main from "../components/Main"
-import { makeStyles } from "@material-ui/core/styles"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import { UserContext } from "../context/UserContext"
 import { Redirect } from "react-router-dom"
-import CircularProgress from "@material-ui/core/CircularProgress"
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.grey[200],
-    height: "100vh",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }
-}))
+import { useStyles } from "../components/styles/pageStyles"
 
 const Homepage = () => {
   const classes = useStyles()

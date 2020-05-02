@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
     width: theme.breakpoints.values.sm * 0.6,
     padding: theme.spacing(1)
   },
-  action: { display: "flex", justifyContent: "flex-end" }
+  action: { display: "flex", justifyContent: "flex-end" },
+  active: { textTransform: "capitalize" }
 }))
 
 const ActiveCard = () => {
@@ -38,10 +39,10 @@ const ActiveCard = () => {
       />
       <CardContent>
         {lists.length !== 0 ? (
-          <ul>
+          <ul className={classes.active}>
             {lists.map((list, index) => (
               <li key={index + Math.random()}>
-                <Link component={RouterLink} to={`/dashboard`}>
+                <Link component={RouterLink} to={`/lists/${list._id}`}>
                   {list.title}
                 </Link>
               </li>

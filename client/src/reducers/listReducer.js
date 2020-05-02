@@ -5,8 +5,8 @@ export const listReducer = (state, action) => {
 
     case "CREATE_LIST":
       return {
-        feedback: action.payload.message,
-        lists: [...state.lists, action.payload.item]
+        ...state,
+        lists: [...state.lists, action.payload.list]
       }
 
     case "DELETE_LIST": {

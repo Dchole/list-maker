@@ -20,8 +20,7 @@ const ListSchema = new Schema(
     },
     members: [
       {
-        fullName: { type: String, required: true },
-        info: [{ type: Schema.Types.Mixed, required: true }],
+        info: [{ type: Schema.Types.String, required: true }],
         time: { type: Date, default: Date.now }
       }
     ],

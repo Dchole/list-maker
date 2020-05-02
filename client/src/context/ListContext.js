@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect, useState } from "react"
 import { listReducer } from "../reducers/listReducer"
-import { fetchLists, createList, deleteList } from "./api/ListsAPI"
+import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI"
 import { getRefreshToken } from "./api/UserAPI"
 import { useHistory } from "react-router-dom"
 
@@ -10,7 +10,7 @@ const ListContextProvider = ({ children }) => {
   const history = useHistory()
   const initialState = { feedback: null, lists: [] }
   const [state, dispatch] = useReducer(listReducer, initialState)
-  const [listLoading, setListLoading] = useState(false)
+  const [listLoading, setListLoading] = useState(true)
 
   useEffect(() => {
     const updateState = async () => {
@@ -32,9 +32,22 @@ const ListContextProvider = ({ children }) => {
     try {
       setListLoading(true)
       const { res } = await getRefreshToken()
-      const { message } = await createList(res.data.accessToken, body)
-      dispatch({ type: "CREATE_LIST", payload: { message, item: body } })
-      history.push("/dashboard")
+      const { savedList } = await createList(res.data.accessToken, body)
+      dispatch({ type: "CREATE_LIST", payload: { list: savedList } })
+
+      const route = `/lists/${savedList._id}`
+      history.push(route)
+    } catch (error) {
+      dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setListLoading(false)
+    }
+  }
+
+  const addToList = async list => {
+    try {
+      setListLoading(true)
+      await updateList(list)
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
@@ -58,7 +71,7 @@ const ListContextProvider = ({ children }) => {
 
   return (
     <ListContext.Provider
-      value={{ state, createNewList, removeList, listLoading }}
+      value={{ state, createNewList, removeList, listLoading, addToList }}
     >
       {children}
     </ListContext.Provider>

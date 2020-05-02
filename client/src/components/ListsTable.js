@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import clsx from "clsx"
 import { lighten, makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
@@ -23,7 +22,7 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow style={{ textTransform: "capitalize", fontWeight: "bold" }}>
         <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -43,16 +42,6 @@ function EnhancedTableHead(props) {
   )
 }
 
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
-}
-
 const useToolbarStyles = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -69,13 +58,14 @@ const useToolbarStyles = makeStyles(theme => ({
           backgroundColor: theme.palette.secondary.dark
         },
   title: {
-    flex: "1 1 100%"
+    flex: "1 1 100%",
+    textTransform: "capitalize"
   }
 }))
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles()
-  const { numSelected } = props
+  const { numSelected, title } = props
 
   return (
     <Toolbar
@@ -99,7 +89,7 @@ const EnhancedTableToolbar = props => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          {title}
         </Typography>
       )}
 
@@ -118,10 +108,6 @@ const EnhancedTableToolbar = props => {
       )}
     </Toolbar>
   )
-}
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired
 }
 
 const useStyles = makeStyles(theme => ({
@@ -148,7 +134,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ListsTable({ fields, members }) {
+export default function ListsTable({ title, fields, members }) {
   const classes = useStyles()
   const [selected, setSelected] = React.useState([])
   const [page, setPage] = React.useState(0)
@@ -156,7 +142,7 @@ export default function ListsTable({ fields, members }) {
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = members.map(n => n.FullName)
+      const newSelecteds = members.map(member => member.info[0])
       setSelected(newSelecteds)
       return
     }
@@ -198,7 +184,7 @@ export default function ListsTable({ fields, members }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} title={title} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -214,17 +200,17 @@ export default function ListsTable({ fields, members }) {
             />
             <TableBody>
               {members.map((member, index) => {
-                const isItemSelected = isSelected(member.fullName)
+                const isItemSelected = isSelected(member.info[0])
                 const labelId = `enhanced-table-checkbox-${index}`
 
                 return (
                   <TableRow
                     hover
-                    onClick={() => handleClick(member.fullName)}
+                    onClick={() => handleClick(member.info[0])}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={member.fullName}
+                    key={member.info[0] + index}
                     selected={isItemSelected}
                   >
                     <TableCell padding="checkbox">
@@ -232,14 +218,6 @@ export default function ListsTable({ fields, members }) {
                         checked={isItemSelected}
                         inputProps={{ "aria-labelledby": labelId }}
                       />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {member.fullName}
                     </TableCell>
                     {member.info.map((info, index) => (
                       <TableCell key={index} align="left">

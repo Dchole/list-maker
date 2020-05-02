@@ -13,6 +13,12 @@ export const createList = async (token, body) => {
   return data
 }
 
+export const updateList = async list => {
+  const res = await Axios.put(`/api/list/${list._id}`, list)
+  const { data } = res
+  return data
+}
+
 export const deleteList = async (token, id) => {
   const res = await Axios.delete(`/api/list/${id}`, options(token))
   const { data } = res

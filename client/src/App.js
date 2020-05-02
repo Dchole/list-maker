@@ -5,6 +5,8 @@ import Homepage from "./pages/Homepage"
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
 import Dashboard from "./pages/Dashboard"
+import InputPage from "./pages/InputPage"
+import List from "./pages/List"
 
 const App = () => (
   <>
@@ -13,6 +15,8 @@ const App = () => (
     <Route path="/register" component={RegisterPage} />
     <Route path="/login" component={LoginPage} />
     <Route path="/dashboard" component={Dashboard} />
+    <Route path="/lists/:id" component={List} />
+    <Route path="/add/:id" component={InputPage} />
   </>
 )
 

@@ -3,8 +3,10 @@ import Container from "@material-ui/core/Container"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListsTable"
 import { ListContext } from "../context/ListContext"
+import { useStyles } from "../components/styles/pageStyles"
 
 const Dashboard = () => {
+  const classes = useStyles()
   const {
     state: { lists }
   } = useContext(ListContext)
@@ -12,11 +14,19 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <section>
+      <section className={classes.root}>
         <main style={{ marginTop: 50 }}>
           {lists.map(list => (
-            <Container key={list._id} maxWidth="md">
-              <ListsTable fields={list.fields} members={list.members} />
+            <Container
+              key={list._id}
+              maxWidth="md"
+              style={{ marginBottom: 50 }}
+            >
+              <ListsTable
+                title={list.title}
+                fields={list.fields}
+                members={list.members}
+              />
             </Container>
           ))}
         </main>

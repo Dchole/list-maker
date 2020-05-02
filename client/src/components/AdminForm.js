@@ -5,14 +5,17 @@ import Chip from "@material-ui/core/Chip"
 import { ListContext } from "../context/ListContext"
 
 const AdminForm = ({ setExpanded, setDisplay }) => {
-  const [fields, setFields] = useState("Full Name, ")
+  const [fields, setFields] = useState("")
   const [title, setTitle] = useState("")
   const [addedFields, setAddedFields] = useState([])
   const { createNewList } = useContext(ListContext)
 
   useEffect(() => {
     const handleAdd = () => {
-      setAddedFields(fields.split(",").map(field => field.trim()))
+      setAddedFields([
+        "Full Name",
+        ...fields.split(",").map(field => field.trim())
+      ])
     }
     if (!fields.endsWith(",")) {
       handleAdd()
@@ -20,7 +23,7 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
   }, [fields])
 
   const handleCancel = () => {
-    setFields("Full Name, ")
+    setFields("")
     setExpanded(false)
     setDisplay(true)
   }
