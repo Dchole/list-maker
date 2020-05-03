@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 50
   },
   link: {
     backgroundColor: "white",
     border: "1px solid black",
-    borderRadius: 10,
-    padding: 10,
+    padding: theme.spacing(1),
     cursor: "pointer"
   }
 }))

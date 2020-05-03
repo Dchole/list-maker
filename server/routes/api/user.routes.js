@@ -79,8 +79,8 @@ router.post("/token", async (req, res) => {
       user: payload.userId
     })
 
-    newRefresh.save()
-    refresh.remove()
+    await newRefresh.save()
+
     res
       .cookie("refreshToken", refreshToken, {
         httpOnly: true,

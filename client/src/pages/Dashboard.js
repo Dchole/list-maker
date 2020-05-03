@@ -3,7 +3,19 @@ import Container from "@material-ui/core/Container"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListsTable"
 import { ListContext } from "../context/ListContext"
-import { useStyles } from "../components/styles/pageStyles"
+import { makeStyles } from "@material-ui/core/styles"
+
+export const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.grey[200],
+    minHeight: "100vh",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+}))
 
 const Dashboard = () => {
   const classes = useStyles()

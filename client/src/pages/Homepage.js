@@ -4,7 +4,19 @@ import Main from "../components/Main"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import { UserContext } from "../context/UserContext"
 import { Redirect } from "react-router-dom"
-import { useStyles } from "../components/styles/pageStyles"
+import { makeStyles } from "@material-ui/core/styles"
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.grey[200],
+    height: "100vh",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
+}))
 
 const Homepage = () => {
   const classes = useStyles()

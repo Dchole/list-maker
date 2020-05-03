@@ -29,7 +29,7 @@ const Navbar = () => {
   } = useContext(UserContext)
 
   return (
-    <AppBar position="sticky">
+    <AppBar position="fixed">
       <Toolbar variant="dense" className={classes.toolbar}>
         <Typography
           component={RouterLink}
