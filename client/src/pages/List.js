@@ -1,15 +1,13 @@
 import React, { useContext, createRef, useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Snackbar from "@material-ui/core/Snackbar"
 import Button from "@material-ui/core/Button"
-import Grow from "@material-ui/core/Grow"
-import Alert from "@material-ui/lab/Alert"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListsTable"
 import { ListContext } from "../context/ListContext"
-import { useParams } from "react-router"
+import { useParams, useHistory } from "react-router"
+import Feedback from "../components/Feedback"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,11 +22,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "white",
     border: "1px solid black",
     borderRadius: 10,
-    padding: 10
+    padding: 10,
+    cursor: "pointer"
   }
 }))
 
 const List = () => {
+  const history = useHistory()
   const params = useParams()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -42,9 +42,7 @@ const List = () => {
   const ref = createRef()
 
   const copy = () => {
-    navigator.clipboard
-      .writeText(ref.current.textContent)
-      .then(() => console.log("Link copied successfully!"))
+    navigator.clipboard.writeText(ref.current.textContent)
     setOpen(true)
   }
 
@@ -58,21 +56,15 @@ const List = () => {
           <span
             ref={ref}
             className={classes.link}
-            onClick={copy}
-          >{`${window.location.origin}/add/${list._id}`}</span>
+            onClick={() => history.push(`/add/${list._id}`)}
+          >
+            {`${window.location.origin}/add/${list._id}`}
+          </span>
           &nbsp;&nbsp;
           <Button variant="outlined" size="small" onClick={copy}>
             Copy
           </Button>
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            open={open}
-            onClose={() => setOpen(false)}
-            TransitionComponent={Grow}
-            autoHideDuration={1000}
-          >
-            <Alert severity="success">Copied!</Alert>
-          </Snackbar>
+          <Feedback open={open} setOpen={setOpen} />
         </div>
         <main style={{ marginTop: 50 }}>
           <Container maxWidth="md">
@@ -80,6 +72,8 @@ const List = () => {
               title={list.title}
               fields={list.fields}
               members={list.members}
+              active={list.active}
+              id={list._id}
             />
           </Container>
         </main>

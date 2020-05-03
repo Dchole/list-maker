@@ -11,6 +11,15 @@ router.get("/", authenticate, async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  try {
+    const list = await List.findById(req.params.id)
+    res.json({ list })
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 router.post("/", authenticate, async (req, res) => {
   try {
     const list = new List({

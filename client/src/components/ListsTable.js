@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import clsx from "clsx"
 import { lighten, makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
@@ -14,8 +14,10 @@ import Paper from "@material-ui/core/Paper"
 import Checkbox from "@material-ui/core/Checkbox"
 import IconButton from "@material-ui/core/IconButton"
 import Tooltip from "@material-ui/core/Tooltip"
+import Button from "@material-ui/core/Button"
 import DeleteIcon from "@material-ui/icons/Delete"
 import FilterListIcon from "@material-ui/icons/FilterList"
+import Feedback from "./Feedback"
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, numSelected, rowCount, headLabels } = props
@@ -58,14 +60,32 @@ const useToolbarStyles = makeStyles(theme => ({
           backgroundColor: theme.palette.secondary.dark
         },
   title: {
-    flex: "1 1 100%",
+    flexGrow: 1,
     textTransform: "capitalize"
+  },
+  status: {
+    width: theme.spacing(2),
+    height: theme.spacing(2),
+    borderRadius: "50%",
+    marginRight: theme.spacing(1)
+  },
+  active: {
+    backgroundColor: theme.palette.success.main
+  },
+  notActive: {
+    backgroundColor: theme.palette.error.main
   }
 }))
 
 const EnhancedTableToolbar = props => {
+  const [open, setOpen] = useState(false)
   const classes = useToolbarStyles()
-  const { numSelected, title } = props
+  const { numSelected, title, active, id } = props
+
+  const copy = () => {
+    navigator.clipboard.writeText(`${window.location.origin}/add/${id}`)
+    setOpen(true)
+  }
 
   return (
     <Toolbar
@@ -92,7 +112,18 @@ const EnhancedTableToolbar = props => {
           {title}
         </Typography>
       )}
-
+      <div style={{ flexGrow: 1 }}>
+        <Button variant="outlined" size="small" color="primary" onClick={copy}>
+          Get Link
+        </Button>
+        <Feedback open={open} setOpen={setOpen} />
+      </div>
+      <div
+        className={clsx(
+          classes.status,
+          active ? classes.active : classes.notActive
+        )}
+      ></div>
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
@@ -134,7 +165,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ListsTable({ title, fields, members }) {
+export default function ListsTable({ title, fields, members, active, id }) {
   const classes = useStyles()
   const [selected, setSelected] = React.useState([])
   const [page, setPage] = React.useState(0)
@@ -184,7 +215,12 @@ export default function ListsTable({ title, fields, members }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} title={title} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          title={title}
+          active={active}
+          id={id}
+        />
         <TableContainer>
           <Table
             className={classes.table}

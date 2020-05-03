@@ -62,7 +62,7 @@ router.post("/login", async (req, res) => {
   }
 })
 
-router.get("/token", async (req, res) => {
+router.post("/token", async (req, res) => {
   const token = req.cookies.refreshToken
   if (!token) return res.sendStatus(401)
 
@@ -80,9 +80,12 @@ router.get("/token", async (req, res) => {
     })
 
     newRefresh.save()
-
+    refresh.remove()
     res
-      .cookie("refreshToken", refreshToken, { httpOnly: true })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        path: "/api/user/token"
+      })
       .json({ accessToken })
   } catch (err) {
     console.log(err)

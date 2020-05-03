@@ -21,10 +21,11 @@ const useStyles = makeStyles(theme => ({
 
 const ActiveCard = () => {
   const classes = useStyles()
+
   const {
     state: { lists }
   } = useContext(ListContext)
-  console.log(lists)
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -40,8 +41,8 @@ const ActiveCard = () => {
       <CardContent>
         {lists.length !== 0 ? (
           <ul className={classes.active}>
-            {lists.map((list, index) => (
-              <li key={index + Math.random()}>
+            {lists.map(list => (
+              <li key={list._id}>
                 <Link component={RouterLink} to={`/lists/${list._id}`}>
                   {list.title}
                 </Link>

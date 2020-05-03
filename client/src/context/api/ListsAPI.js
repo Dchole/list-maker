@@ -7,6 +7,12 @@ export const fetchLists = async token => {
   return data
 }
 
+export const fetchList = async id => {
+  const res = await Axios.get(`/api/list/${id}`)
+  const { data } = res
+  return data
+}
+
 export const createList = async (token, body) => {
   const res = await Axios.post("/api/list/", body, options(token))
   const { data } = res

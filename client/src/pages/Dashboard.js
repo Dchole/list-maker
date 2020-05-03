@@ -26,6 +26,8 @@ const Dashboard = () => {
                 title={list.title}
                 fields={list.fields}
                 members={list.members}
+                active={list.active}
+                id={list._id}
               />
             </Container>
           ))}

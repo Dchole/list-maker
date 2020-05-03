@@ -20,7 +20,7 @@ export const login = async credentials => {
 }
 
 export const getRefreshToken = async () => {
-  const res = await Axios.get("/api/user/token", { withCredentials: true })
+  const res = await Axios.post("/api/user/token", { withCredentials: true })
   const data = { res }
   return data
 }

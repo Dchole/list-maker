@@ -8,35 +8,34 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import Grid from "@material-ui/core/Grid"
 import { ListContext } from "../context/ListContext"
 import { useParams } from "react-router"
+import { fetchList } from "../context/api/ListsAPI"
 
 export default function MemberForm() {
   const params = useParams()
 
-  const {
-    state: { lists },
-    listLoading,
-    addToList
-  } = useContext(ListContext)
-
-  const list = lists.find(list => list._id === params.id)
-
+  const { addToList } = useContext(ListContext)
+  const [list, setList] = useState({})
   const [form, setForm] = useState({})
-  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const fieldName = field => field.split(" ").join("").toLowerCase()
 
   useEffect(() => {
-    setOpen(true)
-  }, [])
-
-  useEffect(() => {
-    if (list) {
-      list.fields.forEach(field => {
-        const createdFieldName = fieldName(field)
-        setForm(prevForm => ({ ...prevForm, [createdFieldName]: "" }))
-      })
-    }
-  }, [list])
+    ;(async () => {
+      try {
+        const { list } = await fetchList(params.id)
+        setList(list)
+        list.fields.forEach(field => {
+          const createdFieldName = fieldName(field)
+          setForm(prevForm => ({ ...prevForm, [createdFieldName]: "" }))
+        })
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [params.id])
 
   const handleInput = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
@@ -48,11 +47,11 @@ export default function MemberForm() {
     addToList(list)
   }
 
-  if (listLoading) return <CircularProgress />
+  if (loading) return <CircularProgress />
 
   return (
     <div>
-      <Dialog open={open} aria-labelledby="form-dialog-title">
+      <Dialog open aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add To List</DialogTitle>
         <DialogContent style={{ marginBottom: 10 }}>
           <form onSubmit={handleSubmit}>
