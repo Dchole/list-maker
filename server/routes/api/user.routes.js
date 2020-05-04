@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken")
 const User = require("../../models/user.model")
 const Refresh = require("../../models/refresh.model")
 const authenticate = require("../middleware/auth")
+const loginValidation = require("../validation/loginValidation")
+const registerValidation = require("../validation/registerValidation")
 const { createAccessToken, createRefreshToken } = require("../token/token")
 
 router.get("/", authenticate, async (req, res) => {
@@ -17,6 +19,13 @@ router.get("/", authenticate, async (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
+    const { error } = registerValidation.validate(req.body)
+    if (error)
+      return res.status(400).json({
+        message: error.details[0].message,
+        path: error.details[0].path
+      })
+
     const userExists = await User.findOne({ email: req.body.email })
     if (userExists)
       return res.status(400).json({ message: "User already exists" })
@@ -38,6 +47,13 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
+    const { error } = loginValidation.validate(req.body)
+    if (error)
+      return res.status(400).json({
+        message: error.details[0].message,
+        path: error.details[0].path
+      })
+
     const user = await User.findOne({ email: req.body.email })
     if (!user) return res.status(400).json({ message: "User doesn't exists" })
 
@@ -52,10 +68,13 @@ router.post("/login", async (req, res) => {
     const refreshToken = createRefreshToken(user._id)
 
     const refresh = new Refresh({ token: refreshToken, user: user._id })
-    refresh.save()
+    await refresh.save()
 
     res
-      .cookie("refreshToken", refreshToken, { httpOnly: true })
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        path: "/api/user/token"
+      })
       .json({ accessToken, message: "Login successful" })
   } catch (err) {
     console.log(err)

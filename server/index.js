@@ -14,6 +14,8 @@ const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
 
+const Refresh = require("./models/refresh.model")
+
 app.disable("x-powered-by")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -36,6 +38,20 @@ mongoose
 
 app.use("/api/user", user)
 app.use("/api/list", list)
+
+;(async function () {
+  try {
+    const tokens = await Refresh.find()
+
+    for (const token of tokens) {
+      const daysInterval =
+        new Date().getDate() - new Date(token.createdAt).getDate()
+      if (Math.abs(daysInterval) >= 7) token.remove()
+    }
+  } catch (err) {
+    console.log(err)
+  }
+})()
 
 io.on("connection", socket => {
   console.log("We have a connection")
