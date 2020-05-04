@@ -13,10 +13,16 @@ import { ListContext } from "../context/ListContext"
 const useStyles = makeStyles(theme => ({
   root: {
     width: theme.breakpoints.values.sm * 0.6,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    margin: theme.spacing(6, 0)
   },
   action: { display: "flex", justifyContent: "flex-end" },
-  active: { textTransform: "capitalize" }
+  active: { textTransform: "capitalize" },
+  "@media (max-height: 640px)": {
+    root: {
+      width: theme.breakpoints.values.sm * 0.5
+    }
+  }
 }))
 
 const ActiveCard = () => {

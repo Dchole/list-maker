@@ -10,7 +10,13 @@ import Button from "@material-ui/core/Button"
 const useStyles = makeStyles(theme => ({
   root: {
     width: theme.breakpoints.values.sm * 0.6,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    margin: theme.spacing(6, 0)
+  },
+  "@media (max-height: 640px)": {
+    root: {
+      width: "100%"
+    }
   },
   action: { display: "flex", justifyContent: "flex-end" }
 }))

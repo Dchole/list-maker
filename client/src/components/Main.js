@@ -9,8 +9,18 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
-    height: theme.breakpoints.values.md
+    alignItems: "center"
+  },
+  "@media (max-width: 1200px)": {
+    root: {
+      flexDirection: "column",
+      marginTop: theme.spacing(6)
+    }
+  },
+  "@media (min-width: 1200px)": {
+    root: {
+      height: "100vh"
+    }
   }
 }))
 

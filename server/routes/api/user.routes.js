@@ -11,6 +11,7 @@ const { createAccessToken, createRefreshToken } = require("../token/token")
 router.get("/", authenticate, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password")
+
     res.json({ user })
   } catch (err) {
     console.log(err)

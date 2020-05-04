@@ -1,9 +1,9 @@
 import React, { useContext } from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListsTable"
 import { ListContext } from "../context/ListContext"
-import { makeStyles } from "@material-ui/core/styles"
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -14,6 +14,12 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  main: {
+    marginTop: theme.spacing(5)
+  },
+  "@media (max-width: 720px)": {
+    main: { width: "100%" }
   }
 }))
 
@@ -27,7 +33,7 @@ const Dashboard = () => {
     <>
       <Navbar />
       <section className={classes.root}>
-        <main style={{ marginTop: 50 }}>
+        <main className={classes.main}>
           {lists.map(list => (
             <Container
               key={list._id}

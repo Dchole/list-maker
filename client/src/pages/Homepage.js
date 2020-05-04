@@ -9,17 +9,22 @@ import { makeStyles } from "@material-ui/core/styles"
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.grey[200],
-    height: "100vh",
     width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  "@media (min-width: 1024px)": {
+    root: {
+      height: "100vh"
+    }
   }
 }))
 
 const Homepage = () => {
   const classes = useStyles()
+
   const {
     state: { isAuthenticated },
     userLoading

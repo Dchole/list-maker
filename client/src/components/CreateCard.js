@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     width: theme.breakpoints.values.sm * 0.6,
     maxHeight: theme.spacing(10) * 8,
     paddingBottom: theme.spacing(1),
-    overflowY: "auto"
+    margin: theme.spacing(6, 0)
   },
   actionHide: {
     transform: "scale(0)",
@@ -25,6 +25,12 @@ const useStyles = makeStyles(theme => ({
     transform: "scale(1)",
     transitionDuration: theme.transitions.duration.enteringScreen,
     transitionTimingFunction: theme.transitions.easing.easeIn
+  },
+  "@media (max-height: 640px)": {
+    root: {
+      width: "100%",
+      padding: theme.spacing(2)
+    }
   }
 }))
 

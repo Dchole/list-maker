@@ -19,6 +19,11 @@ const useStyles = makeStyles(theme => ({
   avatar: {
     backgroundColor: theme.palette.success.main,
     textDecoration: "none"
+  },
+  "@media (max-width: 720px)": {
+    toolbar: {
+      padding: theme.spacing(0, 1)
+    }
   }
 }))
 

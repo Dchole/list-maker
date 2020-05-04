@@ -1,5 +1,7 @@
 require("dotenv").config()
 const express = require("express")
+const helmet = require("helmet")
+const csrf = require("csurf")
 const mongoose = require("mongoose")
 const http = require("http")
 const socketio = require("socket.io")
@@ -16,7 +18,7 @@ const io = socketio(server)
 
 const Refresh = require("./models/refresh.model")
 
-app.disable("x-powered-by")
+app.use(helmet())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -38,7 +40,6 @@ mongoose
 
 app.use("/api/user", user)
 app.use("/api/list", list)
-
 ;(async function () {
   try {
     const tokens = await Refresh.find()

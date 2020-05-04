@@ -60,7 +60,7 @@ export default function SignUp() {
       </Typography>
       <form className={classes.form} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="firstName"
               name="firstName"
@@ -75,7 +75,7 @@ export default function SignUp() {
               onChange={handleInput}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="lastName"
               name="lastName"
