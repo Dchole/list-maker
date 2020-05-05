@@ -20,9 +20,11 @@ const UserContextProvider = ({ children }) => {
   const registerUser = async credentials => {
     try {
       setUserLoading(true)
+
       const {
         res: { data }
       } = await register(credentials)
+
       dispatch({ type: "REGISTER_SUCCESSFUL", payload: data.message })
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
@@ -37,10 +39,13 @@ const UserContextProvider = ({ children }) => {
       const {
         res: { data }
       } = await login(credentials)
+
       const { res: user } = await fetchUser(data.accessToken)
+
       dispatch({ type: "LOGIN_SUCCESSFUL", payload: data.message })
       dispatch({ type: "SET_TOKEN", payload: data.accessToken })
       dispatch({ type: "FETCH_USER", payload: user.data.user })
+
       history.replace("/")
     } catch (error) {
       console.log(error)

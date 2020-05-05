@@ -49,6 +49,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { error } = loginValidation.validate(req.body)
+
     if (error)
       return res.status(400).json({
         message: error.details[0].message,

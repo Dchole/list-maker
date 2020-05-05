@@ -13,12 +13,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center"
-  },
-  "@media (min-width: 1024px)": {
-    root: {
-      height: "100vh"
-    }
+    alignItems: "center",
+    height: "100%"
   }
 }))
 

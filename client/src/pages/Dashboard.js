@@ -16,7 +16,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   main: {
-    marginTop: theme.spacing(5)
+    marginTop: theme.spacing(10) * 1.2
   },
   "@media (max-width: 720px)": {
     main: { width: "100%" }
@@ -40,13 +40,7 @@ const Dashboard = () => {
               maxWidth="md"
               style={{ marginBottom: 50 }}
             >
-              <ListsTable
-                title={list.title}
-                fields={list.fields}
-                members={list.members}
-                active={list.active}
-                id={list._id}
-              />
+              <ListsTable list={list} />
             </Container>
           ))}
         </main>

@@ -90,7 +90,7 @@ const TableToolbar = props => {
         <Button variant="outlined" size="small" color="primary" onClick={copy}>
           Get Link
         </Button>
-        <Feedback open={open} setOpen={setOpen} />
+        <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
       </div>
       <div
         className={clsx(

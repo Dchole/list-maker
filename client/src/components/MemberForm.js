@@ -6,9 +6,18 @@ import DialogContent from "@material-ui/core/DialogContent"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Grid from "@material-ui/core/Grid"
+import Alert from "@material-ui/lab/Alert"
 import { ListContext } from "../context/ListContext"
 import { useParams } from "react-router"
 import { fetchList } from "../context/api/ListsAPI"
+
+const alertStyle = {
+  position: "absolute",
+  top: 0,
+  width: "100%",
+  display: "flex",
+  justifyContent: "center"
+}
 
 export default function MemberForm() {
   const params = useParams()
@@ -51,6 +60,11 @@ export default function MemberForm() {
 
   return (
     <div>
+      {!list.active && (
+        <Alert severity="error" style={alertStyle}>
+          List has been activated :( ...Contact your admin for details
+        </Alert>
+      )}
       <Dialog open aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add To List</DialogTitle>
         <DialogContent style={{ marginBottom: 10 }}>
@@ -73,7 +87,12 @@ export default function MemberForm() {
               ))}
             </Grid>
             <div style={{ float: "right" }}>
-              <Button variant="contained" color="primary" type="submit">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={!list.active}
+              >
                 Add
               </Button>
             </div>

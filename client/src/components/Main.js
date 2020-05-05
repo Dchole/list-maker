@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
   "@media (max-width: 1200px)": {
     root: {
       flexDirection: "column",
+      justifyContent: "space-around",
       marginTop: theme.spacing(6)
     }
   },

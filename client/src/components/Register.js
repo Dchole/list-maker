@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
@@ -7,8 +7,9 @@ import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
+import useFormValidation from "./FormValidation/useFormValidation"
+import validationAuth from "./FormValidation/validationAuth"
 import { Link as RouterLink } from "react-router-dom"
-import { UserContext } from "../context/UserContext"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,25 +31,23 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const initialState = {
+  firstname: "",
+  lastname: "",
+  email: "",
+  password: "",
+  confirmPassword: ""
+}
+
 export default function SignUp() {
   const classes = useStyles()
-  const { registerUser } = useContext(UserContext)
-  const [state, setState] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
-  })
-
-  const handleInput = event => {
-    setState({ ...state, [event.target.name]: event.target.value })
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    registerUser(state)
-  }
+  const {
+    handleInput,
+    handleBlur,
+    handleSubmit,
+    errors,
+    values
+  } = useFormValidation(initialState, validationAuth)
 
   return (
     <div className={classes.paper}>
@@ -71,8 +70,9 @@ export default function SignUp() {
               id="firstName"
               label="First Name"
               autoFocus
-              value={state.firstName}
+              value={values.firstName}
               onChange={handleInput}
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -85,12 +85,15 @@ export default function SignUp() {
               fullWidth
               id="lastName"
               label="Last Name"
-              value={state.lastName}
+              value={values.lastName}
               onChange={handleInput}
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              error={errors.email ? true : false}
+              helperText={errors.email}
               autoComplete="email"
               name="email"
               variant="outlined"
@@ -99,12 +102,15 @@ export default function SignUp() {
               fullWidth
               id="email"
               label="Email"
-              value={state.email}
+              value={values.email}
               onChange={handleInput}
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              error={errors.password ? true : false}
+              helperText={errors.password}
               variant="outlined"
               required
               fullWidth
@@ -113,8 +119,9 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={state.password}
+              value={values.password}
               onChange={handleInput}
+              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
@@ -127,8 +134,9 @@ export default function SignUp() {
               type="password"
               id="confirm_password"
               autoComplete="confirm_password"
-              value={state.confirmPassword}
+              value={values.confirmPassword}
               onChange={handleInput}
+              onBlur={handleBlur}
             />
           </Grid>
         </Grid>

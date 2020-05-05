@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
@@ -8,8 +8,13 @@ import TablePagination from "@material-ui/core/TablePagination"
 import TableRow from "@material-ui/core/TableRow"
 import Paper from "@material-ui/core/Paper"
 import Checkbox from "@material-ui/core/Checkbox"
+import IconButton from "@material-ui/core/IconButton"
+import ActivateIcon from "@material-ui/icons/PlayCircleOutlineRounded"
+import DeactivateIcon from "@material-ui/icons/PowerSettingsNew"
 import TableToolbar from "./ListTable/TableToolbar"
 import TableHeader from "./ListTable/TableHeader"
+import { ListContext } from "../context/ListContext"
+import Feedback from "./Feedback"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,13 +40,26 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function ListsTable({ title, fields, members, active, id }) {
+export default function ListsTable({ list }) {
+  const { title, fields, members, active, id } = list
+
   const classes = useStyles()
+  const [status, setStatus] = useState(active)
+  const [open, setOpen] = useState(false)
+  const { changeListStatus } = useContext(ListContext)
+
+  const handleStatusUpdate = () => {
+    const listCopy = { ...list }
+    listCopy.active = !status
+    changeListStatus(listCopy)
+    setStatus(!status)
+    setOpen(true)
+  }
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableToolbar title={title} active={active} id={id} />
+        <TableToolbar title={title} active={status} id={id} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -85,11 +103,27 @@ export default function ListsTable({ title, fields, members, active, id }) {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={members.length}
-        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ flexGrow: 1, marginLeft: 10 }}>
+            <IconButton onClick={handleStatusUpdate}>
+              {status ? (
+                <DeactivateIcon color="secondary" />
+              ) : (
+                <ActivateIcon style={{ color: "green" }} />
+              )}
+            </IconButton>
+            <Feedback
+              open={open}
+              setOpen={setOpen}
+              message={`List has been ${status ? "activated" : "deactivated"}.`}
+            />
+          </div>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={members.length}
+          />
+        </div>
       </Paper>
     </div>
   )

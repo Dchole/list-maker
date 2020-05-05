@@ -13,7 +13,7 @@ const ListContextProvider = ({ children }) => {
   const [listLoading, setListLoading] = useState(true)
 
   useEffect(() => {
-    const updateState = async () => {
+    ;(async () => {
       try {
         setListLoading(true)
         const { res } = await getRefreshToken()
@@ -24,8 +24,7 @@ const ListContextProvider = ({ children }) => {
       } finally {
         setListLoading(false)
       }
-    }
-    updateState()
+    })()
   }, [])
 
   const createNewList = async body => {
@@ -55,6 +54,14 @@ const ListContextProvider = ({ children }) => {
     }
   }
 
+  const changeListStatus = async list => {
+    try {
+      await updateList(list)
+    } catch (error) {
+      dispatch({ type: "FAILURE", payload: error.response })
+    }
+  }
+
   const removeList = async id => {
     try {
       setListLoading(true)
@@ -71,7 +78,14 @@ const ListContextProvider = ({ children }) => {
 
   return (
     <ListContext.Provider
-      value={{ state, createNewList, removeList, listLoading, addToList }}
+      value={{
+        state,
+        createNewList,
+        removeList,
+        listLoading,
+        addToList,
+        changeListStatus
+      }}
     >
       {children}
     </ListContext.Provider>

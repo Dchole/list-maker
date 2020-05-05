@@ -87,17 +87,11 @@ const List = () => {
           >
             <FileCopyIcon color="primary" />
           </Button>
-          <Feedback open={open} setOpen={setOpen} />
+          <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
         </div>
         <main className={classes.main}>
           <Container maxWidth="md">
-            <ListsTable
-              title={list.title}
-              fields={list.fields}
-              members={list.members}
-              active={list.active}
-              id={list._id}
-            />
+            <ListsTable list={list} />
           </Container>
         </main>
       </section>
