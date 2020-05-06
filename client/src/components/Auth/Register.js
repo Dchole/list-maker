@@ -7,8 +7,8 @@ import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
-import useFormValidation from "./FormValidation/useFormValidation"
-import validationAuth from "./FormValidation/validationAuth"
+import useFormValidation from "../FormValidation/useFormValidation"
+import validationAuth from "../FormValidation/validationAuth"
 import { Link as RouterLink } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({

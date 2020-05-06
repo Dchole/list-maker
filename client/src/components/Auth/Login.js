@@ -10,17 +10,15 @@ import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
-import {
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  IconButton,
-  OutlinedInput
-} from "@material-ui/core"
+import FormControl from "@material-ui/core/FormControl"
+import InputLabel from "@material-ui/core/InputLabel"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import IconButton from "@material-ui/core/IconButton"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import { Link as RouterLink } from "react-router-dom"
-import { UserContext } from "../context/UserContext"
+import { UserContext } from "../../context/UserContext"
 
 const useStyles = makeStyles(theme => ({
   paper: {

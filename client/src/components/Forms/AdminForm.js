@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react"
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import Chip from "@material-ui/core/Chip"
-import { ListContext } from "../context/ListContext"
+import { ListContext } from "../../context/ListContext"
 
 const AdminForm = ({ setExpanded, setDisplay }) => {
   const [fields, setFields] = useState("")

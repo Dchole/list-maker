@@ -7,9 +7,9 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Grid from "@material-ui/core/Grid"
 import Alert from "@material-ui/lab/Alert"
-import { ListContext } from "../context/ListContext"
+import { ListContext } from "../../context/ListContext"
 import { useParams } from "react-router"
-import { fetchList } from "../context/api/ListsAPI"
+import { fetchList } from "../../context/api/ListsAPI"
 
 const alertStyle = {
   position: "absolute",

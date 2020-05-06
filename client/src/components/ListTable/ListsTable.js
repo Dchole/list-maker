@@ -11,10 +11,10 @@ import Checkbox from "@material-ui/core/Checkbox"
 import IconButton from "@material-ui/core/IconButton"
 import ActivateIcon from "@material-ui/icons/PlayCircleOutlineRounded"
 import DeactivateIcon from "@material-ui/icons/PowerSettingsNew"
-import TableToolbar from "./ListTable/TableToolbar"
-import TableHeader from "./ListTable/TableHeader"
-import { ListContext } from "../context/ListContext"
-import Feedback from "./Feedback"
+import TableToolbar from "./TableToolbar"
+import TableHeader from "./TableHeader"
+import { ListContext } from "../../context/ListContext"
+import Feedback from "../Feedback"
 
 const useStyles = makeStyles(theme => ({
   root: {

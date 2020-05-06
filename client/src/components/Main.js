@@ -1,9 +1,9 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import CreateCard from "./CreateCard"
-import AboutCard from "./AboutCard"
-import ActiveCard from "./ActiveCard"
+import CreateCard from "./Cards/CreateCard"
+import AboutCard from "./Cards/AboutCard"
+import ActiveCard from "./Cards/ActiveCard"
 
 const useStyles = makeStyles(theme => ({
   root: {

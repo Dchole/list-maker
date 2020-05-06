@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Grid, Container, Paper, Hidden } from "@material-ui/core"
-import Panel from "../components/Panel"
-import Login from "../components/Login"
+import Panel from "../components/Auth/Panel"
+import Login from "../components/Auth/Login"
 import { UserContext } from "../context/UserContext"
 import { Redirect } from "react-router-dom"
 

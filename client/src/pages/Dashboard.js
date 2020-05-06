@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Navbar from "../components/Navbar"
-import ListsTable from "../components/ListsTable"
+import ListsTable from "../components/ListTable/ListsTable"
 import { ListContext } from "../context/ListContext"
 
 export const useStyles = makeStyles(theme => ({

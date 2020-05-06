@@ -7,7 +7,7 @@ import CardContent from "@material-ui/core/CardContent"
 import CardActions from "@material-ui/core/CardActions"
 import Collapse from "@material-ui/core/Collapse"
 import Typography from "@material-ui/core/Typography"
-import AdminForm from "./AdminForm"
+import AdminForm from "../Forms/AdminForm"
 
 const useStyles = makeStyles(theme => ({
   root: {
