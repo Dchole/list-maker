@@ -15,6 +15,7 @@ import TableToolbar from "./TableToolbar"
 import TableHeader from "./TableHeader"
 import { ListContext } from "../../context/ListContext"
 import Feedback from "../Feedback"
+import { timeDecoration } from "../timeDecoration"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -91,11 +92,7 @@ export default function ListsTable({ list }) {
                       </TableCell>
                     ))}
                     <TableCell align="left">
-                      {Math.abs(
-                        new Date().getMinutes() -
-                          new Date(member.time).getMinutes()
-                      )}
-                      &nbsp;minutes ago
+                      {timeDecoration(member.time)}
                     </TableCell>
                   </TableRow>
                 )

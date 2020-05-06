@@ -15,23 +15,17 @@ const useToolbarStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(1)
   },
-  highlight:
-    theme.palette.type === "light"
-      ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-        }
-      : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark
-        },
+  highlight: {
+    color: theme.palette.secondary.main,
+    backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+  },
   title: {
     flexGrow: 1,
     textTransform: "capitalize"
   },
   status: {
-    width: theme.spacing(2),
-    height: theme.spacing(2),
+    width: theme.spacing(1),
+    height: theme.spacing(1),
     marginRight: theme.spacing(1),
     borderRadius: "50%"
   },
