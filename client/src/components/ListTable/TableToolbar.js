@@ -91,7 +91,7 @@ const TableToolbar = ({ numSelected, title, active, id }) => {
           classes.status,
           active ? classes.active : classes.notActive
         )}
-      ></div>
+      />
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">

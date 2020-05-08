@@ -73,7 +73,6 @@ export default function ListsTable({ list }) {
   useEffect(() => {
     socket.on("addedToList", newMembers => {
       setListMembers([...newMembers])
-      console.log(newMembers)
     })
   })
 
@@ -113,6 +112,7 @@ export default function ListsTable({ list }) {
     changeListStatus(listCopy)
     setStatus(!status)
     setOpen(true)
+    socket.emit("setStatus", status)
   }
 
   return (

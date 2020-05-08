@@ -65,6 +65,10 @@ io.on("connection", socket => {
     io.emit("addedToList", list)
   })
 
+  socket.on("setStatus", status => {
+    io.emit("statusChanged", status)
+  })
+
   socket.on("disconnect", () => {
     console.log("Disconnected")
   })
