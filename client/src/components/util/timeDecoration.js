@@ -1,4 +1,4 @@
-export const timeFormat = time => {
+export const timeDecoration = time => {
   const time_posted = Date.parse(time)
   const now = Date.now()
 
