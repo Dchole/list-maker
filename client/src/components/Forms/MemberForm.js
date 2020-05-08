@@ -69,45 +69,41 @@ export default function MemberForm() {
 
   return (
     <div>
-      {!list.active && (
+      {!list.active ? (
         <Alert severity="error" style={alertStyle}>
-          List has been activated :( ...Contact your admin for details
+          List has been activated :(. Contact your admin for details
         </Alert>
+      ) : (
+        <Dialog open aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">Add To List</DialogTitle>
+          <DialogContent style={{ marginBottom: 10 }}>
+            <form onSubmit={handleSubmit}>
+              <Grid container>
+                {list.fields.map((label, index) => (
+                  <Grid key={index} item xs={12} style={{ marginBottom: 20 }}>
+                    <TextField
+                      id={label}
+                      name={fieldName(label)}
+                      type={label.toLowerCase() === "email" ? "email" : "text"}
+                      label={label}
+                      style={{ textTransform: "capitalize" }}
+                      autoFocus={index === 0 ? true : false}
+                      value={form[fieldName(label)]}
+                      onChange={handleInput}
+                      fullWidth
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+              <div style={{ float: "right" }}>
+                <Button variant="contained" color="primary" type="submit">
+                  Add
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       )}
-      <Dialog open aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add To List</DialogTitle>
-        <DialogContent style={{ marginBottom: 10 }}>
-          <form onSubmit={handleSubmit}>
-            <Grid container>
-              {list.fields.map((label, index) => (
-                <Grid key={index} item xs={12} style={{ marginBottom: 20 }}>
-                  <TextField
-                    id={label}
-                    name={fieldName(label)}
-                    type={label.toLowerCase() === "email" ? "email" : "text"}
-                    label={label}
-                    style={{ textTransform: "capitalize" }}
-                    autoFocus={index === 0 ? true : false}
-                    value={form[fieldName(label)]}
-                    onChange={handleInput}
-                    fullWidth
-                  />
-                </Grid>
-              ))}
-            </Grid>
-            <div style={{ float: "right" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                disabled={!list.active}
-              >
-                Add
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
