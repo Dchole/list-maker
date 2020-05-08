@@ -6,6 +6,7 @@ const http = require("http")
 const socketio = require("socket.io")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
+const path = require("path")
 
 const PORT = process.env.PORT
 const user = require("./routes/api/user.routes")
@@ -19,6 +20,7 @@ const Refresh = require("./models/refresh.model")
 
 app.use(helmet())
 app.use(express.json())
+app.use(express.static(path.join(__dirname, "build")))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(
@@ -39,6 +41,7 @@ mongoose
 
 app.use("/api/user", user)
 app.use("/api/list", list)
+
 ;(async function () {
   try {
     const tokens = await Refresh.find()
@@ -52,6 +55,10 @@ app.use("/api/list", list)
     console.log(err)
   }
 })()
+
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+)
 
 io.on("connection", socket => {
   socket.on("addToList", list => {
