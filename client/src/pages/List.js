@@ -90,7 +90,7 @@ const List = () => {
           <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
         </div>
         <main className={classes.main}>
-          <Container maxWidth="md">
+          <Container maxWidth="md" style={{ height: 750 }}>
             <ListsTable list={list} />
           </Container>
         </main>

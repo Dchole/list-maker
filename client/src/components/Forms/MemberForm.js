@@ -10,13 +10,17 @@ import Alert from "@material-ui/lab/Alert"
 import { ListContext } from "../../context/ListContext"
 import { useParams } from "react-router"
 import { fetchList } from "../../context/api/ListsAPI"
+import io from "socket.io-client"
+
+let socket
 
 const alertStyle = {
   position: "absolute",
   top: 0,
   width: "100%",
   display: "flex",
-  justifyContent: "center"
+  justifyContent: "center",
+  zIndex: 50000
 }
 
 export default function MemberForm() {
@@ -46,14 +50,19 @@ export default function MemberForm() {
     })()
   }, [params.id])
 
+  useEffect(() => {
+    socket = io("localhost:5000")
+  })
+
   const handleInput = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = event => {
     event.preventDefault()
-    list.members.push({ info: Object.values(form) })
+    list.members.push({ info: Object.values(form), time: new Date() })
     addToList(list)
+    socket.emit("addToList", list.members)
   }
 
   if (loading) return <CircularProgress />

@@ -10,10 +10,11 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import FilterListIcon from "@material-ui/icons/FilterList"
 import Feedback from "../Feedback"
 
-const useToolbarStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1)
+    paddingRight: theme.spacing(1),
+    backgroundColor: theme.palette.grey[100]
   },
   highlight: {
     color: theme.palette.secondary.main,
@@ -44,10 +45,9 @@ const useToolbarStyles = makeStyles(theme => ({
   }
 }))
 
-const TableToolbar = props => {
+const TableToolbar = ({ numSelected, title, active, id }) => {
+  const classes = useStyles()
   const [open, setOpen] = useState(false)
-  const classes = useToolbarStyles()
-  const { numSelected, title, active, id } = props
 
   const copy = () => {
     navigator.clipboard.writeText(`${window.location.origin}/add/${id}`)

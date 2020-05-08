@@ -5,6 +5,7 @@ import CardHeader from "@material-ui/core/CardHeader"
 import CardContent from "@material-ui/core/CardContent"
 import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
+import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
 import Link from "@material-ui/core/Link"
 import { Link as RouterLink } from "react-router-dom"
@@ -62,10 +63,13 @@ const ActiveCard = () => {
               ¯\_(ツ)_/¯
             </span>
             <br />
-            Click "Create List" on the previous card{" "}
-            <span role="img" aria-label="backwards arrow">
-              👈
-            </span>{" "}
+            Click <span style={{ color: "#d50000" }}>Create List</span> on the
+            previous card{" "}
+            <Hidden mdDown>
+              <span role="img" aria-label="">
+                👈
+              </span>{" "}
+            </Hidden>
             to add an active list.
           </Typography>
         )}

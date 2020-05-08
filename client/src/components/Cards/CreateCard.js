@@ -56,16 +56,17 @@ const CreateCard = () => {
           <Typography variant="body2" align="center">
             Make a list with your employees, students and groups with so many
             options yet easy to maintain. Click on the button{" "}
-            <span role="img" aria-label="Arrow down">
+            <span role="img" aria-label="below">
               👇
             </span>{" "}
             to start
           </Typography>
         ) : (
           <Typography variant="body1" align="center">
-            For easy maintenance, we autofill your field with "Full Name". You
-            can change it or remove it but we recommend you leave it be so you
-            can easily identify members who adds to your list
+            For easy maintenance, we initiate your fields with{" "}
+            <span style={{ color: "#d50000" }}>Full Name</span> so you can
+            easily identify members who adds to your list. No need to ask for
+            names again unless it's very neccesary
           </Typography>
         )}
       </CardContent>

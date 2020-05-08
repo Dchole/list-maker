@@ -37,7 +37,7 @@ router.post("/", authenticate, async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     await List.findByIdAndUpdate(req.params.id, req.body)
-    res.json({ message: "Update successful" })
+    res.sendStatus(200)
   } catch (err) {
     console.log(err)
   }

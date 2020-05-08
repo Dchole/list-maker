@@ -12,7 +12,7 @@ const TableHeader = ({
 }) => {
   return (
     <TableHead>
-      <TableRow style={{ textTransform: "capitalize", fontWeight: "bold" }}>
+      <TableRow style={{ textTransform: "capitalize", backgroundColor: "red" }}>
         <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}

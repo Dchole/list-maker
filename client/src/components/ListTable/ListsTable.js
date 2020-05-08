@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Table from "@material-ui/core/Table"
 import TableBody from "@material-ui/core/TableBody"
@@ -11,11 +11,14 @@ import Checkbox from "@material-ui/core/Checkbox"
 import IconButton from "@material-ui/core/IconButton"
 import ActivateIcon from "@material-ui/icons/PlayCircleOutlineRounded"
 import DeactivateIcon from "@material-ui/icons/PowerSettingsNew"
+import io from "socket.io-client"
 import TableToolbar from "./TableToolbar"
 import TableHeader from "./TableHeader"
-import { ListContext } from "../../context/ListContext"
 import Feedback from "../Feedback"
-import { timeDecoration } from "../timeDecoration"
+import { ListContext } from "../../context/ListContext"
+import { timeDecoration } from "../util/timeDecoration"
+
+let socket
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,12 +45,67 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ListsTable({ list }) {
-  const { title, fields, members, active, id } = list
+  const { title, fields, members, active, _id } = list
 
   const classes = useStyles()
+  const [listMembers, setListMembers] = useState(members)
   const [status, setStatus] = useState(active)
+  const [selected, setSelected] = React.useState([])
   const [open, setOpen] = useState(false)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const { changeListStatus } = useContext(ListContext)
+
+  useEffect(() => {
+    socket = io("localhost:5000")
+
+    if (!status) {
+      socket.emit("disconnect")
+      socket.off()
+    }
+
+    return () => {
+      socket.emit("disconnect")
+      socket.off()
+    }
+  }, [status])
+
+  useEffect(() => {
+    socket.on("addedToList", newMembers => {
+      setListMembers([...newMembers])
+      console.log(newMembers)
+    })
+  })
+
+  const handleClick = (event, index) => {
+    let newSelected = []
+
+    if (index === -1) {
+      newSelected = newSelected.concat(selected, index)
+    } else if (index === 0) {
+      newSelected = newSelected.concat(selected.slice(1))
+    } else if (index === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1))
+    } else if (index > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, index),
+        selected.slice(index + 1)
+      )
+    }
+
+    setSelected(newSelected)
+  }
+
+  const handleSelectAllClick = event => {
+    if (event.target.checked) {
+      const newSelecteds = members.map(member => member.fullname)
+      setSelected(newSelecteds)
+      return
+    }
+    setSelected([])
+  }
+
+  const isSelected = index => selected.includes(index)
 
   const handleStatusUpdate = () => {
     const listCopy = { ...list }
@@ -60,43 +118,52 @@ export default function ListsTable({ list }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableToolbar title={title} active={status} id={id} />
-        <TableContainer>
+        <TableToolbar title={title} active={status} id={_id} />
+        <TableContainer style={{ maxHeight: 400 }}>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            aria-label="enhanced table"
+            aria-label="list table"
+            stickyHeader
           >
             <TableHeader
               classes={classes}
-              rowCount={members.length}
+              rowCount={listMembers.length}
               headLabels={fields}
             />
             <TableBody>
-              {members.map((member, index) => {
-                const labelId = `enhanced-table-checkbox-${index}`
+              {listMembers
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((member, index) => {
+                  const labelId = `enhanced-table-checkbox-${index}`
 
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={member.info[0] + index}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox inputProps={{ "aria-labelledby": labelId }} />
-                    </TableCell>
-                    {member.info.map((info, index) => (
-                      <TableCell key={index} align="left">
-                        {info}
+                  return (
+                    <TableRow
+                      hover
+                      onClick={event => handleClick(event, index)}
+                      role="checkbox"
+                      aria-checked={isSelected(index)}
+                      tabIndex={-1}
+                      key={index}
+                      selected={isSelected(index)}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          inputProps={{ "aria-labelledby": labelId }}
+                          checked={isSelected(index)}
+                        />
                       </TableCell>
-                    ))}
-                    <TableCell align="left">
-                      {timeDecoration(member.time)}
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
+                      {member.info.map((info, index) => (
+                        <TableCell key={index} align="left">
+                          {info}
+                        </TableCell>
+                      ))}
+                      <TableCell align="left">
+                        {timeDecoration(member.time)}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
             </TableBody>
           </Table>
         </TableContainer>
@@ -116,9 +183,13 @@ export default function ListsTable({ list }) {
             />
           </div>
           <TablePagination
+            rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={members.length}
+            count={listMembers.length}
+            page={page}
+            onChangePage={(e, newPage) => setPage(newPage)}
+            onChangeRowsPerPage={event => setRowsPerPage(+event.target.value)}
           />
         </div>
       </Paper>

@@ -5,6 +5,7 @@ import CardHeader from "@material-ui/core/CardHeader"
 import CardContent from "@material-ui/core/CardContent"
 import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
+import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
 
 const useStyles = makeStyles(theme => ({
@@ -41,10 +42,13 @@ const AboutCard = () => {
           <p>To start a list; </p>
           <ul>
             <li>
-              Click on "Create List" on the next card{" "}
-              <span role="img" aria-label="forward arrow">
-                👉
-              </span>{" "}
+              Click on <span style={{ color: "#d50000" }}>Create List</span> on
+              the next card{" "}
+              <Hidden mdDown>
+                <span role="img" aria-label="forward arrow">
+                  👉
+                </span>{" "}
+              </Hidden>
             </li>
             <li>Add the fields you want your list to have</li>
             <li>Click Done</li>

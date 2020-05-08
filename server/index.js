@@ -1,7 +1,6 @@
 require("dotenv").config()
 const express = require("express")
 const helmet = require("helmet")
-const csrf = require("csurf")
 const mongoose = require("mongoose")
 const http = require("http")
 const socketio = require("socket.io")
@@ -55,9 +54,12 @@ app.use("/api/list", list)
 })()
 
 io.on("connection", socket => {
-  console.log("We have a connection")
+  socket.on("addToList", list => {
+    io.emit("addedToList", list)
+  })
+
   socket.on("disconnect", () => {
-    console.log("User left!!!")
+    console.log("Disconnected")
   })
 })
 
