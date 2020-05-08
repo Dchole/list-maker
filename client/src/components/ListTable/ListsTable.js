@@ -77,35 +77,35 @@ export default function ListsTable({ list }) {
     })
   })
 
-  const handleClick = (event, index) => {
+  const handleClick = name => {
+    const selectedIndex = selected.indexOf(name)
     let newSelected = []
 
-    if (index === -1) {
-      newSelected = newSelected.concat(selected, index)
-    } else if (index === 0) {
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name)
+    } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1))
-    } else if (index === selected.length - 1) {
+    } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1))
-    } else if (index > 0) {
+    } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
-        selected.slice(0, index),
-        selected.slice(index + 1)
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
       )
     }
-
     setSelected(newSelected)
   }
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelecteds = members.map(member => member.fullname)
+      const newSelecteds = members.map(member => member._id)
       setSelected(newSelecteds)
       return
     }
     setSelected([])
   }
 
-  const isSelected = index => selected.includes(index)
+  const isSelected = member => selected.indexOf(member) !== -1
 
   const handleStatusUpdate = () => {
     const listCopy = { ...list }
@@ -118,7 +118,12 @@ export default function ListsTable({ list }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <TableToolbar title={title} active={status} id={_id} />
+        <TableToolbar
+          numSelected={selected.length}
+          title={title}
+          active={status}
+          id={_id}
+        />
         <TableContainer style={{ maxHeight: 400 }}>
           <Table
             className={classes.table}
@@ -130,27 +135,30 @@ export default function ListsTable({ list }) {
               classes={classes}
               rowCount={listMembers.length}
               headLabels={fields}
+              selectAll={handleSelectAllClick}
+              numSelected={selected.length}
             />
             <TableBody>
               {listMembers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((member, index) => {
                   const labelId = `enhanced-table-checkbox-${index}`
+                  const isItemSelected = isSelected(member._id)
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, index)}
+                      onClick={() => handleClick(member._id)}
                       role="checkbox"
-                      aria-checked={isSelected(index)}
+                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
-                      selected={isSelected(index)}
+                      selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
                           inputProps={{ "aria-labelledby": labelId }}
-                          checked={isSelected(index)}
+                          checked={isItemSelected}
                         />
                       </TableCell>
                       {member.info.map((info, index) => (

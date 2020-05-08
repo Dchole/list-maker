@@ -46,7 +46,7 @@ const ActiveCard = () => {
         }
       />
       <CardContent>
-        {lists.length !== 0 ? (
+        {lists.length > 0 ? (
           <ul className={classes.active}>
             {lists.map(list => (
               <li key={list._id}>
