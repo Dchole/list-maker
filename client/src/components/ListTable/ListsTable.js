@@ -196,7 +196,7 @@ export default function ListsTable({ list }) {
             component="div"
             count={listMembers.length}
             page={page}
-            onChangePage={(e, newPage) => setPage(newPage)}
+            onChangePage={(_, newPage) => setPage(newPage)}
             onChangeRowsPerPage={event => setRowsPerPage(+event.target.value)}
           />
         </div>
