@@ -11,8 +11,9 @@ import { ListContext } from "../../context/ListContext"
 import { useParams } from "react-router"
 import { fetchList } from "../../context/api/ListsAPI"
 import io from "socket.io-client"
+import { UserContext } from "../../context/UserContext"
 
-let socket
+const socket = io("localhost:5000")
 
 const alertStyle = {
   position: "absolute",
@@ -25,6 +26,10 @@ const alertStyle = {
 
 export default function MemberForm() {
   const params = useParams()
+
+  const {
+    state: { user }
+  } = useContext(UserContext)
 
   const { addToList } = useContext(ListContext)
   const [list, setList] = useState({})
@@ -41,6 +46,9 @@ export default function MemberForm() {
         list.fields.forEach(field => {
           const createdFieldName = fieldName(field)
           setForm(prevForm => ({ ...prevForm, [createdFieldName]: "" }))
+
+          user.fullName &&
+            setForm(prevForm => ({ ...prevForm, fullname: user.fullName }))
         })
       } catch (err) {
         console.log(err)
@@ -48,11 +56,7 @@ export default function MemberForm() {
         setLoading(false)
       }
     })()
-  }, [params.id])
-
-  useEffect(() => {
-    socket = io("localhost:5000")
-  })
+  }, [params.id, user.fullName])
 
   const handleInput = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
