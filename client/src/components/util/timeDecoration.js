@@ -1,34 +1,37 @@
 export const timeDecoration = time => {
-  const now = new Date()
-  const currentSecond = now.getSeconds()
-  const currentMinute = now.getMinutes()
-  const currentHour = now.getHours()
-  const today = now.getDate()
-  const currentMonth = now.getMonth()
-  const currentYear = now.getFullYear()
+  const time_posted = Date.parse(time)
+  const now = Date.now()
 
-  const timePosted = new Date(time)
-  const secondsFromTimePosted = timePosted.getSeconds()
-  const minutesFromTimePosted = timePosted.getMinutes()
-  const hoursFromTimePosted = timePosted.getHours()
-  const datePosted = timePosted.getHours()
-  const monthPosted = timePosted.getMonth()
-  const yearPosted = timePosted.getFullYear()
+  const timeRange = now - time_posted
 
-  const secondsAgo = Math.abs(currentSecond - secondsFromTimePosted)
-  const minutesAgo = Math.abs(currentMinute - minutesFromTimePosted)
-  const hoursAgo = Math.abs(currentHour - hoursFromTimePosted)
-  const daysAgo = Math.abs(today - datePosted)
-  const monthsAgo = Math.abs(currentMonth - monthPosted)
-  const yearsAgo = Math.abs(currentYear - yearPosted)
+  const seconds = timeRange / 1000
+  const minutes = seconds / 60
+  const hours = minutes / 60
+  const days = hours / 24
+  const weeks = days / 7
+  const months = weeks / 4
+  const years = months / 12
 
-  if (now - timePosted < 1000) return "Just now"
-  else if (yearsAgo > 0) return `${yearsAgo} years ago`
-  else if (monthsAgo > 0) return `${monthsAgo} months ago`
-  else if (daysAgo > 0) return `${daysAgo} days ago`
-  else if (hoursAgo > 0) {
-    if (minutesAgo > 0) return `${hoursAgo} hrs ${minutesAgo} mins ago `
-  } else if (minutesAgo > 0) {
-    if (secondsAgo > 0) return `${minutesAgo} mins ${secondsAgo} secs ago `
-  } else if (secondsAgo > 0) return `${secondsAgo} seconds ago`
+  if (years >= 1) {
+    if (years === 1) return "About a year ago"
+    return `About ${Math.ceil(years)} years ago`
+  } else if (months >= 1) {
+    if (months === 1) return "About a month ago"
+    return `About ${Math.ceil(months)} months ago`
+  } else if (weeks >= 1) {
+    if (weeks === 1) return "About a week ago"
+    return `About ${Math.ceil(weeks)} weeks ago`
+  } else if (days >= 1) {
+    if (days === 1) return "A day ago"
+    return `${Math.ceil(days)} days ago`
+  } else if (hours >= 1) {
+    if (hours === 1) return "An hour ago"
+    return `${Math.ceil(hours)} hours ago`
+  } else if (minutes >= 1) {
+    if (minutes === 1) return "A minute ago"
+    return `${Math.ceil(minutes)} minutes ago`
+  } else if (seconds >= 1) {
+    if (seconds === 1) return "A second ago"
+    return `${Math.ceil(seconds)} seconds ago`
+  } else if (timeRange < 1000) return "Just now"
 }
