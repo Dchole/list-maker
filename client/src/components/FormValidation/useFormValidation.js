@@ -1,32 +1,58 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useContext } from "react"
 import { UserContext } from "../../context/UserContext"
 
 const useFormValidation = (initialState, validate) => {
-  const [values, setValues] = useState(initialState)
-  const [errors, setErrors] = useState({})
+  const [registerValues, setRegisterValues] = useState(initialState)
+  const [loginValues, setLoginValues] = useState(initialState)
+  const [registerErrors, setRegisterErrors] = useState({})
+  const [loginErrors, setLoginErrors] = useState({})
 
-  const { registerUser } = useContext(UserContext)
+  const { registerUser, loginUser } = useContext(UserContext)
 
-  useEffect(() => {
-    const noErrors = Object.keys(errors).length === 0
-    if (noErrors) {
-      registerUser(values)
-    }
-    console.log(errors)
-  }, [errors, values, registerUser])
-
-  const handleInput = event => {
-    setValues({ ...values, [event.target.name]: event.target.value })
+  const handleRegisterInput = event => {
+    setRegisterValues({
+      ...registerValues,
+      [event.target.name]: event.target.value
+    })
   }
 
-  const handleSubmit = event => {
+  const handleLoginInput = event => {
+    setLoginValues({
+      ...loginValues,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleRegisterSubmit = event => {
     event.preventDefault()
-    const validationErrors = validate(values)
-    setErrors(validationErrors)
-    registerUser(values)
+    const validationErrors = validate(registerValues)
+    setRegisterErrors(validationErrors)
+    const noErrors = Object.keys(registerErrors).length === 0
+    if (noErrors) {
+      registerUser(registerValues)
+    }
   }
 
-  return { handleInput, handleSubmit, errors, values }
+  const handleLoginSubmit = event => {
+    event.preventDefault()
+    const validationErrors = validate(loginValues)
+    setLoginErrors(validationErrors)
+    const noErrors = Object.keys(loginErrors).length === 0
+    if (noErrors) {
+      loginUser(loginValues)
+    }
+  }
+
+  return {
+    handleRegisterInput,
+    handleLoginInput,
+    handleLoginSubmit,
+    handleRegisterSubmit,
+    registerErrors,
+    loginErrors,
+    registerValues,
+    loginValues
+  }
 }
 
 export default useFormValidation

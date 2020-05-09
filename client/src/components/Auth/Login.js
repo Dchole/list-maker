@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
@@ -18,7 +18,9 @@ import OutlinedInput from "@material-ui/core/OutlinedInput"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import { Link as RouterLink } from "react-router-dom"
-import { UserContext } from "../../context/UserContext"
+import useFormValidation from "../FormValidation/useFormValidation"
+import { loginValidation } from "../FormValidation/validationAuth"
+import { FormHelperText } from "@material-ui/core"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,22 +43,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function SignIn() {
-  const classes = useStyles()
-  const { loginUser } = useContext(UserContext)
-  const [state, setState] = useState({
+  const initialState = {
     email: "",
     password: ""
-  })
+  }
+
+  const classes = useStyles()
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleInput = event => {
-    setState({ ...state, [event.target.name]: event.target.value })
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    loginUser(state)
-  }
+  const {
+    handleLoginInput,
+    handleLoginSubmit,
+    loginErrors,
+    loginValues
+  } = useFormValidation(initialState, loginValidation)
 
   return (
     <div className={classes.paper}>
@@ -66,8 +66,10 @@ export default function SignIn() {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={handleLoginSubmit}>
         <TextField
+          error={loginErrors.email ? true : false}
+          helperText={loginErrors.email}
           variant="outlined"
           margin="normal"
           required
@@ -77,8 +79,8 @@ export default function SignIn() {
           name="email"
           autoComplete="email"
           autoFocus
-          value={state.email}
-          onChange={handleInput}
+          value={loginValues.email}
+          onChange={handleLoginInput}
         />
         <FormControl
           className={clsx(classes.margin, classes.textField)}
@@ -87,11 +89,12 @@ export default function SignIn() {
         >
           <InputLabel htmlFor="password">Password*</InputLabel>
           <OutlinedInput
+            error={loginErrors.password ? true : false}
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}
-            value={state.password}
-            onChange={handleInput}
+            value={loginValues.password}
+            onChange={handleLoginInput}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -105,6 +108,7 @@ export default function SignIn() {
             }
             labelWidth={70}
           />
+          <FormHelperText>{loginErrors.password}</FormHelperText>
         </FormControl>
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}

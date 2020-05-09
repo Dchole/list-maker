@@ -15,7 +15,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: theme.breakpoints.values.sm * 0.6,
     padding: theme.spacing(1),
-    margin: theme.spacing(6, 0)
+    margin: theme.spacing(6, 0),
+    maxHeight: theme.breakpoints.values.sm * 0.6
   },
   action: { display: "flex", justifyContent: "flex-end" },
   active: { textTransform: "capitalize" },
@@ -48,13 +49,16 @@ const ActiveCard = () => {
       <CardContent>
         {lists.length > 0 ? (
           <ul className={classes.active}>
-            {lists.map(list => (
-              <li key={list._id}>
-                <Link component={RouterLink} to={`/lists/${list._id}`}>
-                  {list.title}
-                </Link>
-              </li>
-            ))}
+            {lists
+              .filter(list => list.active)
+              .slice(0, 5)
+              .map(list => (
+                <li key={list._id}>
+                  <Link component={RouterLink} to={`/lists/${list._id}`}>
+                    {list.title}
+                  </Link>
+                </li>
+              ))}
           </ul>
         ) : (
           <Typography component="h4" variant="body2">
