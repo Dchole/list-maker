@@ -41,13 +41,10 @@ const initialState = {
 
 export default function SignUp() {
   const classes = useStyles()
-  const {
-    handleInput,
-    handleBlur,
-    handleSubmit,
-    errors,
-    values
-  } = useFormValidation(initialState, validationAuth)
+  const { handleInput, handleSubmit, errors, values } = useFormValidation(
+    initialState,
+    validationAuth
+  )
 
   return (
     <div className={classes.paper}>
@@ -61,6 +58,8 @@ export default function SignUp() {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
+              error={errors.firstname ? true : false}
+              helperText={errors.firstname}
               autoComplete="firstName"
               name="firstName"
               variant="outlined"
@@ -72,11 +71,12 @@ export default function SignUp() {
               autoFocus
               value={values.firstName}
               onChange={handleInput}
-              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              error={errors.lastname ? true : false}
+              helperText={errors.lastname}
               autoComplete="lastName"
               name="lastName"
               variant="outlined"
@@ -87,7 +87,6 @@ export default function SignUp() {
               label="Last Name"
               value={values.lastName}
               onChange={handleInput}
-              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
@@ -104,7 +103,6 @@ export default function SignUp() {
               label="Email"
               value={values.email}
               onChange={handleInput}
-              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
@@ -121,11 +119,12 @@ export default function SignUp() {
               autoComplete="current-password"
               value={values.password}
               onChange={handleInput}
-              onBlur={handleBlur}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              error={errors.confirmPassword ? true : false}
+              helperText={errors.confirmPassword}
               variant="outlined"
               required
               fullWidth
@@ -136,7 +135,6 @@ export default function SignUp() {
               autoComplete="confirm_password"
               value={values.confirmPassword}
               onChange={handleInput}
-              onBlur={handleBlur}
             />
           </Grid>
         </Grid>

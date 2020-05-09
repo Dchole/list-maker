@@ -10,20 +10,13 @@ const useFormValidation = (initialState, validate) => {
   useEffect(() => {
     const noErrors = Object.keys(errors).length === 0
     if (noErrors) {
-      //   registerUser(values)
+      registerUser(values)
     }
     console.log(errors)
-  }, [errors])
+  }, [errors, values, registerUser])
 
   const handleInput = event => {
     setValues({ ...values, [event.target.name]: event.target.value })
-    const validationErrors = validate(values)
-    setErrors(validationErrors)
-  }
-
-  const handleBlur = () => {
-    const validationErrors = validate(values)
-    setErrors(validationErrors)
   }
 
   const handleSubmit = event => {
@@ -33,7 +26,7 @@ const useFormValidation = (initialState, validate) => {
     registerUser(values)
   }
 
-  return { handleInput, handleBlur, handleSubmit, errors, values }
+  return { handleInput, handleSubmit, errors, values }
 }
 
 export default useFormValidation
