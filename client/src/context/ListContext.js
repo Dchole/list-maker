@@ -1,15 +1,28 @@
-import React, { createContext, useReducer, useEffect, useState } from "react"
+import React, {
+  createContext,
+  useReducer,
+  useEffect,
+  useState,
+  useContext
+} from "react"
 import { listReducer } from "../reducers/listReducer"
 import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI"
 import { getRefreshToken } from "./api/UserAPI"
 import { useHistory } from "react-router-dom"
+import { UserContext } from "./UserContext"
 
 export const ListContext = createContext()
 
 const ListContextProvider = ({ children }) => {
   const history = useHistory()
   const initialState = { feedback: null, lists: [] }
+
   const [state, dispatch] = useReducer(listReducer, initialState)
+
+  const {
+    state: { isAuthenticated }
+  } = useContext(UserContext)
+
   const [listLoading, setListLoading] = useState(true)
 
   useEffect(() => {
@@ -25,7 +38,7 @@ const ListContextProvider = ({ children }) => {
         setListLoading(false)
       }
     })()
-  }, [])
+  }, [isAuthenticated])
 
   const createNewList = async body => {
     try {

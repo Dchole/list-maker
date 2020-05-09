@@ -41,7 +41,6 @@ mongoose
 
 app.use("/api/user", user)
 app.use("/api/list", list)
-
 ;(async function () {
   try {
     const tokens = await Refresh.find()
@@ -65,8 +64,8 @@ io.on("connection", socket => {
     io.emit("addedToList", list)
   })
 
-  socket.on("setStatus", status => {
-    io.emit("statusChanged", status)
+  socket.on("setStatus", () => {
+    io.emit("statusChanged")
   })
 
   socket.on("disconnect", () => {

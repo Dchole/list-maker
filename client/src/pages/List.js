@@ -4,12 +4,14 @@ import Container from "@material-ui/core/Container"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Link from "@material-ui/core/Link"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListTable/ListsTable"
 import { ListContext } from "../context/ListContext"
-import { useParams, useHistory } from "react-router"
+import { useParams } from "react-router"
 import Feedback from "../components/Feedback"
+import { Link as RouterLink } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +45,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const List = () => {
-  const history = useHistory()
   const params = useParams()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -62,21 +63,28 @@ const List = () => {
   }
 
   if (listLoading) return <CircularProgress />
+  const linkToAddMember = `/add/${list._id}`
 
   return (
     <>
       <Navbar />
       <section className={classes.root}>
         <div className={classes.linkContainer}>
-          <Typography
-            ref={ref}
-            noWrap
-            variant="subtitle2"
-            className={classes.link}
-            onClick={() => history.push(`/add/${list._id}`)}
+          <Link
+            component={RouterLink}
+            to={linkToAddMember}
+            target="_blank"
+            style={{ textDecoration: "none" }}
           >
-            {`${window.location.origin}/add/${list._id}`}
-          </Typography>
+            <Typography
+              ref={ref}
+              noWrap
+              variant="subtitle2"
+              className={classes.link}
+            >
+              {`${window.location.origin}/add/${list._id}`}
+            </Typography>
+          </Link>
           &nbsp;&nbsp;
           <Button
             variant="outlined"

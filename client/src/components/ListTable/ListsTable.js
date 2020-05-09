@@ -18,7 +18,7 @@ import Feedback from "../Feedback"
 import { ListContext } from "../../context/ListContext"
 import { timeDecoration } from "../util/timeDecoration"
 
-let socket
+const socket = io("localhost:5000")
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,12 +57,7 @@ export default function ListsTable({ list }) {
   const { changeListStatus } = useContext(ListContext)
 
   useEffect(() => {
-    socket = io("localhost:5000")
-
-    if (!status) {
-      socket.emit("disconnect")
-      socket.off()
-    }
+    socket.emit("setStatus")
 
     return () => {
       socket.emit("disconnect")
@@ -112,7 +107,6 @@ export default function ListsTable({ list }) {
     changeListStatus(listCopy)
     setStatus(!status)
     setOpen(true)
-    socket.emit("setStatus", status)
   }
 
   return (

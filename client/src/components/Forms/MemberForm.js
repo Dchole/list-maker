@@ -32,7 +32,6 @@ export default function MemberForm() {
   } = useContext(UserContext)
 
   const { addToList } = useContext(ListContext)
-  const [status, setStatus] = useState(true)
   const [list, setList] = useState({})
   const [form, setForm] = useState({})
   const [loading, setLoading] = useState(true)
@@ -50,8 +49,6 @@ export default function MemberForm() {
 
           user.fullName &&
             setForm(prevForm => ({ ...prevForm, fullname: user.fullName }))
-
-          setStatus(list.status)
         })
       } catch (err) {
         console.log(err)
@@ -62,10 +59,15 @@ export default function MemberForm() {
   }, [params.id, user.fullName])
 
   useEffect(() => {
-    socket.on("statusChanged", updatedStatus => {
-      setStatus(updatedStatus)
+    socket.on("statusChanged", () => {
+      window.location.reload()
     })
-  })
+
+    return () => {
+      socket.emit("disconnect")
+      socket.off()
+    }
+  }, [])
 
   const handleInput = event => {
     setForm({ ...form, [event.target.name]: event.target.value })
@@ -82,7 +84,7 @@ export default function MemberForm() {
 
   return (
     <div>
-      {!status ? (
+      {!list.active ? (
         <Alert severity="error" style={alertStyle}>
           List has been activated :(. Contact your admin for details
         </Alert>

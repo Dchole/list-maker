@@ -5,7 +5,6 @@ import TableCell from "@material-ui/core/TableCell"
 import Checkbox from "@material-ui/core/Checkbox"
 
 const TableHeader = ({ selectAll, numSelected, rowCount, headLabels }) => {
-  console.log(numSelected, rowCount)
   return (
     <TableHead>
       <TableRow style={{ textTransform: "capitalize", backgroundColor: "red" }}>
