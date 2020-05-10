@@ -53,7 +53,7 @@ const List = () => {
     state: { lists },
     listLoading
   } = useContext(ListContext)
-
+  console.log(lists)
   const list = lists.find(list => list._id === params.id)
   const ref = createRef()
 

@@ -1,6 +1,12 @@
 import React, { createContext, useEffect, useReducer, useState } from "react"
 import { userReducer } from "../reducers/userReducer"
-import { getRefreshToken, fetchUser, login, register } from "./api/UserAPI"
+import {
+  getRefreshToken,
+  fetchUser,
+  login,
+  register,
+  logout
+} from "./api/UserAPI"
 import { useHistory } from "react-router-dom"
 
 export const UserContext = createContext()
@@ -55,6 +61,19 @@ const UserContextProvider = ({ children }) => {
     }
   }
 
+  const exitApp = async () => {
+    try {
+      const {
+        res: { data }
+      } = await logout()
+      dispatch({ type: "LOGOUT", payload: data.message })
+      state.isAuthenticated = false
+      history.replace("/login")
+    } catch (error) {
+      dispatch({ type: "FAILURE", payload: error.response })
+    }
+  }
+
   useEffect(() => {
     const updatedState = async () => {
       try {
@@ -75,7 +94,7 @@ const UserContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ state, registerUser, loginUser, userLoading }}
+      value={{ state, registerUser, loginUser, userLoading, exitApp }}
     >
       {children}
     </UserContext.Provider>

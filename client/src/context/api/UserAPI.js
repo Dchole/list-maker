@@ -32,7 +32,7 @@ export const updateUser = async (token, credentials) => {
 }
 
 export const logout = async () => {
-  const res = await Axios.post("/api/user/login", { withCredentials: true })
+  const res = await Axios.post("/api/user/logout", { withCredentials: true })
   const data = { res }
   return data
 }

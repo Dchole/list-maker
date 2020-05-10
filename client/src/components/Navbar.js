@@ -1,11 +1,13 @@
 import React, { useContext } from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Avatar from "@material-ui/core/Avatar"
+import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
-import { makeStyles } from "@material-ui/core/styles"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { UserContext } from "../context/UserContext"
-import { Link as RouterLink } from "react-router-dom"
+import { Link as RouterLink, useLocation } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -28,9 +30,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Navbar = () => {
+  const location = useLocation()
   const classes = useStyles()
   const {
-    state: { user }
+    state: { user },
+    exitApp
   } = useContext(UserContext)
 
   return (
@@ -48,13 +52,19 @@ const Navbar = () => {
           </span>
         </Typography>
         <div>
-          <Avatar
-            component={RouterLink}
-            className={classes.avatar}
-            to="/dashboard"
-          >
-            {user.fullName?.charAt()}
-          </Avatar>
+          {location.pathname === "/dashboard" ? (
+            <IconButton style={{ color: "white" }} onClick={exitApp}>
+              <ExitToAppIcon color="inherit" />
+            </IconButton>
+          ) : (
+            <Avatar
+              component={RouterLink}
+              className={classes.avatar}
+              to="/dashboard"
+            >
+              {user.fullName?.charAt()}
+            </Avatar>
+          )}
         </div>
       </Toolbar>
     </AppBar>

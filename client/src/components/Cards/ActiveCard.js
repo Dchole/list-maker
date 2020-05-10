@@ -7,7 +7,10 @@ import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
 import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
-import Link from "@material-ui/core/Link"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import Divider from "@material-ui/core/Divider"
 import { Link as RouterLink } from "react-router-dom"
 import { ListContext } from "../../context/ListContext"
 
@@ -20,6 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
   action: { display: "flex", justifyContent: "flex-end" },
   active: { textTransform: "capitalize" },
+  link: { color: theme.palette.primary.main },
   "@media (max-height: 640px)": {
     root: {
       width: theme.breakpoints.values.sm * 0.5
@@ -48,18 +52,26 @@ const ActiveCard = () => {
       />
       <CardContent>
         {lists.length > 0 ? (
-          <ul className={classes.active}>
+          <List className={classes.active}>
             {lists
               .filter(list => list.active)
               .slice(0, 5)
               .map(list => (
-                <li key={list._id}>
-                  <Link component={RouterLink} to={`/lists/${list._id}`}>
-                    {list.title}
-                  </Link>
-                </li>
+                <div key={list._id}>
+                  <ListItem
+                    component={RouterLink}
+                    to={`/lists/${list._id}`}
+                    button
+                  >
+                    <ListItemText
+                      primary={list.title}
+                      className={classes.link}
+                    />
+                  </ListItem>
+                  <Divider />
+                </div>
               ))}
-          </ul>
+          </List>
         ) : (
           <Typography component="h4" variant="body2">
             There are no active lists.{" "}

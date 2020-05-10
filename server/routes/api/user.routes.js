@@ -126,8 +126,14 @@ router.put("/", authenticate, async (req, res) => {
 
 router.post("/logout", (req, res) => {
   try {
-    res.clearCookie("refreshtoken")
-    res.json({ message: "Logged out successfully" })
+    res
+      .clearCookie("refreshToken", {
+        httpOnly: true,
+        path: "/api/user/token"
+      })
+      .json({
+        message: "Logged out successfully. Thank you for working with us"
+      })
   } catch (err) {
     console.log(err)
   }

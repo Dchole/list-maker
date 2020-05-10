@@ -7,8 +7,8 @@ import Button from "@material-ui/core/Button"
 import Tooltip from "@material-ui/core/Tooltip"
 import IconButton from "@material-ui/core/IconButton"
 import DeleteIcon from "@material-ui/icons/Delete"
-import FilterListIcon from "@material-ui/icons/FilterList"
 import Feedback from "../Feedback"
+import TableMenu from "./TableMenu"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,11 +99,7 @@ const TableToolbar = ({ numSelected, title, active, id }) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <TableMenu id={id} />
       )}
     </Toolbar>
   )

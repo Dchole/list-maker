@@ -69,6 +69,10 @@ export default function ListsTable({ list }) {
     socket.on("addedToList", newMembers => {
       setListMembers([...newMembers])
     })
+
+    return () => {
+      socket.off()
+    }
   })
 
   const handleClick = name => {
