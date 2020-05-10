@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
@@ -10,15 +10,30 @@ import PrintIcon from "@material-ui/icons/Print"
 import SaveIcon from "@material-ui/icons/SaveAlt"
 import DeleteIcon from "@material-ui/icons/Delete"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
+import XLSX from "xlsx"
 import Confirm from "./Confirm"
+import { jsonData } from "../util/jsonData"
+import { ListContext } from "../../context/ListContext"
 
 const TableMenu = ({ id }) => {
+  const {
+    state: { lists }
+  } = useContext(ListContext)
+
+  const list = lists.find(list => list._id === id)
+
   const [anchorEl, setAnchorEl] = useState(null)
   const [dialog, setDialog] = useState(false)
 
   const handleClick = event => setAnchorEl(event.currentTarget)
   const handleClose = _ => setAnchorEl(null)
   const handleDeleteClick = _ => setDialog(true)
+
+  const handleDownload = () => {
+    const data = jsonData(list)
+    XLSX.utils.json_to_sheet(data)
+    setDialog(false)
+  }
 
   return (
     <>
@@ -46,7 +61,7 @@ const TableMenu = ({ id }) => {
           </ListItemIcon>
           <ListItemText primary="Print" />
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleDownload}>
           <ListItemIcon>
             <SaveIcon fontSize="small" />
           </ListItemIcon>
