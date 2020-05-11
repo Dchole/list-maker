@@ -166,7 +166,10 @@ export default function ListsTable({ list }) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
-                          inputProps={{ "aria-labelledby": labelId }}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                            "aria-label": `Select ${member.info[0]}`
+                          }}
                           checked={isItemSelected}
                         />
                       </TableCell>

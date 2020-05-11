@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(10),
     overflow: "hidden"
   },
+  title: { textTransform: "capitalize", marginBottom: theme.spacing(4) },
   link: {
     backgroundColor: "white",
     border: `1px solid ${theme.palette.primary.main}`,
@@ -36,9 +37,10 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "center"
   },
-  main: {
+  container: {
     marginTop: theme.spacing(5)
   },
+
   "@media (max-width: 720px)": {
     main: { width: "100%" },
     linkContainer: { width: "50%" },
@@ -76,7 +78,10 @@ const List = () => {
   return (
     <>
       <Navbar />
-      <section className={classes.root}>
+      <main className={classes.root}>
+        <Typography variant="h4" component="h1" className={classes.title}>
+          {list.title}
+        </Typography>
         <div className={classes.linkContainer}>
           <Link
             component={RouterLink}
@@ -87,7 +92,7 @@ const List = () => {
             <Typography
               ref={ref}
               noWrap
-              variant="subtitle2"
+              variant="body2"
               className={classes.link}
             >
               {`${window.location.origin}/add/${list._id}`}
@@ -106,12 +111,12 @@ const List = () => {
           </Button>
           <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
         </div>
-        <main className={classes.main}>
+        <div className={classes.container}>
           <Container maxWidth="md" style={{ height: 750 }}>
             <ListsTable list={list} />
           </Container>
-        </main>
-      </section>
+        </div>
+      </main>
     </>
   )
 }

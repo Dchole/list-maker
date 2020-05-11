@@ -31,12 +31,12 @@ const Dashboard = () => {
     <>
       <Navbar />
       <div className={classes.root}>
-        <Typography variant="h4" component="h1">
-          All Lists
-        </Typography>
-
         <section>
           <main>
+            <Typography variant="h4" component="h1">
+              All Lists
+            </Typography>
+
             {lists.map(list => (
               <Container
                 key={list._id}
