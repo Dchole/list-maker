@@ -75,9 +75,23 @@ export default function MemberForm() {
 
   const handleSubmit = event => {
     event.preventDefault()
-    list.members.push({ info: Object.values(form), time: new Date() })
+
+    const socketMembers = [
+      ...list.members,
+      {
+        _id: Math.random() * Math.random(),
+        info: Object.values(form),
+        time: new Date()
+      }
+    ]
+
+    list.members.push({
+      info: Object.values(form),
+      time: new Date()
+    })
+
     addToList(list)
-    socket.emit("addToList", list.members)
+    socket.emit("addToList", socketMembers)
   }
 
   if (loading) return <CircularProgress />

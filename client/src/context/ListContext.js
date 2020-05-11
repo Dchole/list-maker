@@ -58,12 +58,18 @@ const ListContextProvider = ({ children }) => {
 
   const addToList = async list => {
     try {
-      setListLoading(true)
       await updateList(list)
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
-    } finally {
-      setListLoading(false)
+    }
+  }
+
+  const removeMember = async list => {
+    try {
+      await updateList(list)
+      dispatch({ type: "DELETE_MEMBER", payload: list })
+    } catch (error) {
+      dispatch({ type: "FAILURE", payload: error.response })
     }
   }
 
@@ -77,7 +83,6 @@ const ListContextProvider = ({ children }) => {
 
   const removeList = async id => {
     try {
-      setListLoading(true)
       const { res } = await getRefreshToken()
       const { message } = await deleteList(res.data.accessToken, id)
       dispatch({ type: "DELETE_LIST", message, id })
@@ -85,8 +90,6 @@ const ListContextProvider = ({ children }) => {
     } catch (error) {
       console.log(error.response)
       dispatch({ type: "FAILURE", payload: error.response })
-    } finally {
-      setListLoading(false)
     }
   }
 
@@ -96,6 +99,7 @@ const ListContextProvider = ({ children }) => {
         state,
         createNewList,
         removeList,
+        removeMember,
         listLoading,
         addToList,
         changeListStatus

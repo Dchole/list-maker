@@ -17,6 +17,7 @@ import TableHeader from "./TableHeader"
 import Feedback from "../Feedback"
 import { ListContext } from "../../context/ListContext"
 import { timeDecoration } from "../util/timeDecoration"
+import ConfirmMember from "./ConfirmMember"
 
 const socket = io("localhost:5000")
 
@@ -53,6 +54,7 @@ export default function ListsTable({ list }) {
   const [selected, setSelected] = React.useState([])
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(0)
+  const [dialogOpen, setDialogOpen] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const { changeListStatus } = useContext(ListContext)
 
@@ -116,7 +118,15 @@ export default function ListsTable({ list }) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
+        <ConfirmMember
+          open={dialogOpen}
+          setOpen={setDialogOpen}
+          selected={selected}
+          list={list}
+          setSelected={setSelected}
+        />
         <TableToolbar
+          handleDelete={() => setDialogOpen(true)}
           numSelected={selected.length}
           title={title}
           active={status}
@@ -160,7 +170,13 @@ export default function ListsTable({ list }) {
                         />
                       </TableCell>
                       {member.info.map((info, index) => (
-                        <TableCell key={index} align="left">
+                        <TableCell
+                          key={index}
+                          style={
+                            index === 0 ? { textTransform: "capitalize" } : null
+                          }
+                          align="left"
+                        >
                           {info}
                         </TableCell>
                       ))}

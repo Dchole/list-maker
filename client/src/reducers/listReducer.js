@@ -9,8 +9,18 @@ export const listReducer = (state, action) => {
         lists: [...state.lists, action.payload.list]
       }
 
-    case "ADD_MEMBER":
-      return state.lists.map(list => list.members.push(list))
+    case "DELETE_MEMBER": {
+      const updatedList = action.payload
+
+      const updatedLists = state.lists.map(list => {
+        if (list._id === updatedList._id) {
+          return updatedList
+        }
+        return updatedLists
+      })
+
+      return { ...state, lists: updatedLists }
+    }
 
     case "DELETE_LIST": {
       const lists = state.lists.filter(list => list._id !== action.id)

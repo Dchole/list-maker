@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    paddingTop: theme.spacing(10)
+    paddingTop: theme.spacing(10),
+    overflow: "hidden"
   },
   link: {
     backgroundColor: "white",

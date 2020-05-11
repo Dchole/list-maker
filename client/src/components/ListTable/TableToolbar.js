@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const TableToolbar = ({ numSelected, title, active, id }) => {
+const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
   const classes = useStyles()
   const [open, setOpen] = useState(false)
 
@@ -94,7 +94,7 @@ const TableToolbar = ({ numSelected, title, active, id }) => {
       />
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton aria-label="delete">
+          <IconButton aria-label="delete" onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
