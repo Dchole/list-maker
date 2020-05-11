@@ -12,9 +12,9 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import xlsx from "xlsx"
 import { saveAs } from "file-saver"
-import Confirm from "./Confirm"
 import { jsonData } from "../util/jsonData"
 import { ListContext } from "../../context/ListContext"
+import Confirm from "./Confirm"
 
 const TableMenu = ({ id }) => {
   const {
