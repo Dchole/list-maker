@@ -10,7 +10,8 @@ import PrintIcon from "@material-ui/icons/Print"
 import SaveIcon from "@material-ui/icons/SaveAlt"
 import DeleteIcon from "@material-ui/icons/Delete"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
-import XLSX from "xlsx"
+import xlsx from "xlsx"
+import { saveAs } from "file-saver"
 import Confirm from "./Confirm"
 import { jsonData } from "../util/jsonData"
 import { ListContext } from "../../context/ListContext"
@@ -30,9 +31,16 @@ const TableMenu = ({ id }) => {
   const handleDeleteClick = _ => setDialog(true)
 
   const handleDownload = () => {
-    const data = jsonData(list)
-    XLSX.utils.json_to_sheet(data)
-    setDialog(false)
+    const sheet = xlsx.utils.json_to_sheet(jsonData(list))
+    const workbook = xlsx.utils.book_new()
+
+    xlsx.utils.book_append_sheet(workbook, sheet, list.title)
+
+    const excelFile = xlsx.writeFile(workbook, `${list.title}.xlsx`)
+    const blob = new Blob([excelFile])
+    saveAs(blob, `${list.title}.xlsx`)
+
+    setAnchorEl(false)
   }
 
   return (
