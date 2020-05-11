@@ -6,7 +6,7 @@ import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
 import Dashboard from "./pages/Dashboard"
 import InputPage from "./pages/InputPage"
-import List from "./pages/List"
+import ListPage from "./pages/ListPage"
 
 const App = () => (
   <>
@@ -15,7 +15,7 @@ const App = () => (
     <Route path="/register" component={RegisterPage} />
     <Route path="/login" component={LoginPage} />
     <Route path="/dashboard" component={Dashboard} />
-    <Route path="/lists/:id" component={List} />
+    <Route path="/lists/:id" component={ListPage} />
     <Route path="/add/:id" component={InputPage} />
   </>
 )

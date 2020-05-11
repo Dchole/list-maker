@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const List = () => {
+const ListPage = () => {
   const params = useParams()
   const classes = useStyles()
   const [open, setOpen] = useState(false)
@@ -121,4 +121,4 @@ const List = () => {
   )
 }
 
-export default List
+export default ListPage

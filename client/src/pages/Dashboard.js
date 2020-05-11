@@ -16,6 +16,9 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-evenly",
     alignItems: "center"
   },
+  head: {
+    margin: theme.spacing(10, 0, 6, 0)
+  },
   "@media (max-width: 720px)": {
     main: { width: "100%" }
   }
@@ -30,25 +33,17 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <div className={classes.root}>
-        <section>
-          <main>
-            <Typography variant="h4" component="h1">
-              All Lists
-            </Typography>
+      <main className={classes.root}>
+        <Typography variant="h4" component="h1" className={classes.head}>
+          All Lists
+        </Typography>
 
-            {lists.map(list => (
-              <Container
-                key={list._id}
-                maxWidth="md"
-                style={{ marginBottom: 50 }}
-              >
-                <ListsTable list={list} />
-              </Container>
-            ))}
-          </main>
-        </section>
-      </div>
+        {lists.map(list => (
+          <Container key={list._id} maxWidth="md" style={{ marginBottom: 50 }}>
+            <ListsTable list={list} />
+          </Container>
+        ))}
+      </main>
     </>
   )
 }

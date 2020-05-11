@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
-    height: "100%"
+    alignItems: "space-between",
+    height: "100vh"
   }
 }))
 
@@ -39,9 +39,10 @@ const Homepage = () => {
   return (
     <div className={classes.root}>
       <Navbar />
-
       <Main />
-      <footer>&copy; Created by Derek Oware, 2020</footer>
+      <footer style={{ textAlign: "center" }}>
+        &copy; Created by Derek Oware, 2020
+      </footer>
     </div>
   )
 }

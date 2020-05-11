@@ -64,7 +64,6 @@ const TableMenu = ({ id }) => {
         </IconButton>
       </Tooltip>
       <Menu
-        id="options"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

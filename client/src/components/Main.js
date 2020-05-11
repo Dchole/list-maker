@@ -1,7 +1,7 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
+import Container from "@material-ui/core/Container"
 import CreateCard from "./Cards/CreateCard"
 import AboutCard from "./Cards/AboutCard"
 import ActiveCard from "./Cards/ActiveCard"
@@ -9,17 +9,21 @@ import ActiveCard from "./Cards/ActiveCard"
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
+    flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center"
   },
+  container: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    width: "100%"
+  },
   "@media (max-width: 1200px)": {
-    root: {
+    container: {
       flexDirection: "column",
       justifyContent: "space-evenly"
     }
-  },
-  head: {
-    paddingTop: theme.spacing(5)
   },
   "@media (min-width: 1200px)": {
     root: {
@@ -32,22 +36,16 @@ const Main = () => {
   const classes = useStyles()
 
   return (
-    <>
-      <Typography variant="h4" component="h1" className={classes.head}>
+    <Container maxWidth="lg" className={classes.root}>
+      <Typography variant="h4" component="h1">
         Create and Manage a list with ease
       </Typography>
-      <Container component="main" maxWidth="lg" className={classes.root}>
-        <div>
-          <AboutCard />
-        </div>
-        <div>
-          <CreateCard />
-        </div>
-        <div>
-          <ActiveCard />
-        </div>
-      </Container>
-    </>
+      <div className={classes.container}>
+        <AboutCard />
+        <CreateCard />
+        <ActiveCard />
+      </div>
+    </Container>
   )
 }
 
