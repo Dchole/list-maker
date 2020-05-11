@@ -51,7 +51,7 @@ export default list => {
   doc.addSection({
     children: [
       new Paragraph({
-        text: "Title",
+        text: list.title,
         heading: HeadingLevel.HEADING_1
       }),
       table
