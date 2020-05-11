@@ -27,20 +27,20 @@ const DownloadAs = ({
           onClick={handleDownloadAsExcel}
           aria-label="Download as excel"
         >
-          <ListItemIcon>
+          <ListItemIcon style={{ color: "#4CAF50" }}>
             <ExcelIcon />
           </ListItemIcon>
-          <ListItemText primary="Excel" />
+          <ListItemText primary="Excel" style={{ color: "#4CAF50" }} />
         </ListItem>
         <ListItem
           button
           onClick={handleDownloadAsDocx}
           aria-label="Download as document"
         >
-          <ListItemIcon>
+          <ListItemIcon style={{ color: "#3F51B5" }}>
             <DocumentIcon />
           </ListItemIcon>
-          <ListItemText primary="Document" />
+          <ListItemText primary="Document" style={{ color: "#3F51B5" }} />
         </ListItem>
       </List>
     </Dialog>

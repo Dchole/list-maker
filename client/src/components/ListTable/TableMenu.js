@@ -5,8 +5,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import IconButton from "@material-ui/core/IconButton"
 import Tooltip from "@material-ui/core/Tooltip"
-import SendIcon from "@material-ui/icons/Send"
-import PrintIcon from "@material-ui/icons/Print"
 import SaveIcon from "@material-ui/icons/SaveAlt"
 import DeleteIcon from "@material-ui/icons/Delete"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
@@ -72,18 +70,6 @@ const TableMenu = ({ id }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <SendIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Share" />
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PrintIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Print" />
-        </MenuItem>
         <MenuItem onClick={handleDownloadClick}>
           <ListItemIcon>
             <SaveIcon fontSize="small" />

@@ -29,7 +29,7 @@ const AboutCard = () => {
     <Card className={classes.root}>
       <CardHeader
         title={
-          <Typography variant="h6">
+          <Typography component="h2" variant="h6">
             How To Make List{" "}
             <span role="img" aria-label="read">
               📖

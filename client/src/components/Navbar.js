@@ -53,7 +53,11 @@ const Navbar = () => {
         </Typography>
         <div>
           {location.pathname === "/dashboard" ? (
-            <IconButton style={{ color: "white" }} onClick={exitApp}>
+            <IconButton
+              style={{ color: "white" }}
+              onClick={exitApp}
+              aria-label="Log out"
+            >
               <ExitToAppIcon color="inherit" />
             </IconButton>
           ) : (
@@ -61,6 +65,7 @@ const Navbar = () => {
               component={RouterLink}
               className={classes.avatar}
               to="/dashboard"
+              aria-label="Dashboard"
             >
               {user.fullName?.charAt()}
             </Avatar>

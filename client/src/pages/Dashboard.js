@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
+import Typography from "@material-ui/core/Typography"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListTable/ListsTable"
 import { ListContext } from "../context/ListContext"
@@ -12,11 +13,8 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center"
-  },
-  main: {
-    marginTop: theme.spacing(10) * 1.2
   },
   "@media (max-width: 720px)": {
     main: { width: "100%" }
@@ -32,19 +30,25 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <section className={classes.root}>
-        <main className={classes.main}>
-          {lists.map(list => (
-            <Container
-              key={list._id}
-              maxWidth="md"
-              style={{ marginBottom: 50 }}
-            >
-              <ListsTable list={list} />
-            </Container>
-          ))}
-        </main>
-      </section>
+      <div className={classes.root}>
+        <Typography variant="h4" component="h1">
+          All Lists
+        </Typography>
+
+        <section>
+          <main>
+            {lists.map(list => (
+              <Container
+                key={list._id}
+                maxWidth="md"
+                style={{ marginBottom: 50 }}
+              >
+                <ListsTable list={list} />
+              </Container>
+            ))}
+          </main>
+        </section>
+      </div>
     </>
   )
 }

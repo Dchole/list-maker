@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Backdrop from "@material-ui/core/Backdrop"
 import Link from "@material-ui/core/Link"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import Navbar from "../components/Navbar"
@@ -63,7 +64,13 @@ const List = () => {
     setOpen(true)
   }
 
-  if (listLoading) return <CircularProgress />
+  if (listLoading)
+    return (
+      <Backdrop open={listLoading} style={{ color: "white" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    )
+
   const linkToAddMember = `/add/${list._id}`
 
   return (
@@ -93,6 +100,7 @@ const List = () => {
             color="primary"
             onClick={copy}
             className={classes.btn}
+            aria-label="copy link address"
           >
             <FileCopyIcon color="primary" />
           </Button>

@@ -42,7 +42,7 @@ const ActiveCard = () => {
     <Card className={classes.root}>
       <CardHeader
         title={
-          <Typography variant="h6">
+          <Typography variant="h6" component="h2">
             Active Lists{" "}
             <span role="img" aria-label="read">
               ⏱
@@ -57,7 +57,7 @@ const ActiveCard = () => {
               .filter(list => list.active)
               .slice(0, 5)
               .map(list => (
-                <div key={list._id}>
+                <li key={list._id}>
                   <ListItem
                     component={RouterLink}
                     to={`/lists/${list._id}`}
@@ -69,7 +69,7 @@ const ActiveCard = () => {
                     />
                   </ListItem>
                   <Divider />
-                </div>
+                </li>
               ))}
           </List>
         ) : (

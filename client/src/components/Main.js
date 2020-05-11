@@ -5,17 +5,16 @@ import CreateCard from "./Cards/CreateCard"
 import AboutCard from "./Cards/AboutCard"
 import ActiveCard from "./Cards/ActiveCard"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     alignItems: "center"
   },
   "@media (max-width: 1200px)": {
     root: {
       flexDirection: "column",
-      justifyContent: "space-around",
-      marginTop: theme.spacing(6)
+      justifyContent: "space-evenly"
     }
   },
   "@media (min-width: 1200px)": {
@@ -23,7 +22,7 @@ const useStyles = makeStyles(theme => ({
       height: "100vh"
     }
   }
-}))
+})
 
 const Main = () => {
   const classes = useStyles()

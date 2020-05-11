@@ -191,7 +191,10 @@ export default function ListsTable({ list }) {
         </TableContainer>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ flexGrow: 1, marginLeft: 10 }}>
-            <IconButton onClick={handleStatusUpdate}>
+            <IconButton
+              onClick={handleStatusUpdate}
+              aria-label={status ? "deactivate list" : "activate list"}
+            >
               {status ? (
                 <DeactivateIcon color="secondary" />
               ) : (

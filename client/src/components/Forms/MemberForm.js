@@ -5,6 +5,7 @@ import Dialog from "@material-ui/core/Dialog"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Backdrop from "@material-ui/core/Backdrop"
 import Grid from "@material-ui/core/Grid"
 import Alert from "@material-ui/lab/Alert"
 import { ListContext } from "../../context/ListContext"
@@ -94,7 +95,12 @@ export default function MemberForm() {
     socket.emit("addToList", socketMembers)
   }
 
-  if (loading) return <CircularProgress />
+  if (loading)
+    return (
+      <Backdrop open={loading} style={{ color: "white" }}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    )
 
   return (
     <div>

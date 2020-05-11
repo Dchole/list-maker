@@ -43,7 +43,7 @@ const CreateCard = () => {
     <Card className={classes.root} id="create-card">
       <CardHeader
         title={
-          <Typography variant="h6">
+          <Typography variant="h6" component="h2">
             Create List{" "}
             <span role="img" aria-label="Add">
               📝
