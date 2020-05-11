@@ -9,6 +9,7 @@ export const listReducer = (state, action) => {
         lists: [...state.lists, action.payload.list]
       }
 
+    case "ADD_MEMBER":
     case "DELETE_MEMBER": {
       const updatedList = action.payload
 

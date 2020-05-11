@@ -80,7 +80,7 @@ export default function MemberForm() {
     const socketMembers = [
       ...list.members,
       {
-        _id: Math.random() * Math.random(),
+        _id: String(Math.random() * Math.random()),
         info: Object.values(form),
         time: new Date()
       }

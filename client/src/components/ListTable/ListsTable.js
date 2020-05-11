@@ -49,14 +49,14 @@ export default function ListsTable({ list }) {
   const { title, fields, members, active, _id } = list
 
   const classes = useStyles()
-  const [listMembers, setListMembers] = useState(members)
+  // const [listMembers, setListMembers] = useState(members)
   const [status, setStatus] = useState(active)
   const [selected, setSelected] = React.useState([])
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(0)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const { changeListStatus } = useContext(ListContext)
+  const { changeListStatus, socketUpdate } = useContext(ListContext)
 
   useEffect(() => {
     socket.emit("setStatus")
@@ -69,7 +69,8 @@ export default function ListsTable({ list }) {
 
   useEffect(() => {
     socket.on("addedToList", newMembers => {
-      setListMembers([...newMembers])
+      list.members = newMembers
+      socketUpdate(list)
     })
 
     return () => {
@@ -141,13 +142,13 @@ export default function ListsTable({ list }) {
           >
             <TableHeader
               classes={classes}
-              rowCount={listMembers.length}
+              rowCount={list.members.length}
               headLabels={fields}
               selectAll={handleSelectAllClick}
               numSelected={selected.length}
             />
             <TableBody>
-              {listMembers
+              {list.members
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((member, index) => {
                   const labelId = `enhanced-table-checkbox-${index}`
@@ -211,7 +212,7 @@ export default function ListsTable({ list }) {
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={listMembers.length}
+            count={list.members.length}
             page={page}
             onChangePage={(_, newPage) => setPage(newPage)}
             onChangeRowsPerPage={event => setRowsPerPage(+event.target.value)}

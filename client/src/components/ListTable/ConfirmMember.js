@@ -9,7 +9,6 @@ import { ListContext } from "../../context/ListContext"
 
 const ConfirmMember = ({ open, setOpen, selected, list, setSelected }) => {
   const { removeMember } = useContext(ListContext)
-
   const handleClose = _ => setOpen(false)
 
   const handleDelete = () => {

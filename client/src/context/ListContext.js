@@ -64,6 +64,8 @@ const ListContextProvider = ({ children }) => {
     }
   }
 
+  const socketUpdate = list => dispatch({ type: "ADD_MEMBER", payload: list })
+
   const removeMember = async list => {
     try {
       await updateList(list)
@@ -102,6 +104,7 @@ const ListContextProvider = ({ children }) => {
         removeMember,
         listLoading,
         addToList,
+        socketUpdate,
         changeListStatus
       }}
     >
