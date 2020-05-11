@@ -6,7 +6,7 @@ export const listReducer = (state, action) => {
     case "CREATE_LIST":
       return {
         ...state,
-        lists: [...state.lists, action.payload.list]
+        lists: [action.payload.list, ...state.lists]
       }
 
     case "ADD_MEMBER":
