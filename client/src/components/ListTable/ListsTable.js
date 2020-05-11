@@ -132,7 +132,7 @@ export default function ListsTable({ list }) {
           active={status}
           id={_id}
         />
-        <TableContainer style={{ maxHeight: 400 }}>
+        <TableContainer style={{ maxHeight: 430 }}>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"

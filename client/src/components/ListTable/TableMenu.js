@@ -12,9 +12,12 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import xlsx from "xlsx"
 import { saveAs } from "file-saver"
+import { Packer } from "docx"
 import { jsonData } from "../util/jsonData"
 import { ListContext } from "../../context/ListContext"
 import Confirm from "./Confirm"
+import docx from "../util/jsonToDocxData"
+import DownloadAs from "./DownloadAs"
 
 const TableMenu = ({ id }) => {
   const {
@@ -25,22 +28,34 @@ const TableMenu = ({ id }) => {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const [dialog, setDialog] = useState(false)
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false)
 
   const handleClick = event => setAnchorEl(event.currentTarget)
   const handleClose = _ => setAnchorEl(null)
   const handleDeleteClick = _ => setDialog(true)
 
-  const handleDownload = () => {
+  const handleDownloadClick = _ => setDownloadDialogOpen(true)
+
+  const handleDownloadAsExcel = () => {
     const sheet = xlsx.utils.json_to_sheet(jsonData(list))
     const workbook = xlsx.utils.book_new()
 
     xlsx.utils.book_append_sheet(workbook, sheet, list.title)
 
-    const excelFile = xlsx.writeFile(workbook, `${list.title}.xlsx`)
-    const blob = new Blob([excelFile])
-    saveAs(blob, `${list.title}.xlsx`)
+    xlsx.writeFile(workbook, `${list.title}.xlsx`)
 
     setAnchorEl(false)
+    setDownloadDialogOpen(false)
+  }
+
+  const handleDownloadAsDocx = () => {
+    const doc = docx(list)
+    Packer.toBuffer(doc).then(buffer => {
+      const blob = new Blob([buffer])
+      saveAs(blob, `${list.title}.docx`)
+    })
+
+    setDownloadDialogOpen(false)
   }
 
   return (
@@ -69,7 +84,7 @@ const TableMenu = ({ id }) => {
           </ListItemIcon>
           <ListItemText primary="Print" />
         </MenuItem>
-        <MenuItem onClick={handleDownload}>
+        <MenuItem onClick={handleDownloadClick}>
           <ListItemIcon>
             <SaveIcon fontSize="small" />
           </ListItemIcon>
@@ -82,6 +97,12 @@ const TableMenu = ({ id }) => {
           <ListItemText primary="Delete" />
         </MenuItem>
         <Confirm id={id} open={dialog} setOpen={setDialog} />
+        <DownloadAs
+          open={downloadDialogOpen}
+          setOpen={setDownloadDialogOpen}
+          handleDownloadAsExcel={handleDownloadAsExcel}
+          handleDownloadAsDocx={handleDownloadAsDocx}
+        />
       </Menu>
     </>
   )
