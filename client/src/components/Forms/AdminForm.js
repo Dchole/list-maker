@@ -58,6 +58,7 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
         name="title"
         label="Title"
         fullWidth
+        autoFocus
         style={{ marginBottom: 20 }}
       />
       <TextField

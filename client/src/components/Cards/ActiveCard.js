@@ -3,10 +3,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
 import CardContent from "@material-ui/core/CardContent"
-import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
 import Hidden from "@material-ui/core/Hidden"
-import Button from "@material-ui/core/Button"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemText from "@material-ui/core/ListItemText"
@@ -21,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(6, 0),
     maxHeight: theme.breakpoints.values.sm * 0.6
   },
-  action: { display: "flex", justifyContent: "flex-end" },
   active: { textTransform: "capitalize" },
   link: { color: theme.palette.primary.main },
   "@media (max-height: 640px)": {
@@ -56,7 +53,7 @@ const ActiveCard = () => {
             <Divider />
             {lists
               .filter(list => list.active)
-              .slice(0, 3)
+              .slice(0, 4)
               .map(list => (
                 <li key={list._id}>
                   <ListItem
@@ -91,13 +88,6 @@ const ActiveCard = () => {
           </Typography>
         )}
       </CardContent>
-      <CardActions className={classes.action}>
-        <div>
-          <Button variant="outlined" size="small" color="primary">
-            Learn More
-          </Button>
-        </div>
-      </CardActions>
     </Card>
   )
 }

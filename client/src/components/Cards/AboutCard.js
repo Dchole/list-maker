@@ -3,10 +3,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
 import CardContent from "@material-ui/core/CardContent"
-import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography"
 import Hidden from "@material-ui/core/Hidden"
-import Button from "@material-ui/core/Button"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,8 +16,7 @@ const useStyles = makeStyles(theme => ({
     root: {
       width: "100%"
     }
-  },
-  action: { display: "flex", justifyContent: "flex-end" }
+  }
 }))
 
 const AboutCard = () => {
@@ -56,13 +53,6 @@ const AboutCard = () => {
           </ul>
         </Typography>
       </CardContent>
-      <CardActions className={classes.action}>
-        <div>
-          <Button variant="outlined" size="small" color="primary">
-            Learn More
-          </Button>
-        </div>
-      </CardActions>
     </Card>
   )
 }

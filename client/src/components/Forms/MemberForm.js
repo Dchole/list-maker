@@ -8,7 +8,6 @@ import CircularProgress from "@material-ui/core/CircularProgress"
 import Backdrop from "@material-ui/core/Backdrop"
 import Container from "@material-ui/core/Container"
 import Grid from "@material-ui/core/Grid"
-import Alert from "@material-ui/lab/Alert"
 import { ListContext } from "../../context/ListContext"
 import { useParams } from "react-router"
 import { fetchList } from "../../context/api/ListsAPI"
@@ -28,12 +27,14 @@ const useStyles = makeStyles(theme => ({
     top: 0,
     width: "100%",
     display: "flex",
-    justifyContent: "center",
-    zIndex: 50000
+    justifyContent: "center"
   },
   paper: {
     marginTop: theme.spacing(6),
     padding: theme.spacing(4, 4, 6, 4)
+  },
+  form: {
+    display: "none"
   }
 }))
 
@@ -52,6 +53,7 @@ export default function MemberForm() {
   const [loading, setLoading] = useState(true)
   const [adding, setAdding] = useState(false)
   const [sent, setSent] = useState(false)
+  const [open, setOpen] = useState(false)
   const [fullname, setFullname] = useState({
     firstname: "",
     lastname: ""
@@ -137,6 +139,7 @@ export default function MemberForm() {
       addToList(list)
       socket.emit("addToList", socketMembers)
       setSent(true)
+      setOpen(true)
     }
     setAdding(false)
   }
@@ -150,23 +153,23 @@ export default function MemberForm() {
 
   return (
     <div>
-      {!list.active ? (
-        <Alert severity="error" className={classes.alert}>
-          List has been activated :(. Contact your admin for details
-        </Alert>
-      ) : (
-        <Container component="main" maxWidth="sm" className={classes.root}>
-          <Typography
-            align="center"
-            variant="h4"
-            component="h1"
-            id="form-title"
-          >
-            Add To List
-          </Typography>
+      <Container component="main" maxWidth="sm" className={classes.root}>
+        <Typography align="center" variant="h4" component="h1" id="form-title">
+          {!list.active ? "Sorry :(" : "Add To List"}
+        </Typography>
+        {!list.active ? (
+          <Paper color="primary" className={classes.paper}>
+            <Typography variant="overline" color="error">
+              List has been deactivated. Contact your admin for details
+            </Typography>
+          </Paper>
+        ) : (
           <Paper className={classes.paper}>
             <div style={{ marginBottom: 10 }}>
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={handleSubmit}
+                className={sent ? classes.form : null}
+              >
                 <Grid container>
                   <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
                     <TextField
@@ -238,13 +241,13 @@ export default function MemberForm() {
               </form>
             </div>
           </Paper>
-          <Feedback
-            open={sent}
-            setOpen={setSent}
-            message="Your info was sent succesfully ✔"
-          />
-        </Container>
-      )}
+        )}
+        <Feedback
+          open={open}
+          setOpen={setOpen}
+          message="Your info was sent succesfully ✔"
+        />
+      </Container>
     </div>
   )
 }
