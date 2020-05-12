@@ -44,6 +44,7 @@ export default function SignUp() {
   const {
     handleRegisterInput,
     handleRegisterSubmit,
+    validateRegister,
     registerErrors,
     registerValues
   } = useFormValidation(initialState, registerValidation)
@@ -146,6 +147,7 @@ export default function SignUp() {
           variant="contained"
           color="primary"
           className={classes.submit}
+          onClick={validateRegister}
         >
           Sign Up
         </Button>

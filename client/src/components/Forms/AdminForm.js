@@ -67,7 +67,7 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
         id="fields"
         name="fields"
         label="fields"
-        helperText="Separate you list with comma(,)"
+        helperText="Separate your list with comma(,)"
         fullWidth
       />
       <div style={{ marginBottom: 25 }}>

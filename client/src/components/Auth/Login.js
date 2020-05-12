@@ -54,6 +54,7 @@ export default function SignIn() {
   const {
     handleLoginInput,
     handleLoginSubmit,
+    validateLogin,
     loginErrors,
     loginValues
   } = useFormValidation(initialState, loginValidation)
@@ -127,6 +128,7 @@ export default function SignIn() {
           variant="contained"
           color="primary"
           className={classes.submit}
+          onClick={validateLogin}
         >
           Sign In
         </Button>
