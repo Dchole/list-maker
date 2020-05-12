@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Backdrop from "@material-ui/core/Backdrop"
 import Link from "@material-ui/core/Link"
+import Hidden from "@material-ui/core/Hidden"
 import FileCopyIcon from "@material-ui/icons/FileCopy"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListTable/ListsTable"
@@ -22,8 +23,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    paddingTop: theme.spacing(10),
-    overflow: "hidden"
+    paddingTop: theme.spacing(9)
   },
   title: { textTransform: "capitalize", marginBottom: theme.spacing(4) },
   link: {
@@ -33,18 +33,17 @@ const useStyles = makeStyles(theme => ({
     cursor: "pointer"
   },
   linkContainer: {
-    width: "100%",
+    width: "50%",
     display: "flex",
     justifyContent: "center"
   },
   container: {
-    marginTop: theme.spacing(5)
+    marginTop: theme.spacing(5),
+    height: 750
   },
 
   "@media (max-width: 720px)": {
-    main: { width: "100%" },
-    linkContainer: { width: "50%" },
-    link: { width: "100%" }
+    linkContainer: { width: "100%" }
   }
 }))
 
@@ -78,7 +77,7 @@ const ListPage = () => {
   return (
     <>
       <Navbar />
-      <Container className={classes.root}>
+      <main className={classes.root}>
         <Typography variant="h4" component="h1" className={classes.title}>
           {list.title}
         </Typography>
@@ -87,7 +86,7 @@ const ListPage = () => {
             component={RouterLink}
             to={linkToAddMember}
             target="_blank"
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", width: "50%" }}
           >
             <Typography
               ref={ref}
@@ -99,24 +98,24 @@ const ListPage = () => {
             </Typography>
           </Link>
           &nbsp;&nbsp;
-          <Button
-            variant="outlined"
-            size="small"
-            color="primary"
-            onClick={copy}
-            className={classes.btn}
-            aria-label="copy link address"
-          >
-            <FileCopyIcon color="primary" />
-          </Button>
-          <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
+          <Hidden smDown>
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              onClick={copy}
+              className={classes.btn}
+              aria-label="copy link address"
+            >
+              <FileCopyIcon color="primary" />
+            </Button>
+          </Hidden>
         </div>
-        <div className={classes.container}>
-          <Container maxWidth="md" style={{ height: 750 }}>
-            <ListsTable list={list} />
-          </Container>
-        </div>
-      </Container>
+        <Feedback open={open} setOpen={setOpen} message={"Copied!"} />
+        <Container maxWidth="md" className={classes.container}>
+          <ListsTable list={list} />
+        </Container>
+      </main>
     </>
   )
 }

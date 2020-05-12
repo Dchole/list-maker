@@ -42,7 +42,7 @@ const Main = () => {
   const match = useMediaQuery(theme.breakpoints.down("sm"))
 
   return (
-    <Container maxWidth="lg" className={classes.root}>
+    <Container maxWidth="lg" className={classes.root} component="main">
       <Typography variant={match ? "h6" : "h4"} component="h1">
         Create and Manage a list with ease
       </Typography>
