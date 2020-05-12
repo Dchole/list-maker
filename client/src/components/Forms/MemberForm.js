@@ -168,7 +168,7 @@ export default function MemberForm() {
             <div style={{ marginBottom: 10 }}>
               <form onSubmit={handleSubmit}>
                 <Grid container>
-                  <Grid item xs={6} style={{ marginBottom: 20 }}>
+                  <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
                     <TextField
                       error={Boolean(errors.firstname)}
                       helperText={errors.firstname}
@@ -183,7 +183,7 @@ export default function MemberForm() {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={6} style={{ marginBottom: 20 }}>
+                  <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
                     <TextField
                       error={Boolean(errors.lastname)}
                       helperText={errors.lastname}
