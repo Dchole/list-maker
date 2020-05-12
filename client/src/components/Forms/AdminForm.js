@@ -3,10 +3,12 @@ import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
 import Chip from "@material-ui/core/Chip"
 import { ListContext } from "../../context/ListContext"
+import { adminValidation } from "./formValidation"
 
 const AdminForm = ({ setExpanded, setDisplay }) => {
   const [fields, setFields] = useState("")
   const [title, setTitle] = useState("")
+  const [error, setError] = useState("")
   const [addedFields, setAddedFields] = useState([])
   const { createNewList } = useContext(ListContext)
 
@@ -28,23 +30,32 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
     setDisplay(true)
   }
 
+  const validateForm = () => setError(adminValidation(title))
+
   const handleSubmit = event => {
     event.preventDefault()
-    const nonEmptyFields = addedFields.filter(field => field !== "")
-    createNewList({
-      _id: Math.random() + Date.now(),
-      title,
-      fields: nonEmptyFields,
-      members: []
-    })
+
+    if (!error) {
+      const nonEmptyFields = addedFields.filter(field => field !== "")
+      createNewList({
+        _id: Math.random() + Date.now(),
+        title,
+        fields: nonEmptyFields,
+        members: []
+      })
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        error={Boolean(error)}
+        helperText={error}
         value={title}
         onChange={e => setTitle(e.target.value)}
         size="small"
+        id="title"
+        name="title"
         label="Title"
         fullWidth
         style={{ marginBottom: 20 }}
@@ -53,7 +64,10 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
         value={fields}
         onChange={e => setFields(e.target.value)}
         size="small"
+        id="fields"
+        name="fields"
         label="fields"
+        helperText="Separate you list with comma(,)"
         fullWidth
       />
       <div style={{ marginBottom: 25 }}>
@@ -75,7 +89,13 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
           Cancel
         </Button>
         &nbsp;&nbsp;
-        <Button variant="contained" color="primary" size="small" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          type="submit"
+          onClick={validateForm}
+        >
           Done
         </Button>
       </div>

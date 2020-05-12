@@ -68,6 +68,7 @@ const TableMenu = ({ id }) => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        aria-hidden={!Boolean(anchorEl)}
       >
         <MenuItem onClick={handleDownloadClick}>
           <ListItemIcon>

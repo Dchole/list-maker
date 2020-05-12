@@ -136,9 +136,9 @@ export default function MemberForm() {
 
       addToList(list)
       socket.emit("addToList", socketMembers)
+      setSent(true)
     }
     setAdding(false)
-    setSent(true)
   }
 
   if (loading)
@@ -170,7 +170,7 @@ export default function MemberForm() {
                 <Grid container>
                   <Grid item xs={6} style={{ marginBottom: 20 }}>
                     <TextField
-                      error={errors.firstname ? true : false}
+                      error={Boolean(errors.firstname)}
                       helperText={errors.firstname}
                       id="firstname"
                       name="firstname"
@@ -185,7 +185,7 @@ export default function MemberForm() {
                   </Grid>
                   <Grid item xs={6} style={{ marginBottom: 20 }}>
                     <TextField
-                      error={errors.lastname ? true : false}
+                      error={Boolean(errors.lastname)}
                       helperText={errors.lastname}
                       id="lastname"
                       name="lastname"
@@ -207,7 +207,7 @@ export default function MemberForm() {
                         style={{ marginBottom: 20 }}
                       >
                         <TextField
-                          error={errors[label] ? true : false}
+                          error={Boolean(errors[label])}
                           helperText={errors[label]}
                           id={label}
                           name={label}

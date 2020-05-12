@@ -63,10 +63,10 @@ const CreateCard = () => {
           </Typography>
         ) : (
           <Typography variant="body1" align="center">
-            For easy maintenance, we initiate your fields with{" "}
-            <span style={{ color: "#d50000" }}>Full Name</span> so you can
-            easily identify members who adds to your list. No need to ask for
-            names again unless it's very neccesary
+            List your requirements in field labelled{" "}
+            <span style={{ color: "#d50000" }}>fields</span>.<br />
+            Separate your list with comma(,). No need to ask for members' names.
+            Full name field is provided by default
           </Typography>
         )}
       </CardContent>

@@ -87,8 +87,8 @@ const ListContextProvider = ({ children }) => {
     try {
       const { res } = await getRefreshToken()
       const { message } = await deleteList(res.data.accessToken, id)
-      dispatch({ type: "DELETE_LIST", message, id })
       history.replace("/dashboard")
+      dispatch({ type: "DELETE_LIST", message, id })
     } catch (error) {
       console.log(error.response)
       dispatch({ type: "FAILURE", payload: error.response })

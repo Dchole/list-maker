@@ -29,6 +29,7 @@ const Confirm = ({ id, open, setOpen }) => {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        aria-hidden={!open}
       >
         <DialogTitle id="alert-dialog-title">Confirm Delete</DialogTitle>
         <DialogContent>

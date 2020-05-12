@@ -1,10 +1,10 @@
-export const adminValidation = values => {
-  let errors = {}
+export const adminValidation = title => {
+  let error = ""
 
-  if (!values.title) {
-    errors.title = "Title is required"
+  if (!title) {
+    error = "Title is required"
   }
-  return errors
+  return error
 }
 
 export const memberValidation = (form, firstname, lastname) => {
