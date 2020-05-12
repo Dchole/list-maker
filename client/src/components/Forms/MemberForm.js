@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
-import Dialog from "@material-ui/core/Dialog"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogTitle from "@material-ui/core/DialogTitle"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Backdrop from "@material-ui/core/Backdrop"
 import Grid from "@material-ui/core/Grid"
@@ -11,8 +10,8 @@ import Alert from "@material-ui/lab/Alert"
 import { ListContext } from "../../context/ListContext"
 import { useParams } from "react-router"
 import { fetchList } from "../../context/api/ListsAPI"
-import io from "socket.io-client"
 import { UserContext } from "../../context/UserContext"
+import io from "socket.io-client"
 
 const socket = io("localhost:5000")
 
@@ -109,9 +108,9 @@ export default function MemberForm() {
           List has been activated :(. Contact your admin for details
         </Alert>
       ) : (
-        <Dialog open aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add To List</DialogTitle>
-          <DialogContent style={{ marginBottom: 10 }}>
+        <Paper>
+          <Typography id="form-title">Add To List</Typography>
+          <div style={{ marginBottom: 10 }}>
             <form onSubmit={handleSubmit}>
               <Grid container>
                 {list.fields.map((label, index) => (
@@ -136,8 +135,8 @@ export default function MemberForm() {
                 </Button>
               </div>
             </form>
-          </DialogContent>
-        </Dialog>
+          </div>
+        </Paper>
       )}
     </div>
   )
