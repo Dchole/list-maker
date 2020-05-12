@@ -24,7 +24,7 @@ const LoginPage = () => {
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Paper>
+      <Paper component="main">
         <Grid container>
           <Grid style={{ zIndex: 1000 }} item xs={6}>
             <Hidden smDown>

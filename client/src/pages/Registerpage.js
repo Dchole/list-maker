@@ -27,7 +27,7 @@ const RegisterPage = () => {
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Grid container>
+      <Grid container component="main">
         <Grid item xs={12} sm={6}>
           <Paper>
             <Register />

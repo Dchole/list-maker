@@ -63,7 +63,7 @@ export default function SignUp() {
             <TextField
               error={registerErrors.firstname ? true : false}
               helperText={registerErrors.firstname}
-              autoComplete="firstName"
+              autoComplete="first name"
               name="firstName"
               variant="outlined"
               type="text"
@@ -80,7 +80,7 @@ export default function SignUp() {
             <TextField
               error={registerErrors.lastname ? true : false}
               helperText={registerErrors.lastname}
-              autoComplete="lastName"
+              autoComplete="last name"
               name="lastName"
               variant="outlined"
               type="text"
@@ -119,7 +119,7 @@ export default function SignUp() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="password"
               value={registerValues.password}
               onChange={handleRegisterInput}
             />
@@ -135,7 +135,7 @@ export default function SignUp() {
               label="Confirm Password"
               type="password"
               id="confirm_password"
-              autoComplete="confirm_password"
+              autoComplete="confirm password"
               value={registerValues.confirmPassword}
               onChange={handleRegisterInput}
             />
