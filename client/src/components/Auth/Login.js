@@ -87,7 +87,12 @@ export default function SignIn() {
           variant="outlined"
           fullWidth
         >
-          <InputLabel htmlFor="password">Password*</InputLabel>
+          <InputLabel
+            htmlFor="password"
+            style={loginErrors.password ? { color: "red" } : null}
+          >
+            Password*
+          </InputLabel>
           <OutlinedInput
             error={loginErrors.password ? true : false}
             id="password"
@@ -108,7 +113,9 @@ export default function SignIn() {
             }
             labelWidth={70}
           />
-          <FormHelperText>{loginErrors.password}</FormHelperText>
+          <FormHelperText style={{ color: "red" }}>
+            {loginErrors.password}
+          </FormHelperText>
         </FormControl>
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
