@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import FormControl from "@material-ui/core/FormControl"
+import FormHelperText from "@material-ui/core/FormHelperText"
 import InputLabel from "@material-ui/core/InputLabel"
 import InputAdornment from "@material-ui/core/InputAdornment"
 import IconButton from "@material-ui/core/IconButton"
@@ -18,9 +19,8 @@ import OutlinedInput from "@material-ui/core/OutlinedInput"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import { Link as RouterLink } from "react-router-dom"
-import useFormValidation from "../FormValidation/useFormValidation"
 import { loginValidation } from "../FormValidation/validationAuth"
-import { FormHelperText } from "@material-ui/core"
+import useFormValidation from "../FormValidation/useFormValidation"
 
 const useStyles = makeStyles(theme => ({
   paper: {

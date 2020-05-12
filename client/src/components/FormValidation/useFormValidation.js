@@ -4,8 +4,10 @@ import { UserContext } from "../../context/UserContext"
 const useFormValidation = (initialState, validate) => {
   const [registerValues, setRegisterValues] = useState(initialState)
   const [loginValues, setLoginValues] = useState(initialState)
+  const [memberValues, setMemberValues] = useState(initialState)
   const [registerErrors, setRegisterErrors] = useState({})
   const [loginErrors, setLoginErrors] = useState({})
+  const [memberErrors, setMemberErrors] = useState({})
 
   const { registerUser, loginUser } = useContext(UserContext)
 
@@ -19,6 +21,13 @@ const useFormValidation = (initialState, validate) => {
   const handleLoginInput = event => {
     setLoginValues({
       ...loginValues,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleMemberInput = event => {
+    setMemberValues({
+      ...memberValues,
       [event.target.name]: event.target.value
     })
   }
@@ -43,13 +52,21 @@ const useFormValidation = (initialState, validate) => {
     }
   }
 
+  const validateMemberForm = () => {
+    const validationErrors = validate(memberValues)
+    setMemberErrors(validationErrors)
+  }
+
   return {
     handleRegisterInput,
     handleLoginInput,
+    handleMemberInput,
     handleLoginSubmit,
     handleRegisterSubmit,
+    validateMemberForm,
     registerErrors,
     loginErrors,
+    memberErrors,
     registerValues,
     loginValues
   }

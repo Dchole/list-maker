@@ -17,7 +17,7 @@ export const listReducer = (state, action) => {
         if (list._id === updatedList._id) {
           return updatedList
         }
-        return updatedLists
+        return list
       })
 
       return { ...state, lists: updatedLists }
