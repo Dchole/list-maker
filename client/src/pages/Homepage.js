@@ -16,6 +16,12 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     alignItems: "space-between",
     minHeight: "100vh"
+  },
+  footer: {
+    textAlign: "center",
+    position: "absolute",
+    bottom: 0,
+    width: "100%"
   }
 }))
 
@@ -40,7 +46,7 @@ const Homepage = () => {
     <div className={classes.root}>
       <Navbar />
       <Main />
-      <footer style={{ textAlign: "center" }}>
+      <footer className={classes.footer}>
         &copy; Created by Derek Oware, 2020
       </footer>
     </div>

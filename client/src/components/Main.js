@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
   "@media (min-width: 1200px)": {
     root: {
-      height: "100vh"
+      height: "90vh"
     }
   }
 }))
