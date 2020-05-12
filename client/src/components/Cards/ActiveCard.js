@@ -53,6 +53,7 @@ const ActiveCard = () => {
       <CardContent>
         {lists.length > 0 ? (
           <List className={classes.active}>
+            <Divider />
             {lists
               .filter(list => list.active)
               .slice(0, 5)
@@ -62,13 +63,13 @@ const ActiveCard = () => {
                     component={RouterLink}
                     to={`/lists/${list._id}`}
                     button
+                    divider
                   >
                     <ListItemText
                       primary={list.title}
                       className={classes.link}
                     />
                   </ListItem>
-                  <Divider />
                 </li>
               ))}
           </List>
