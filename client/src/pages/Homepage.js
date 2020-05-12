@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "space-between",
-    height: "100vh"
+    minHeight: "100vh"
   }
 }))
 

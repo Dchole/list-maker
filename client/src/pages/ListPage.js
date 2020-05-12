@@ -78,7 +78,7 @@ const ListPage = () => {
   return (
     <>
       <Navbar />
-      <main className={classes.root}>
+      <Container className={classes.root}>
         <Typography variant="h4" component="h1" className={classes.title}>
           {list.title}
         </Typography>
@@ -116,7 +116,7 @@ const ListPage = () => {
             <ListsTable list={list} />
           </Container>
         </div>
-      </main>
+      </Container>
     </>
   )
 }
