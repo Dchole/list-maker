@@ -56,7 +56,7 @@ const ActiveCard = () => {
             <Divider />
             {lists
               .filter(list => list.active)
-              .slice(0, 5)
+              .slice(0, 3)
               .map(list => (
                 <li key={list._id}>
                   <ListItem
