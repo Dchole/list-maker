@@ -34,9 +34,6 @@ const Panel = () => {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h4" component="h1" className={classes.head}>
-        {route}
-      </Typography>
       <div className={classes.googleAuth}></div>
       <br />
       <Divider />
