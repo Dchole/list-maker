@@ -37,7 +37,7 @@ const Panel = () => {
     <div className={classes.root}>
       <div className={classes.googleAuth}></div>
       <br />
-      <Divider className={classes.divider} />
+      <Divider className={classes.divider} light />
       <Typography variant="caption">{route} with google</Typography>
     </div>
   )
