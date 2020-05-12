@@ -1,8 +1,8 @@
 import React from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import Typography from "@material-ui/core/Typography"
-import Divider from "@material-ui/core/Divider"
 import { useLocation } from "react-router-dom"
+import Divider from "@material-ui/core/Divider"
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,19 +10,20 @@ const useStyles = makeStyles(theme => ({
     height: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "flex-start",
     alignItems: "center",
-    padding: "130px 90px 130px 90px",
+    padding: theme.spacing(5),
     color: "white"
-  },
-  head: {
-    marginBottom: theme.spacing(2)
   },
   googleAuth: {
     backgroundColor: "white",
     borderRadius: "50%",
     height: 120,
     width: 120
+  },
+  divider: {
+    width: "100%",
+    backgroundColor: "white"
   }
 }))
 
@@ -36,7 +37,7 @@ const Panel = () => {
     <div className={classes.root}>
       <div className={classes.googleAuth}></div>
       <br />
-      <Divider />
+      <Divider className={classes.divider} />
       <Typography variant="caption">{route} with google</Typography>
     </div>
   )
