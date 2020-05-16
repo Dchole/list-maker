@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
         userId: user._id
       },
       process.env.EMAIL_SECRET,
-      { expiresIn: "30m" },
+      { expiresIn: "3d" },
       (err, emailToken) => {
         if (err) console.log(err)
 

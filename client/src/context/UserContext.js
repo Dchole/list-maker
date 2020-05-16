@@ -31,7 +31,6 @@ const UserContextProvider = ({ children }) => {
 
       dispatch({ type: "REGISTER_SUCCESSFUL", payload: res })
     } catch (error) {
-      console.log(error.response)
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
       setUserLoading(false)
@@ -81,7 +80,7 @@ const UserContextProvider = ({ children }) => {
         dispatch({ type: "SET_TOKEN", payload: token.data.accessToken })
         dispatch({ type: "FETCH_USER", payload: user.data.user })
       } catch (error) {
-        console.log(error.response)
+        console.log(error)
       } finally {
         setUserLoading(false)
       }
