@@ -58,7 +58,7 @@ router.post("/register", async (req, res) => {
       (err, emailToken) => {
         if (err) console.log(err)
 
-        const url = `http://localhost:5000/api/user/confirmation/${emailToken}`
+        const url = `${req.protocol}://${req.headers.host}/api/user/confirmation/${emailToken}`
 
         const mailOptions = {
           from: `"List-Maker" <no-reply@list-maker.com>`,
@@ -180,7 +180,7 @@ router.put("/", authenticate, async (req, res) => {
   }
 })
 
-router.post("/logout", (req, res) => {
+router.post("/logout", (_, res) => {
   try {
     res
       .clearCookie("refreshToken", {

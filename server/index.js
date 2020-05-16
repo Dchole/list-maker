@@ -17,6 +17,7 @@ const server = http.createServer(app)
 const io = socketio(server)
 
 const Refresh = require("./models/refresh.model")
+const User = require("./models/user.model")
 
 app.use(helmet())
 app.use(express.json())
@@ -42,25 +43,31 @@ mongoose
 app.use("/api/user", user)
 app.use("/api/list", list)
 
+// Removing Useless data
 ;(async function () {
   try {
     const tokens = await Refresh.find()
+    const users = await User.find()
 
-    for (const token of tokens) {
+    tokens.forEach(token => {
       const daysInterval =
         new Date().getDate() - new Date(token.createdAt).getDate()
       if (Math.abs(daysInterval) >= 7) token.remove()
-    }
+    })
+
+    users.forEach(user => {
+      const daysInterval =
+        new Date().getDate() - new Date(user.createdAt).getDate()
+      if (Math.abs(daysInterval) >= 3 && !user.confirmed) user.remove()
+    })
   } catch (err) {
     console.log(err)
   }
 })()
 
-if (process.env.NODE_ENV === "production") {
-  app.get("*", (req, res) =>
-    res.sendFile(path.join(__dirname, "build", "index.html"))
-  )
-}
+app.all("*", (_, res) =>
+  res.sendFile(path.join(__dirname, "build", "index.html"))
+)
 
 io.on("connection", socket => {
   socket.on("addToList", list => {
@@ -76,4 +83,4 @@ io.on("connection", socket => {
   })
 })
 
-server.listen(PORT, () => console.info(`Server running on port: ${PORT}`))
+server.listen(PORT, () => console.log(`Server running on port: ${PORT}`))
