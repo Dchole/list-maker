@@ -54,7 +54,7 @@ const ListPage = () => {
 
   const {
     state: { lists },
-    listLoading
+    loading: { listLoading }
   } = useContext(ListContext)
 
   const list = lists.find(list => list._id === params.id)

@@ -5,12 +5,15 @@ import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
-import { ListContext } from "../../context/ListContext"
+import Backdrop from "@material-ui/core/Backdrop"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import Feedback from "../Feedback"
+import { ListContext } from "../../context/ListContext"
 
 const Confirm = ({ id, open, setOpen }) => {
   const {
     state: { feedback },
+    loading: { actionLoading },
     removeList
   } = useContext(ListContext)
 
@@ -19,11 +22,16 @@ const Confirm = ({ id, open, setOpen }) => {
   const handleClose = _ => setOpen(false)
   const handleDelete = _ => {
     removeList(id)
-    setOpen(false)
+    handleClose()
   }
 
   return (
     <div>
+      {actionLoading && (
+        <Backdrop open={actionLoading} style={{ color: "white" }}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -50,7 +58,12 @@ const Confirm = ({ id, open, setOpen }) => {
           >
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary" variant="contained">
+          <Button
+            onClick={handleDelete}
+            color="primary"
+            variant="contained"
+            disabled={actionLoading}
+          >
             Confirm
           </Button>
         </DialogActions>

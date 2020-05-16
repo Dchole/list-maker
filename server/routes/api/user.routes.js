@@ -110,10 +110,10 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email })
     if (!user) return res.status(400).json({ message: "User doesn't exists" })
 
-    if (!user.confirmed)
-      return res
-        .status(401)
-        .json({ message: "Email hasn't been confirmed. Confirm before login!" })
+    // if (!user.confirmed)
+    //   return res
+    //     .status(401)
+    //     .json({ message: "Email hasn't been confirmed. Confirm before login!" })
 
     const correctPassword = await bcrypt.compare(
       req.body.password,

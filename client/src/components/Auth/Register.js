@@ -1,13 +1,15 @@
-import React from "react"
+import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import useFormValidation from "../FormValidation/useFormValidation"
+import { UserContext } from "../../context/UserContext"
 import { registerValidation } from "../FormValidation/validationAuth"
 import { Link as RouterLink } from "react-router-dom"
 
@@ -41,6 +43,11 @@ const initialState = {
 
 export default function SignUp() {
   const classes = useStyles()
+
+  const {
+    loading: { authLoading }
+  } = useContext(UserContext)
+
   const {
     handleRegisterInput,
     handleRegisterSubmit,
@@ -148,8 +155,9 @@ export default function SignUp() {
           color="primary"
           className={classes.submit}
           onClick={validateRegister}
+          disabled={authLoading}
         >
-          Sign Up
+          {authLoading ? <CircularProgress size={25} /> : "Sign Up"}
         </Button>
         <Grid container justify="flex-end">
           <Grid item>

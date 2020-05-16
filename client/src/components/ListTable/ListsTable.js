@@ -15,11 +15,14 @@ import io from "socket.io-client"
 import TableToolbar from "./TableToolbar"
 import TableHeader from "./TableHeader"
 import Feedback from "../Feedback"
+import ConfirmMember from "./ConfirmMember"
 import { ListContext } from "../../context/ListContext"
 import { timeDecoration } from "../util/timeDecoration"
-import ConfirmMember from "./ConfirmMember"
 
-const socket = io("localhost:5000")
+const socket =
+  process.env.NODE_ENV === "production"
+    ? io(window.location.host)
+    : io("localhost:5000")
 
 const useStyles = makeStyles(theme => ({
   root: {

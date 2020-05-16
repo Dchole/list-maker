@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import Navbar from "../components/Navbar"
 import ListsTable from "../components/ListTable/ListsTable"
 import { ListContext } from "../context/ListContext"
@@ -19,6 +20,12 @@ export const useStyles = makeStyles(theme => ({
   head: {
     margin: theme.spacing(10, 0, 6, 0)
   },
+  loader: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  list: { marginBottom: 50 },
   "@media (max-width: 720px)": {
     main: { width: "100%" }
   }
@@ -27,7 +34,8 @@ export const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
   const classes = useStyles()
   const {
-    state: { lists }
+    state: { lists },
+    loading: { listLoading }
   } = useContext(ListContext)
 
   return (
@@ -37,12 +45,21 @@ const Dashboard = () => {
         <Typography variant="h4" component="h1" className={classes.head}>
           All Lists
         </Typography>
-
-        {lists.map(list => (
-          <Container key={list._id} maxWidth="md" style={{ marginBottom: 50 }}>
-            <ListsTable list={list} />
-          </Container>
-        ))}
+        {lists.length === 0 ? (
+          <Typography variant="h5" component="p" color="textSecondary">
+            Your lists are empty
+          </Typography>
+        ) : (
+          lists.map(list => (
+            <Container
+              key={list._id}
+              maxWidth="md"
+              className={listLoading ? classes.loader : classes.list}
+            >
+              {listLoading ? <CircularProgress /> : <ListsTable list={list} />}
+            </Container>
+          ))
+        )}
       </main>
     </>
   )

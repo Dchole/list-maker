@@ -23,26 +23,29 @@ const ListContextProvider = ({ children }) => {
     state: { isAuthenticated }
   } = useContext(UserContext)
 
-  const [listLoading, setListLoading] = useState(true)
+  const [loading, setLoading] = useState({
+    listLoading: true,
+    actionLoading: false
+  })
 
   useEffect(() => {
     ;(async () => {
       try {
-        setListLoading(true)
+        setLoading(l => ({ ...l, listLoading: true }))
         const { res } = await getRefreshToken()
         const { lists } = await fetchLists(res.data.accessToken)
         dispatch({ type: "FETCH_LISTS", payload: lists })
       } catch (error) {
         dispatch({ type: "FAILURE", payload: error.response })
       } finally {
-        setListLoading(false)
+        setLoading(l => ({ ...l, listLoading: false }))
       }
     })()
   }, [isAuthenticated])
 
   const createNewList = async body => {
     try {
-      setListLoading(true)
+      setLoading({ ...loading, actionLoading: true })
       const { res } = await getRefreshToken()
       const { savedList } = await createList(res.data.accessToken, body)
       dispatch({ type: "CREATE_LIST", payload: { list: savedList } })
@@ -52,15 +55,18 @@ const ListContextProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
-      setListLoading(false)
+      setLoading({ ...loading, actionLoading: false })
     }
   }
 
   const addToList = async list => {
     try {
+      setLoading({ ...loading, actionLoading: true })
       await updateList(list)
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setLoading({ ...loading, actionLoading: false })
     }
   }
 
@@ -68,30 +74,38 @@ const ListContextProvider = ({ children }) => {
 
   const removeMember = async list => {
     try {
+      setLoading({ ...loading, actionLoading: true })
       await updateList(list)
       dispatch({ type: "DELETE_MEMBER", payload: list })
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setLoading({ ...loading, actionLoading: false })
     }
   }
 
   const changeListStatus = async list => {
     try {
+      setLoading({ ...loading, actionLoading: true })
       await updateList(list)
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setLoading({ ...loading, actionLoading: false })
     }
   }
 
   const removeList = async id => {
     try {
+      setLoading({ ...loading, actionLoading: true })
       const { res } = await getRefreshToken()
       const { message } = await deleteList(res.data.accessToken, id)
       history.replace("/dashboard")
       dispatch({ type: "DELETE_LIST", message, id })
     } catch (error) {
-      console.log(error.response)
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setLoading({ ...loading, actionLoading: false })
     }
   }
 
@@ -102,7 +116,7 @@ const ListContextProvider = ({ children }) => {
         createNewList,
         removeList,
         removeMember,
-        listLoading,
+        loading,
         addToList,
         socketUpdate,
         changeListStatus

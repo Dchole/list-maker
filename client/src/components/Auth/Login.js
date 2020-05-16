@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import clsx from "clsx"
 import { makeStyles } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
@@ -8,6 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import Checkbox from "@material-ui/core/Checkbox"
 import Link from "@material-ui/core/Link"
 import Grid from "@material-ui/core/Grid"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import FormControl from "@material-ui/core/FormControl"
@@ -18,9 +19,10 @@ import IconButton from "@material-ui/core/IconButton"
 import OutlinedInput from "@material-ui/core/OutlinedInput"
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import { Link as RouterLink } from "react-router-dom"
-import { loginValidation } from "../FormValidation/validationAuth"
 import useFormValidation from "../FormValidation/useFormValidation"
+import { UserContext } from "../../context/UserContext"
+import { loginValidation } from "../FormValidation/validationAuth"
+import { Link as RouterLink } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -50,6 +52,10 @@ export default function SignIn() {
 
   const classes = useStyles()
   const [showPassword, setShowPassword] = useState(false)
+
+  const {
+    loading: { authLoading }
+  } = useContext(UserContext)
 
   const {
     handleLoginInput,
@@ -129,8 +135,9 @@ export default function SignIn() {
           color="primary"
           className={classes.submit}
           onClick={validateLogin}
+          disabled={authLoading}
         >
-          Sign In
+          {authLoading ? <CircularProgress size={25} /> : "Sign In"}
         </Button>
         <Grid container>
           <Grid item xs>

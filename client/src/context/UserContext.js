@@ -21,11 +21,14 @@ const UserContextProvider = ({ children }) => {
   }
 
   const [state, dispatch] = useReducer(userReducer, initialState)
-  const [userLoading, setUserLoading] = useState(true)
+  const [loading, setLoading] = useState({
+    userLoading: true,
+    authLoading: false
+  })
 
   const registerUser = async credentials => {
     try {
-      setUserLoading(true)
+      setLoading({ ...loading, authLoading: true })
 
       const { res } = await register(credentials)
 
@@ -33,33 +36,33 @@ const UserContextProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
-      setUserLoading(false)
+      setLoading({ ...loading, authLoading: false })
     }
   }
 
   const loginUser = async credentials => {
     try {
-      setUserLoading(true)
-      const {
-        res: { data }
-      } = await login(credentials)
+      setLoading({ ...loading, authLoading: true })
+      const { res } = await login(credentials)
+      console.log(res)
 
-      const { res: user } = await fetchUser(data.accessToken)
+      const { res: user } = await fetchUser(res.data.accessToken)
 
-      dispatch({ type: "LOGIN_SUCCESSFUL", payload: data.message })
-      dispatch({ type: "SET_TOKEN", payload: data.accessToken })
+      dispatch({ type: "LOGIN_SUCCESSFUL", payload: res })
+      dispatch({ type: "SET_TOKEN", payload: res.data.accessToken })
       dispatch({ type: "FETCH_USER", payload: user.data.user })
 
       history.replace("/")
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
-      setUserLoading(false)
+      setLoading({ ...loading, authLoading: false })
     }
   }
 
   const exitApp = async () => {
     try {
+      setLoading({ ...loading, authLoading: true })
       const {
         res: { data }
       } = await logout()
@@ -68,13 +71,15 @@ const UserContextProvider = ({ children }) => {
       history.replace("/login")
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response })
+    } finally {
+      setLoading({ ...loading, authLoading: false })
     }
   }
 
   useEffect(() => {
     const updatedState = async () => {
       try {
-        setUserLoading(true)
+        setLoading(l => ({ ...l, userLoading: true }))
         const { res: token } = await getRefreshToken()
         const { res: user } = await fetchUser(token.data.accessToken)
         dispatch({ type: "SET_TOKEN", payload: token.data.accessToken })
@@ -82,19 +87,19 @@ const UserContextProvider = ({ children }) => {
       } catch (error) {
         console.log(error)
       } finally {
-        setUserLoading(false)
+        setLoading(l => ({ ...l, userLoading: false }))
       }
     }
     updatedState()
   }, [])
 
   useEffect(() => {
-    dispatch({ type: "DEFAULT", payload: initialState })
+    dispatch({ type: "DEFAULT", payload: {} })
   }, [history.location.pathname])
 
   return (
     <UserContext.Provider
-      value={{ state, registerUser, loginUser, userLoading, exitApp }}
+      value={{ state, registerUser, loginUser, loading, exitApp }}
     >
       {children}
     </UserContext.Provider>

@@ -30,7 +30,7 @@ const Homepage = () => {
 
   const {
     state: { isAuthenticated },
-    userLoading
+    loading: { userLoading }
   } = useContext(UserContext)
 
   if (userLoading)

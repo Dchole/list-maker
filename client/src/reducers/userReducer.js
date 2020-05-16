@@ -20,7 +20,7 @@ export const userReducer = (state, action) => {
     }
 
     case "DEFAULT":
-      return action.payload
+      return { ...state, feedback: action.payload }
 
     default:
       return state

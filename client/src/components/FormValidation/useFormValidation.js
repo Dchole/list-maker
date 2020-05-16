@@ -33,7 +33,6 @@ const useFormValidation = (initialState, validate) => {
   }
 
   const validateRegister = () => {
-    console.log(registerValues)
     const validationErrors = validate(registerValues)
     setRegisterErrors(validationErrors)
   }

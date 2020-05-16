@@ -5,10 +5,15 @@ import DialogActions from "@material-ui/core/DialogActions"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import { ListContext } from "../../context/ListContext"
 
 const ConfirmMember = ({ open, setOpen, selected, list, setSelected }) => {
-  const { removeMember } = useContext(ListContext)
+  const {
+    loading: { actionLoading },
+    removeMember
+  } = useContext(ListContext)
+
   const handleClose = _ => setOpen(false)
 
   const handleDelete = () => {
@@ -50,8 +55,13 @@ const ConfirmMember = ({ open, setOpen, selected, list, setSelected }) => {
           >
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary" variant="contained">
-            Confirm
+          <Button
+            onClick={handleDelete}
+            color="primary"
+            variant="contained"
+            disabled={actionLoading}
+          >
+            {actionLoading ? <CircularProgress size={25} /> : "Confirm"}
           </Button>
         </DialogActions>
       </Dialog>

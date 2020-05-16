@@ -16,7 +16,10 @@ import { memberValidation } from "./formValidation"
 import Feedback from "../Feedback"
 import io from "socket.io-client"
 
-const socket = io("localhost:5000")
+const socket =
+  process.env.NODE_ENV === "production"
+    ? io(window.location.host)
+    : io("localhost:5000")
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,12 +49,15 @@ export default function MemberForm() {
     state: { user }
   } = useContext(UserContext)
 
-  const { addToList } = useContext(ListContext)
+  const {
+    loading: { actionLoading },
+    addToList
+  } = useContext(ListContext)
+
   const [list, setList] = useState({})
   const [form, setForm] = useState({})
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(true)
-  const [adding, setAdding] = useState(false)
   const [sent, setSent] = useState(false)
   const [open, setOpen] = useState(false)
   const [fullname, setFullname] = useState({
@@ -119,7 +125,6 @@ export default function MemberForm() {
 
   const handleSubmit = event => {
     event.preventDefault()
-    setAdding(true)
     const noErrors = Object.keys(errors).length === 0
     if (noErrors) {
       const socketMembers = [
@@ -141,7 +146,6 @@ export default function MemberForm() {
       setSent(true)
       setOpen(true)
     }
-    setAdding(false)
   }
 
   if (loading)
@@ -233,9 +237,9 @@ export default function MemberForm() {
                     type="submit"
                     aria-label="Add your info"
                     onClick={validateMember}
-                    disabled={adding}
+                    disabled={actionLoading}
                   >
-                    Add
+                    {actionLoading ? <CircularProgress size={25} /> : "Add"}
                   </Button>
                 </div>
               </form>
