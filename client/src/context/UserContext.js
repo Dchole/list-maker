@@ -27,12 +27,11 @@ const UserContextProvider = ({ children }) => {
     try {
       setUserLoading(true)
 
-      const {
-        res: { data }
-      } = await register(credentials)
+      const { res } = await register(credentials)
 
-      dispatch({ type: "REGISTER_SUCCESSFUL", payload: data.message })
+      dispatch({ type: "REGISTER_SUCCESSFUL", payload: res })
     } catch (error) {
+      console.log(error.response)
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
       setUserLoading(false)
@@ -54,7 +53,6 @@ const UserContextProvider = ({ children }) => {
 
       history.replace("/")
     } catch (error) {
-      console.log(error)
       dispatch({ type: "FAILURE", payload: error.response })
     } finally {
       setUserLoading(false)
@@ -84,13 +82,16 @@ const UserContextProvider = ({ children }) => {
         dispatch({ type: "FETCH_USER", payload: user.data.user })
       } catch (error) {
         console.log(error.response)
-        dispatch({ type: "FAILURE", payload: error.response })
       } finally {
         setUserLoading(false)
       }
     }
     updatedState()
   }, [])
+
+  useEffect(() => {
+    dispatch({ type: "DEFAULT", payload: initialState })
+  }, [history.location.pathname])
 
   return (
     <UserContext.Provider

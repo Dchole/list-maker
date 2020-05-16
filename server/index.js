@@ -41,6 +41,7 @@ mongoose
 
 app.use("/api/user", user)
 app.use("/api/list", list)
+
 ;(async function () {
   try {
     const tokens = await Refresh.find()
@@ -55,9 +56,11 @@ app.use("/api/list", list)
   }
 })()
 
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-)
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) =>
+    res.sendFile(path.join(__dirname, "build", "index.html"))
+  )
+}
 
 io.on("connection", socket => {
   socket.on("addToList", list => {

@@ -1,8 +1,9 @@
 import React, { useContext } from "react"
 import { makeStyles } from "@material-ui/core/styles"
-import { Grid, Container, Paper, Hidden } from "@material-ui/core"
-import Panel from "../components/Auth/Panel"
+import Container from "@material-ui/core/Container"
+import Paper from "@material-ui/core/Paper"
 import Login from "../components/Auth/Login"
+import Feedback from "../components/AuthAlert"
 import { UserContext } from "../context/UserContext"
 import { Redirect } from "react-router-dom"
 
@@ -11,11 +12,16 @@ const useStyles = makeStyles(() => ({
     height: "100vh",
     display: "flex",
     alignItems: "center"
+  },
+  feedback: {
+    position: "absolute",
+    width: "100%"
   }
 }))
 
 const LoginPage = () => {
   const classes = useStyles()
+
   const {
     state: { isAuthenticated }
   } = useContext(UserContext)
@@ -23,20 +29,14 @@ const LoginPage = () => {
   if (isAuthenticated) return <Redirect to="/" />
 
   return (
-    <Container maxWidth="md" className={classes.root}>
-      <Paper component="main">
-        <Grid container>
-          <Grid style={{ zIndex: 1000 }} item xs={6}>
-            <Hidden smDown>
-              <Panel />
-            </Hidden>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Login />
-          </Grid>
-        </Grid>
-      </Paper>
-    </Container>
+    <>
+      <Feedback />
+      <Container component="main" maxWidth="xs" className={classes.root}>
+        <Paper>
+          <Login />
+        </Paper>
+      </Container>
+    </>
   )
 }
 

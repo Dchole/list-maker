@@ -1,10 +1,11 @@
 const Joi = require("@hapi/joi")
 
 const registerValidation = Joi.object({
-  fullName: Joi.string().required(),
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required(),
   email: Joi.string().email().required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,}$")).required(),
-  confirm: Joi.ref("password")
+  confirmPassword: Joi.ref("password")
 })
 
 module.exports = registerValidation

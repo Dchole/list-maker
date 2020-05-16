@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const nodemailer = require("nodemailer")
 const User = require("../../models/user.model")
 const Refresh = require("../../models/refresh.model")
 const authenticate = require("../middleware/auth")
@@ -39,8 +40,58 @@ router.post("/register", async (req, res) => {
       password: hashedPassword
     })
 
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+      }
+    })
+    jwt.sign(
+      {
+        userId: user._id
+      },
+      process.env.EMAIL_SECRET,
+      { expiresIn: "30m" },
+      (err, emailToken) => {
+        if (err) console.log(err)
+
+        const url = `http://localhost:5000/api/user/confirmation/${emailToken}`
+
+        const mailOptions = {
+          from: `"List-Maker" <no-reply@list-maker.com>`,
+          to: req.body.email,
+          subject: "Confirm Email",
+          html: `Please click on the link to confirm your email: <a href="${url}">${url}</a>`
+        }
+
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) console.log(err)
+          else console.log(info)
+        })
+      }
+    )
+
     await user.save()
-    res.json({ message: "Signup successful" })
+    res.json({
+      message:
+        "A message has been sent to your email. Check and confirm your email to login"
+    })
+  } catch (err) {
+    console.log(err)
+  }
+})
+
+router.get("/confirmation/:token", async (req, res) => {
+  try {
+    const token = req.params.token
+    const payload = jwt.verify(token, process.env.EMAIL_SECRET)
+
+    await User.findByIdAndUpdate(payload.userId, { confirmed: true })
+
+    res.redirect("/")
   } catch (err) {
     console.log(err)
   }
@@ -58,6 +109,11 @@ router.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email: req.body.email })
     if (!user) return res.status(400).json({ message: "User doesn't exists" })
+
+    if (!user.confirmed)
+      return res
+        .status(401)
+        .json({ message: "Email hasn't been confirmed. Confirm before login!" })
 
     const correctPassword = await bcrypt.compare(
       req.body.password,

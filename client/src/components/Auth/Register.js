@@ -32,8 +32,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   confirmPassword: ""

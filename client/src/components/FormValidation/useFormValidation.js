@@ -28,10 +28,12 @@ const useFormValidation = (initialState, validate) => {
     const noErrors = Object.keys(registerErrors).length === 0
     if (noErrors) {
       registerUser(registerValues)
+      setRegisterValues(initialState)
     }
   }
 
   const validateRegister = () => {
+    console.log(registerValues)
     const validationErrors = validate(registerValues)
     setRegisterErrors(validationErrors)
   }
@@ -41,6 +43,7 @@ const useFormValidation = (initialState, validate) => {
     const noErrors = Object.keys(loginErrors).length === 0
     if (noErrors) {
       loginUser(loginValues)
+      setLoginValues(initialState)
     }
   }
 
