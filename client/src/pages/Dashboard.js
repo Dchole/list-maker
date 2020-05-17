@@ -55,7 +55,7 @@ const Dashboard = () => {
             </Typography>
           ) : (
             lists.map(list => (
-              <div
+              <Container
                 key={list._id}
                 className={listLoading ? classes.loader : classes.list}
               >
@@ -64,7 +64,7 @@ const Dashboard = () => {
                 ) : (
                   <ListsTable list={list} />
                 )}
-              </div>
+              </Container>
             ))
           )}
         </Container>

@@ -156,102 +156,95 @@ export default function MemberForm() {
     )
 
   return (
-    <div>
-      <Container component="main" maxWidth="sm" className={classes.root}>
-        <Typography align="center" variant="h4" component="h1" id="form-title">
-          {!list.active ? "Sorry :(" : "Add To List"}
-        </Typography>
-        {!list.active ? (
-          <Paper color="primary" className={classes.paper}>
-            <Typography variant="overline" color="error">
-              List has been deactivated. Contact your admin for details
-            </Typography>
-          </Paper>
-        ) : (
-          <Paper className={classes.paper}>
-            <div style={{ marginBottom: 10 }}>
-              <form
-                onSubmit={handleSubmit}
-                className={sent ? classes.form : null}
-              >
-                <Grid container>
-                  <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
-                    <TextField
-                      error={Boolean(errors.firstname)}
-                      helperText={errors.firstname}
-                      id="firstname"
-                      name="firstname"
-                      type="text"
-                      label="First Name"
-                      style={{ textTransform: "capitalize" }}
-                      autoFocus
-                      value={fullname.firstname}
-                      onChange={handlefullnameInput}
-                      fullWidth
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
-                    <TextField
-                      error={Boolean(errors.lastname)}
-                      helperText={errors.lastname}
-                      id="lastname"
-                      name="lastname"
-                      type="text"
-                      label="Last Name"
-                      style={{ textTransform: "capitalize" }}
-                      value={fullname.lastname}
-                      onChange={handlefullnameInput}
-                      fullWidth
-                    />
-                  </Grid>
-                  {list.fields
-                    .slice(1, list.fields.length)
-                    .map((label, index) => (
-                      <Grid
-                        key={index}
-                        item
-                        xs={12}
-                        style={{ marginBottom: 20 }}
-                      >
-                        <TextField
-                          error={Boolean(errors[label])}
-                          helperText={errors[label]}
-                          id={label}
-                          name={label}
-                          type={
-                            label.toLowerCase() === "email" ? "email" : "text"
-                          }
-                          label={label}
-                          style={{ textTransform: "capitalize" }}
-                          value={form[label]}
-                          onChange={handleInput}
-                          fullWidth
-                        />
-                      </Grid>
-                    ))}
+    <Container component="main" maxWidth="sm" className={classes.root}>
+      <Typography align="center" variant="h4" component="h1" id="form-title">
+        {!list.active ? "Sorry :(" : "Add To List"}
+      </Typography>
+      {!list.active ? (
+        <Paper color="primary" className={classes.paper}>
+          <Typography variant="overline" color="error">
+            List has been deactivated. Contact your admin for details
+          </Typography>
+        </Paper>
+      ) : (
+        <Paper className={classes.paper}>
+          <div style={{ marginBottom: 10 }}>
+            <form
+              onSubmit={handleSubmit}
+              className={sent ? classes.form : null}
+            >
+              <Grid container>
+                <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
+                  <TextField
+                    error={Boolean(errors.firstname)}
+                    helperText={errors.firstname}
+                    id="firstname"
+                    name="firstname"
+                    type="text"
+                    label="First Name"
+                    style={{ textTransform: "capitalize" }}
+                    value={fullname.firstname}
+                    onChange={handlefullnameInput}
+                    fullWidth
+                    autoFocus
+                  />
                 </Grid>
-                <div style={{ float: "right" }}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    aria-label="Add your info"
-                    onClick={validateMember}
-                    disabled={actionLoading}
-                  >
-                    {actionLoading ? <CircularProgress size={25} /> : "Add"}
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </Paper>
-        )}
-        <Feedback
-          open={open}
-          setOpen={setOpen}
-          message="Your info was sent succesfully ✔"
-        />
-      </Container>
-    </div>
+                <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
+                  <TextField
+                    error={Boolean(errors.lastname)}
+                    helperText={errors.lastname}
+                    id="lastname"
+                    name="lastname"
+                    type="text"
+                    label="Last Name"
+                    style={{ textTransform: "capitalize" }}
+                    value={fullname.lastname}
+                    onChange={handlefullnameInput}
+                    fullWidth
+                  />
+                </Grid>
+                {list.fields
+                  .slice(1, list.fields.length)
+                  .map((label, index) => (
+                    <Grid key={index} item xs={12} style={{ marginBottom: 20 }}>
+                      <TextField
+                        error={Boolean(errors[label])}
+                        helperText={errors[label]}
+                        id={label}
+                        name={label}
+                        type={
+                          label.toLowerCase() === "email" ? "email" : "text"
+                        }
+                        label={label}
+                        style={{ textTransform: "capitalize" }}
+                        value={form[label]}
+                        onChange={handleInput}
+                        fullWidth
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+              <div style={{ float: "right" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  aria-label="Add your info"
+                  onClick={validateMember}
+                  disabled={actionLoading}
+                >
+                  {actionLoading ? <CircularProgress size={25} /> : "Add"}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Paper>
+      )}
+      <Feedback
+        open={open}
+        setOpen={setOpen}
+        message="Your info was sent succesfully ✔"
+      />
+    </Container>
   )
 }
