@@ -77,7 +77,7 @@ const UserContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    const updatedState = async () => {
+    ;(async () => {
       try {
         setLoading(l => ({ ...l, userLoading: true }))
         const { res: token } = await getRefreshToken()
@@ -89,8 +89,7 @@ const UserContextProvider = ({ children }) => {
       } finally {
         setLoading(l => ({ ...l, userLoading: false }))
       }
-    }
-    updatedState()
+    })()
   }, [])
 
   useEffect(() => {
