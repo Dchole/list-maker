@@ -30,18 +30,20 @@ const ListContextProvider = ({ children }) => {
 
   useEffect(() => {
     ;(async () => {
-      try {
-        setLoading(l => ({ ...l, listLoading: true }))
-        const { res } = await getRefreshToken()
-        const { lists } = await fetchLists(res.data.accessToken)
-        dispatch({ type: "FETCH_LISTS", payload: lists })
-      } catch (error) {
-        dispatch({ type: "FAILURE", payload: error.response })
-      } finally {
-        setLoading(l => ({ ...l, listLoading: false }))
+      if (state.lists.length === 0) {
+        try {
+          setLoading(l => ({ ...l, listLoading: true }))
+          const { res } = await getRefreshToken()
+          const { lists } = await fetchLists(res.data.accessToken)
+          dispatch({ type: "FETCH_LISTS", payload: lists })
+        } catch (error) {
+          dispatch({ type: "FAILURE", payload: error.response })
+        } finally {
+          setLoading(l => ({ ...l, listLoading: false }))
+        }
       }
     })()
-  }, [isAuthenticated])
+  }, [state.lists.length, isAuthenticated])
 
   const createNewList = async body => {
     try {

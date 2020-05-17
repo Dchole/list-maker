@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 
 const Homepage = () => {
   const classes = useStyles()
-
+  console.log("homepage")
   const {
     state: { isAuthenticated },
     loading: { userLoading }
