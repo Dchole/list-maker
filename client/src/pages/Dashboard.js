@@ -18,14 +18,17 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   head: {
-    margin: theme.spacing(10, 0, 6, 0)
+    marginTop: theme.spacing(10)
   },
   loader: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: theme.spacing(5)
   },
-  list: { marginBottom: 50 },
+  list: {
+    marginBottom: theme.spacing(5)
+  },
   "@media (max-width: 720px)": {
     main: { width: "100%" }
   }
@@ -45,21 +48,26 @@ const Dashboard = () => {
         <Typography variant="h4" component="h1" className={classes.head}>
           All Lists
         </Typography>
-        {lists.length === 0 ? (
-          <Typography variant="h5" component="p" color="textSecondary">
-            Your lists are empty
-          </Typography>
-        ) : (
-          lists.map(list => (
-            <Container
-              key={list._id}
-              maxWidth="md"
-              className={listLoading ? classes.loader : classes.list}
-            >
-              {listLoading ? <CircularProgress /> : <ListsTable list={list} />}
-            </Container>
-          ))
-        )}
+        <Container maxWidth="md">
+          {lists.length === 0 ? (
+            <Typography variant="h5" component="p" color="textSecondary">
+              Your lists are empty
+            </Typography>
+          ) : (
+            lists.map(list => (
+              <div
+                key={list._id}
+                className={listLoading ? classes.loader : classes.list}
+              >
+                {listLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <ListsTable list={list} />
+                )}
+              </div>
+            ))
+          )}
+        </Container>
       </main>
     </>
   )

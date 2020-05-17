@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     textAlign: "center",
-    position: "absolute",
+    position: "fixed",
     bottom: 0,
     width: "100%"
   }
