@@ -33,11 +33,13 @@ const ListContextProvider = ({ children }) => {
       if (state.lists.length === 0) {
         try {
           setLoading(l => ({ ...l, listLoading: true }));
-          const { res } = await getRefreshToken();
-          const { lists } = await fetchLists(res.data.accessToken);
+
+          const { accessToken } = await getRefreshToken();
+          const { lists } = await fetchLists(accessToken);
+
           dispatch({ type: "FETCH_LISTS", payload: lists });
         } catch (error) {
-          dispatch({ type: "FAILURE", payload: error.response });
+          dispatch({ type: "FAILURE", payload: error.response.data.message });
         } finally {
           setLoading(l => ({ ...l, listLoading: false }));
         }
@@ -48,14 +50,16 @@ const ListContextProvider = ({ children }) => {
   const createNewList = async body => {
     try {
       setLoading({ ...loading, actionLoading: true });
-      const { res } = await getRefreshToken();
-      const { savedList } = await createList(res.data.accessToken, body);
+
+      const { accessToken } = await getRefreshToken();
+      const { savedList } = await createList(accessToken, body);
+
       dispatch({ type: "CREATE_LIST", payload: { list: savedList } });
 
       const route = `/lists/${savedList._id}`;
       history.push(route);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
@@ -66,7 +70,7 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true });
       await updateList(list);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
@@ -80,7 +84,7 @@ const ListContextProvider = ({ children }) => {
       await updateList(list);
       dispatch({ type: "DELETE_MEMBER", payload: list });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
@@ -91,7 +95,7 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true });
       await updateList(list);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
@@ -100,12 +104,13 @@ const ListContextProvider = ({ children }) => {
   const removeList = async id => {
     try {
       setLoading({ ...loading, actionLoading: true });
-      const { res } = await getRefreshToken();
-      const { message } = await deleteList(res.data.accessToken, id);
+      const { accessToken } = await getRefreshToken();
+      const { message } = await deleteList(accessToken, id);
+
       history.replace("/dashboard");
       dispatch({ type: "DELETE_LIST", message, id });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
