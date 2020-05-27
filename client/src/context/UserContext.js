@@ -29,12 +29,10 @@ const UserContextProvider = ({ children }) => {
   const registerUser = async credentials => {
     try {
       setLoading({ ...loading, authLoading: true });
-
-      const { res } = await register(credentials);
-
-      dispatch({ type: "REGISTER_SUCCESSFUL", payload: res });
+      const { message } = await register(credentials);
+      dispatch({ type: "REGISTER_SUCCESSFUL", payload: message });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, authLoading: false });
     }
@@ -43,18 +41,14 @@ const UserContextProvider = ({ children }) => {
   const loginUser = async credentials => {
     try {
       setLoading({ ...loading, authLoading: true });
-      const { res } = await login(credentials);
-      console.log(res);
-
-      const { res: user } = await fetchUser(res.data.accessToken);
-
-      dispatch({ type: "LOGIN_SUCCESSFUL", payload: res });
-      dispatch({ type: "SET_TOKEN", payload: res.data.accessToken });
-      dispatch({ type: "FETCH_USER", payload: user.data.user });
-
+      const { accessToken, message } = await login(credentials);
+      const { user } = await fetchUser(accessToken);
+      dispatch({ type: "LOGIN_SUCCESSFUL", payload: message });
+      dispatch({ type: "SET_TOKEN", payload: accessToken });
+      dispatch({ type: "FETCH_USER", payload: user });
       history.replace("/");
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, authLoading: false });
     }
@@ -63,14 +57,12 @@ const UserContextProvider = ({ children }) => {
   const exitApp = async () => {
     try {
       setLoading({ ...loading, authLoading: true });
-      const {
-        res: { data }
-      } = await logout();
-      dispatch({ type: "LOGOUT", payload: data.message });
+      const { message } = await logout();
+      dispatch({ type: "LOGOUT", payload: message });
       state.isAuthenticated = false;
       history.replace("/login");
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, authLoading: false });
     }
@@ -80,12 +72,12 @@ const UserContextProvider = ({ children }) => {
     (async () => {
       try {
         setLoading(l => ({ ...l, userLoading: true }));
-        const { res: token } = await getRefreshToken();
-        const { res: user } = await fetchUser(token.data.accessToken);
-        dispatch({ type: "SET_TOKEN", payload: token.data.accessToken });
-        dispatch({ type: "FETCH_USER", payload: user.data.user });
+        const { accessToken } = await getRefreshToken();
+        const { user } = await fetchUser(accessToken);
+        dispatch({ type: "SET_TOKEN", payload: accessToken });
+        dispatch({ type: "FETCH_USER", payload: user });
       } catch (error) {
-        console.log(error);
+        dispatch({ type: "FAILURE", payload: error.response.data.message });
       } finally {
         setLoading(l => ({ ...l, userLoading: false }));
       }

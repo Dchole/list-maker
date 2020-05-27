@@ -15,9 +15,8 @@ export const userReducer = (state, action) => {
     case "LOGIN_SUCCESSFUL":
       return { ...state, feedback: { success: action.payload } };
 
-    case "FAILURE": {
+    case "FAILURE":
       return { ...state, feedback: { error: action.payload } };
-    }
 
     case "DEFAULT":
       return { ...state, feedback: action.payload };

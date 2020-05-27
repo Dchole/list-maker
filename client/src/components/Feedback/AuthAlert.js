@@ -17,13 +17,13 @@ const Feedback = () => {
   if (feedback.success)
     return (
       <Alert severity="info" style={style}>
-        {feedback.success.data.message}
+        {feedback.success}
       </Alert>
     );
   else if (feedback.error)
     return (
       <Alert severity="error" style={style}>
-        {feedback.error.data.message}
+        {feedback.error}
       </Alert>
     );
 

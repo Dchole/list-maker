@@ -39,39 +39,39 @@ router.post("/register", async (req, res) => {
       password: hashedPassword
     });
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-      }
-    });
-    jwt.sign(
-      {
-        userId: user._id
-      },
-      process.env.EMAIL_SECRET,
-      { expiresIn: "3d" },
-      (err, emailToken) => {
-        if (err) console.log(err);
+    // const transporter = nodemailer.createTransport({
+    //   host: "smtp.gmail.com",
+    //   port: 465,
+    //   secure: true,
+    //   auth: {
+    //     user: process.env.EMAIL,
+    //     pass: process.env.PASSWORD
+    //   }
+    // });
+    // jwt.sign(
+    //   {
+    //     userId: user._id
+    //   },
+    //   process.env.EMAIL_SECRET,
+    //   { expiresIn: "3d" },
+    //   (err, emailToken) => {
+    //     if (err) console.log(err);
 
-        const url = `${req.protocol}://${req.headers.host}/api/user/confirmation/${emailToken}`;
+    //     const url = `${req.protocol}://${req.headers.host}/api/user/confirmation/${emailToken}`;
 
-        const mailOptions = {
-          from: `"List-Maker" <no-reply@list-maker.com>`,
-          to: req.body.email,
-          subject: "Confirm Email",
-          html: `Please click on the link to confirm your email: <a href="${url}">${url}</a>`
-        };
+    //     const mailOptions = {
+    //       from: `"List-Maker" <no-reply@list-maker.com>`,
+    //       to: req.body.email,
+    //       subject: "Confirm Email",
+    //       html: `Please click on the link to confirm your email: <a href="${url}">${url}</a>`
+    //     };
 
-        transporter.sendMail(mailOptions, (err, info) => {
-          if (err) console.log(err);
-          else console.log(info);
-        });
-      }
-    );
+    //     transporter.sendMail(mailOptions, (err, info) => {
+    //       if (err) console.log(err);
+    //       else console.log(info);
+    //     });
+    //   }
+    // );
 
     await user.save();
     res.json({
