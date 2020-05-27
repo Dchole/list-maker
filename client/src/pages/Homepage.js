@@ -1,29 +1,11 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Redirect } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
 import Navbar from "../components/Layout/Navbar";
 import Main from "../components/Layout/Main";
+import { Redirect } from "react-router-dom";
+import { useStyles } from "./styles/homepage";
 import { UserContext } from "../context/UserContext";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    backgroundColor: theme.palette.grey[200],
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "space-between",
-    minHeight: "100vh"
-  },
-  footer: {
-    textAlign: "center",
-    position: "fixed",
-    bottom: 0,
-    width: "100%"
-  }
-}));
 
 const Homepage = () => {
   const classes = useStyles();
