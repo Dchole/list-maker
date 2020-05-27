@@ -1,25 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from "@material-ui/core/Backdrop";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { ListContext } from "../../context/ListContext";
-import { useParams } from "react-router";
-import { fetchList } from "../../context/api/ListsAPI";
-import { UserContext } from "../../context/UserContext";
 import { memberValidation } from "./formValidation";
 import Feedback from "../Feedback/Feedback";
-import io from "socket.io-client";
-
-const socket =
-  process.env.NODE_ENV === "production"
-    ? io(window.location.host)
-    : io("localhost:5000");
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,70 +31,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MemberForm() {
-  const params = useParams();
+const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
   const classes = useStyles();
-
-  const {
-    state: { user }
-  } = useContext(UserContext);
 
   const {
     loading: { actionLoading },
     addToList
   } = useContext(ListContext);
 
-  const [list, setList] = useState({});
-  const [form, setForm] = useState({});
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(true);
   const [sent, setSent] = useState(false);
+  const [errors, setErrors] = useState({});
   const [open, setOpen] = useState(false);
-  const [fullname, setFullname] = useState({
-    firstname: "",
-    lastname: ""
-  });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { list } = await fetchList(params.id);
-        setList(list);
-        list.fields.forEach(field => {
-          const createdFieldName = field;
-          setForm(prevForm => ({ ...prevForm, [createdFieldName]: "" }));
-
-          user.fullName &&
-            setFullname({
-              firstname: user.fullName.split(" ")[0],
-              lastname: user.fullName.split(" ")[1]
-            });
-        });
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [params.id, user.fullName]);
-
-  useEffect(() => {
-    socket.on("statusChanged", () => {
-      window.location.reload();
-    });
-
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-  }, []);
-
-  useEffect(() => {
-    setForm(prevForm => ({
-      ...prevForm,
-      "Full Name": `${fullname.firstname} ${fullname.lastname}`
-    }));
-  }, [fullname]);
 
   const handlefullnameInput = event => {
     setFullname({ ...fullname, [event.target.name]: event.target.value });
@@ -147,13 +84,6 @@ export default function MemberForm() {
       setOpen(true);
     }
   };
-
-  if (loading)
-    return (
-      <Backdrop open={loading} style={{ color: "white" }}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
-    );
 
   return (
     <Container component="main" maxWidth="sm" className={classes.root}>
@@ -247,4 +177,6 @@ export default function MemberForm() {
       />
     </Container>
   );
-}
+};
+
+export default MemberForm;
