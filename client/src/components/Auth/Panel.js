@@ -1,8 +1,8 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { useLocation } from "react-router-dom"
-import Divider from "@material-ui/core/Divider"
-import Typography from "@material-ui/core/Typography"
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { useLocation } from "react-router-dom";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,13 +25,13 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     backgroundColor: "white"
   }
-}))
+}));
 
 const Panel = () => {
-  const location = useLocation()
-  const classes = useStyles()
+  const location = useLocation();
+  const classes = useStyles();
 
-  const route = location.pathname === "/register" ? "Sign up" : "Sign in"
+  const route = location.pathname === "/register" ? "Sign up" : "Sign in";
 
   return (
     <div className={classes.root}>
@@ -40,7 +40,7 @@ const Panel = () => {
       <Divider className={classes.divider} light />
       <Typography variant="caption">{route} with google</Typography>
     </div>
-  )
-}
+  );
+};
 
-export default Panel
+export default Panel;

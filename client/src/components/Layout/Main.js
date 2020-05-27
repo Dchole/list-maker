@@ -1,11 +1,11 @@
-import React from "react"
-import { makeStyles, useTheme } from "@material-ui/core/styles"
-import useMediaQuery from "@material-ui/core/useMediaQuery"
-import Typography from "@material-ui/core/Typography"
-import Container from "@material-ui/core/Container"
-import CreateCard from "./Cards/CreateCard"
-import AboutCard from "./Cards/AboutCard"
-import ActiveCard from "./Cards/ActiveCard"
+import React from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import CreateCard from "../Cards/CreateCard";
+import AboutCard from "../Cards/AboutCard";
+import ActiveCard from "../Cards/ActiveCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,12 +34,12 @@ const useStyles = makeStyles(theme => ({
       height: "90vh"
     }
   }
-}))
+}));
 
 const Main = () => {
-  const theme = useTheme()
-  const classes = useStyles()
-  const match = useMediaQuery(theme.breakpoints.down("sm"))
+  const theme = useTheme();
+  const classes = useStyles();
+  const match = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Container maxWidth="lg" className={classes.root} component="main">
@@ -52,7 +52,7 @@ const Main = () => {
         <ActiveCard />
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

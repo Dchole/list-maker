@@ -1,13 +1,13 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Avatar from "@material-ui/core/Avatar"
-import IconButton from "@material-ui/core/IconButton"
-import Typography from "@material-ui/core/Typography"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import { UserContext } from "../context/UserContext"
-import { Link as RouterLink, useLocation } from "react-router-dom"
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { UserContext } from "../../context/UserContext";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -27,15 +27,15 @@ const useStyles = makeStyles(theme => ({
       padding: theme.spacing(0, 1)
     }
   }
-}))
+}));
 
 const Navbar = () => {
-  const location = useLocation()
-  const classes = useStyles()
+  const location = useLocation();
+  const classes = useStyles();
   const {
     state: { user },
     exitApp
-  } = useContext(UserContext)
+  } = useContext(UserContext);
 
   return (
     <AppBar position="fixed">
@@ -73,7 +73,7 @@ const Navbar = () => {
         </div>
       </Toolbar>
     </AppBar>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

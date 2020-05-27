@@ -1,6 +1,6 @@
-import React from "react"
-import MemberForm from "../components/Forms/MemberForm"
+import React from "react";
+import MemberForm from "../components/Forms/MemberForm";
 
-const InputPage = () => <MemberForm />
+const InputPage = () => <MemberForm />;
 
-export default InputPage
+export default InputPage;

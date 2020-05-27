@@ -6,12 +6,12 @@ import {
   Paragraph,
   VerticalAlign,
   HeadingLevel
-} from "docx"
-import { jsonData } from "./jsonData"
+} from "docx";
+import { jsonData } from "./jsonData";
 
 export default list => {
-  const doc = new Document()
-  const json = jsonData(list)
+  const doc = new Document();
+  const json = jsonData(list);
 
   const table = new Table({
     rows: [
@@ -46,7 +46,7 @@ export default list => {
           })
       )
     ]
-  })
+  });
 
   doc.addSection({
     children: [
@@ -56,7 +56,7 @@ export default list => {
       }),
       table
     ]
-  })
+  });
 
-  return doc
-}
+  return doc;
+};

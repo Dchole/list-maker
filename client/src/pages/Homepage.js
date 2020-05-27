@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { Redirect } from "react-router-dom"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import Backdrop from "@material-ui/core/Backdrop"
-import Navbar from "../components/Navbar"
-import Main from "../components/Main"
-import { UserContext } from "../context/UserContext"
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Redirect } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
+import Navbar from "../components/Layout/Navbar";
+import Main from "../components/Layout/Main";
+import { UserContext } from "../context/UserContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,24 +23,24 @@ const useStyles = makeStyles(theme => ({
     bottom: 0,
     width: "100%"
   }
-}))
+}));
 
 const Homepage = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const {
     state: { isAuthenticated },
     loading: { userLoading }
-  } = useContext(UserContext)
+  } = useContext(UserContext);
 
   if (userLoading)
     return (
       <Backdrop open={userLoading} style={{ color: "white" }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    )
+    );
 
-  if (!isAuthenticated) return <Redirect to="/register" />
+  if (!isAuthenticated) return <Redirect to="/register" />;
 
   return (
     <div className={classes.root}>
@@ -50,7 +50,7 @@ const Homepage = () => {
         &copy; Created by Derek Oware, 2020
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Homepage
+export default Homepage;

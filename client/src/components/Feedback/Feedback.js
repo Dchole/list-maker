@@ -1,7 +1,7 @@
-import React from "react"
-import Snackbar from "@material-ui/core/Snackbar"
-import Grow from "@material-ui/core/Grow"
-import Alert from "@material-ui/lab/Alert"
+import React from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import Grow from "@material-ui/core/Grow";
+import Alert from "@material-ui/lab/Alert";
 
 const Feedback = ({ open, setOpen, message }) => (
   <>
@@ -15,6 +15,6 @@ const Feedback = ({ open, setOpen, message }) => (
       <Alert severity="success">{message}</Alert>
     </Snackbar>
   </>
-)
+);
 
-export default Feedback
+export default Feedback;

@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
-import Paper from "@material-ui/core/Paper"
-import Login from "../components/Auth/Login"
-import Feedback from "../components/AuthAlert"
-import { UserContext } from "../context/UserContext"
-import { Redirect } from "react-router-dom"
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
+import Login from "../components/Auth/Login";
+import Feedback from "../components/Feedback/AuthAlert";
+import { UserContext } from "../context/UserContext";
+import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,16 +17,16 @@ const useStyles = makeStyles(() => ({
     position: "absolute",
     width: "100%"
   }
-}))
+}));
 
 const LoginPage = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const {
     state: { isAuthenticated }
-  } = useContext(UserContext)
+  } = useContext(UserContext);
 
-  if (isAuthenticated) return <Redirect to="/" />
+  if (isAuthenticated) return <Redirect to="/" />;
 
   return (
     <>
@@ -37,7 +37,7 @@ const LoginPage = () => {
         </Paper>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

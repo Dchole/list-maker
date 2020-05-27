@@ -1,100 +1,100 @@
-import React, { createContext, useEffect, useReducer, useState } from "react"
-import { userReducer } from "../reducers/userReducer"
+import React, { createContext, useEffect, useReducer, useState } from "react";
+import { userReducer } from "../reducers/userReducer";
 import {
   getRefreshToken,
   fetchUser,
   login,
   register,
   logout
-} from "./api/UserAPI"
-import { useHistory } from "react-router-dom"
+} from "./api/UserAPI";
+import { useHistory } from "react-router-dom";
 
-export const UserContext = createContext()
+export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const history = useHistory()
+  const history = useHistory();
   const initialState = {
     token: null,
     isAuthenticated: false,
     user: {},
     feedback: {}
-  }
+  };
 
-  const [state, dispatch] = useReducer(userReducer, initialState)
+  const [state, dispatch] = useReducer(userReducer, initialState);
   const [loading, setLoading] = useState({
     userLoading: true,
     authLoading: false
-  })
+  });
 
   const registerUser = async credentials => {
     try {
-      setLoading({ ...loading, authLoading: true })
+      setLoading({ ...loading, authLoading: true });
 
-      const { res } = await register(credentials)
+      const { res } = await register(credentials);
 
-      dispatch({ type: "REGISTER_SUCCESSFUL", payload: res })
+      dispatch({ type: "REGISTER_SUCCESSFUL", payload: res });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, authLoading: false })
+      setLoading({ ...loading, authLoading: false });
     }
-  }
+  };
 
   const loginUser = async credentials => {
     try {
-      setLoading({ ...loading, authLoading: true })
-      const { res } = await login(credentials)
-      console.log(res)
+      setLoading({ ...loading, authLoading: true });
+      const { res } = await login(credentials);
+      console.log(res);
 
-      const { res: user } = await fetchUser(res.data.accessToken)
+      const { res: user } = await fetchUser(res.data.accessToken);
 
-      dispatch({ type: "LOGIN_SUCCESSFUL", payload: res })
-      dispatch({ type: "SET_TOKEN", payload: res.data.accessToken })
-      dispatch({ type: "FETCH_USER", payload: user.data.user })
+      dispatch({ type: "LOGIN_SUCCESSFUL", payload: res });
+      dispatch({ type: "SET_TOKEN", payload: res.data.accessToken });
+      dispatch({ type: "FETCH_USER", payload: user.data.user });
 
-      history.replace("/")
+      history.replace("/");
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, authLoading: false })
+      setLoading({ ...loading, authLoading: false });
     }
-  }
+  };
 
   const exitApp = async () => {
     try {
-      setLoading({ ...loading, authLoading: true })
+      setLoading({ ...loading, authLoading: true });
       const {
         res: { data }
-      } = await logout()
-      dispatch({ type: "LOGOUT", payload: data.message })
-      state.isAuthenticated = false
-      history.replace("/login")
+      } = await logout();
+      dispatch({ type: "LOGOUT", payload: data.message });
+      state.isAuthenticated = false;
+      history.replace("/login");
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, authLoading: false })
+      setLoading({ ...loading, authLoading: false });
     }
-  }
+  };
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
-        setLoading(l => ({ ...l, userLoading: true }))
-        const { res: token } = await getRefreshToken()
-        const { res: user } = await fetchUser(token.data.accessToken)
-        dispatch({ type: "SET_TOKEN", payload: token.data.accessToken })
-        dispatch({ type: "FETCH_USER", payload: user.data.user })
+        setLoading(l => ({ ...l, userLoading: true }));
+        const { res: token } = await getRefreshToken();
+        const { res: user } = await fetchUser(token.data.accessToken);
+        dispatch({ type: "SET_TOKEN", payload: token.data.accessToken });
+        dispatch({ type: "FETCH_USER", payload: user.data.user });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
-        setLoading(l => ({ ...l, userLoading: false }))
+        setLoading(l => ({ ...l, userLoading: false }));
       }
-    })()
-  }, [])
+    })();
+  }, []);
 
   useEffect(() => {
-    dispatch({ type: "DEFAULT", payload: {} })
-  }, [history.location.pathname])
+    dispatch({ type: "DEFAULT", payload: {} });
+  }, [history.location.pathname]);
 
   return (
     <UserContext.Provider
@@ -102,7 +102,7 @@ const UserContextProvider = ({ children }) => {
     >
       {children}
     </UserContext.Provider>
-  )
-}
+  );
+};
 
-export default UserContextProvider
+export default UserContextProvider;

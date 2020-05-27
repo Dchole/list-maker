@@ -1,16 +1,16 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Card from "@material-ui/core/Card"
-import CardHeader from "@material-ui/core/CardHeader"
-import CardContent from "@material-ui/core/CardContent"
-import Typography from "@material-ui/core/Typography"
-import Hidden from "@material-ui/core/Hidden"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-import Divider from "@material-ui/core/Divider"
-import { Link as RouterLink } from "react-router-dom"
-import { ListContext } from "../../context/ListContext"
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import Hidden from "@material-ui/core/Hidden";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import { Link as RouterLink } from "react-router-dom";
+import { ListContext } from "../../context/ListContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,14 +26,14 @@ const useStyles = makeStyles(theme => ({
       width: theme.breakpoints.values.sm * 0.5
     }
   }
-}))
+}));
 
 const ActiveCard = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   const {
     state: { lists }
-  } = useContext(ListContext)
+  } = useContext(ListContext);
 
   return (
     <Card className={classes.root}>
@@ -89,7 +89,7 @@ const ActiveCard = () => {
         )}
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default ActiveCard
+export default ActiveCard;

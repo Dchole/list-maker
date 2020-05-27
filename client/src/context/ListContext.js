@@ -4,112 +4,112 @@ import React, {
   useEffect,
   useState,
   useContext
-} from "react"
-import { listReducer } from "../reducers/listReducer"
-import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI"
-import { getRefreshToken } from "./api/UserAPI"
-import { useHistory } from "react-router-dom"
-import { UserContext } from "./UserContext"
+} from "react";
+import { listReducer } from "../reducers/listReducer";
+import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI";
+import { getRefreshToken } from "./api/UserAPI";
+import { useHistory } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
-export const ListContext = createContext()
+export const ListContext = createContext();
 
 const ListContextProvider = ({ children }) => {
-  const history = useHistory()
-  const initialState = { feedback: null, lists: [] }
+  const history = useHistory();
+  const initialState = { feedback: null, lists: [] };
 
-  const [state, dispatch] = useReducer(listReducer, initialState)
+  const [state, dispatch] = useReducer(listReducer, initialState);
 
   const {
     state: { isAuthenticated }
-  } = useContext(UserContext)
+  } = useContext(UserContext);
 
   const [loading, setLoading] = useState({
     listLoading: true,
     actionLoading: false
-  })
+  });
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       if (state.lists.length === 0) {
         try {
-          setLoading(l => ({ ...l, listLoading: true }))
-          const { res } = await getRefreshToken()
-          const { lists } = await fetchLists(res.data.accessToken)
-          dispatch({ type: "FETCH_LISTS", payload: lists })
+          setLoading(l => ({ ...l, listLoading: true }));
+          const { res } = await getRefreshToken();
+          const { lists } = await fetchLists(res.data.accessToken);
+          dispatch({ type: "FETCH_LISTS", payload: lists });
         } catch (error) {
-          dispatch({ type: "FAILURE", payload: error.response })
+          dispatch({ type: "FAILURE", payload: error.response });
         } finally {
-          setLoading(l => ({ ...l, listLoading: false }))
+          setLoading(l => ({ ...l, listLoading: false }));
         }
       }
-    })()
-  }, [state.lists.length, isAuthenticated])
+    })();
+  }, [state.lists.length, isAuthenticated]);
 
   const createNewList = async body => {
     try {
-      setLoading({ ...loading, actionLoading: true })
-      const { res } = await getRefreshToken()
-      const { savedList } = await createList(res.data.accessToken, body)
-      dispatch({ type: "CREATE_LIST", payload: { list: savedList } })
+      setLoading({ ...loading, actionLoading: true });
+      const { res } = await getRefreshToken();
+      const { savedList } = await createList(res.data.accessToken, body);
+      dispatch({ type: "CREATE_LIST", payload: { list: savedList } });
 
-      const route = `/lists/${savedList._id}`
-      history.push(route)
+      const route = `/lists/${savedList._id}`;
+      history.push(route);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, actionLoading: false })
+      setLoading({ ...loading, actionLoading: false });
     }
-  }
+  };
 
   const addToList = async list => {
     try {
-      setLoading({ ...loading, actionLoading: true })
-      await updateList(list)
+      setLoading({ ...loading, actionLoading: true });
+      await updateList(list);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, actionLoading: false })
+      setLoading({ ...loading, actionLoading: false });
     }
-  }
+  };
 
-  const socketUpdate = list => dispatch({ type: "ADD_MEMBER", payload: list })
+  const socketUpdate = list => dispatch({ type: "ADD_MEMBER", payload: list });
 
   const removeMember = async list => {
     try {
-      setLoading({ ...loading, actionLoading: true })
-      await updateList(list)
-      dispatch({ type: "DELETE_MEMBER", payload: list })
+      setLoading({ ...loading, actionLoading: true });
+      await updateList(list);
+      dispatch({ type: "DELETE_MEMBER", payload: list });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, actionLoading: false })
+      setLoading({ ...loading, actionLoading: false });
     }
-  }
+  };
 
   const changeListStatus = async list => {
     try {
-      setLoading({ ...loading, actionLoading: true })
-      await updateList(list)
+      setLoading({ ...loading, actionLoading: true });
+      await updateList(list);
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, actionLoading: false })
+      setLoading({ ...loading, actionLoading: false });
     }
-  }
+  };
 
   const removeList = async id => {
     try {
-      setLoading({ ...loading, actionLoading: true })
-      const { res } = await getRefreshToken()
-      const { message } = await deleteList(res.data.accessToken, id)
-      history.replace("/dashboard")
-      dispatch({ type: "DELETE_LIST", message, id })
+      setLoading({ ...loading, actionLoading: true });
+      const { res } = await getRefreshToken();
+      const { message } = await deleteList(res.data.accessToken, id);
+      history.replace("/dashboard");
+      dispatch({ type: "DELETE_LIST", message, id });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response })
+      dispatch({ type: "FAILURE", payload: error.response });
     } finally {
-      setLoading({ ...loading, actionLoading: false })
+      setLoading({ ...loading, actionLoading: false });
     }
-  }
+  };
 
   return (
     <ListContext.Provider
@@ -126,7 +126,7 @@ const ListContextProvider = ({ children }) => {
     >
       {children}
     </ListContext.Provider>
-  )
-}
+  );
+};
 
-export default ListContextProvider
+export default ListContextProvider;

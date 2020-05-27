@@ -1,19 +1,19 @@
-import React, { useContext, createRef, useState } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import Backdrop from "@material-ui/core/Backdrop"
-import Link from "@material-ui/core/Link"
-import Hidden from "@material-ui/core/Hidden"
-import FileCopyIcon from "@material-ui/icons/FileCopy"
-import Navbar from "../components/Navbar"
-import ListsTable from "../components/ListTable/ListsTable"
-import { ListContext } from "../context/ListContext"
-import { useParams } from "react-router"
-import Feedback from "../components/Feedback"
-import { Link as RouterLink } from "react-router-dom"
+import React, { useContext, createRef, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
+import Link from "@material-ui/core/Link";
+import Hidden from "@material-ui/core/Hidden";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import Navbar from "../components/Layout/Navbar";
+import ListsTable from "../components/ListTable/ListsTable";
+import { ListContext } from "../context/ListContext";
+import { useParams } from "react-router";
+import Feedback from "../components/Feedback/Feedback";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,34 +45,34 @@ const useStyles = makeStyles(theme => ({
   "@media (max-width: 720px)": {
     linkContainer: { width: "100%" }
   }
-}))
+}));
 
 const ListPage = () => {
-  const params = useParams()
-  const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  const params = useParams();
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const {
     state: { lists },
     loading: { listLoading }
-  } = useContext(ListContext)
+  } = useContext(ListContext);
 
-  const list = lists.find(list => list._id === params.id)
-  const ref = createRef()
+  const list = lists.find(list => list._id === params.id);
+  const ref = createRef();
 
   const copy = () => {
-    navigator.clipboard.writeText(ref.current.textContent)
-    setOpen(true)
-  }
+    navigator.clipboard.writeText(ref.current.textContent);
+    setOpen(true);
+  };
 
   if (listLoading)
     return (
       <Backdrop open={listLoading} style={{ color: "white" }}>
         <CircularProgress color="inherit" />
       </Backdrop>
-    )
+    );
 
-  const linkToAddMember = `/add/${list._id}`
+  const linkToAddMember = `/add/${list._id}`;
 
   return (
     <>
@@ -117,7 +117,7 @@ const ListPage = () => {
         </Container>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default ListPage
+export default ListPage;

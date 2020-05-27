@@ -4,7 +4,7 @@ export const options = token => {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`
     }
-  }
+  };
 
-  return config
-}
+  return config;
+};

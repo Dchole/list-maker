@@ -1,14 +1,14 @@
-import React, { useState } from "react"
-import { makeStyles, lighten } from "@material-ui/core/styles"
-import clsx from "clsx"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import Tooltip from "@material-ui/core/Tooltip"
-import IconButton from "@material-ui/core/IconButton"
-import DeleteIcon from "@material-ui/icons/Delete"
-import Feedback from "../Feedback"
-import TableMenu from "./TableMenu"
+import React, { useState } from "react";
+import { makeStyles, lighten } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Feedback from "../Feedback/Feedback";
+import TableMenu from "./TableMenu";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,16 +43,16 @@ const useStyles = makeStyles(theme => ({
       fontSize: "1.2rem"
     }
   }
-}))
+}));
 
 const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
-  const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const copy = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/add/${id}`)
-    setOpen(true)
-  }
+    navigator.clipboard.writeText(`${window.location.origin}/add/${id}`);
+    setOpen(true);
+  };
 
   return (
     <Toolbar
@@ -102,7 +102,7 @@ const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
         <TableMenu id={id} />
       )}
     </Toolbar>
-  )
-}
+  );
+};
 
-export default TableToolbar
+export default TableToolbar;

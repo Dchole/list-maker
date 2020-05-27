@@ -1,29 +1,29 @@
-import React, { useContext, useState } from "react"
-import Button from "@material-ui/core/Button"
-import Dialog from "@material-ui/core/Dialog"
-import DialogActions from "@material-ui/core/DialogActions"
-import DialogContent from "@material-ui/core/DialogContent"
-import DialogContentText from "@material-ui/core/DialogContentText"
-import DialogTitle from "@material-ui/core/DialogTitle"
-import Backdrop from "@material-ui/core/Backdrop"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import Feedback from "../Feedback"
-import { ListContext } from "../../context/ListContext"
+import React, { useContext, useState } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Feedback from "../Feedback/Feedback";
+import { ListContext } from "../../context/ListContext";
 
 const Confirm = ({ id, open, setOpen }) => {
   const {
     state: { feedback },
     loading: { actionLoading },
     removeList
-  } = useContext(ListContext)
+  } = useContext(ListContext);
 
-  const [feedbackOpen, setFeedbackOpen] = useState(false)
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
-  const handleClose = _ => setOpen(false)
+  const handleClose = _ => setOpen(false);
   const handleDelete = _ => {
-    removeList(id)
-    handleClose()
-  }
+    removeList(id);
+    handleClose();
+  };
 
   return (
     <div>
@@ -74,7 +74,7 @@ const Confirm = ({ id, open, setOpen }) => {
         />
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
-export default Confirm
+export default Confirm;

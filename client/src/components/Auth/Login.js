@@ -1,28 +1,28 @@
-import React, { useState, useContext } from "react"
-import clsx from "clsx"
-import { makeStyles } from "@material-ui/core/styles"
-import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-import TextField from "@material-ui/core/TextField"
-import FormControlLabel from "@material-ui/core/FormControlLabel"
-import Checkbox from "@material-ui/core/Checkbox"
-import Link from "@material-ui/core/Link"
-import Grid from "@material-ui/core/Grid"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
-import Typography from "@material-ui/core/Typography"
-import FormControl from "@material-ui/core/FormControl"
-import FormHelperText from "@material-ui/core/FormHelperText"
-import InputLabel from "@material-ui/core/InputLabel"
-import InputAdornment from "@material-ui/core/InputAdornment"
-import IconButton from "@material-ui/core/IconButton"
-import OutlinedInput from "@material-ui/core/OutlinedInput"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import useFormValidation from "../FormValidation/useFormValidation"
-import { UserContext } from "../../context/UserContext"
-import { loginValidation } from "../FormValidation/validationAuth"
-import { Link as RouterLink } from "react-router-dom"
+import React, { useState, useContext } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import useFormValidation from "../FormValidation/useFormValidation";
+import { UserContext } from "../../context/UserContext";
+import { loginValidation } from "../FormValidation/validationAuth";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -42,20 +42,20 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   }
-}))
+}));
 
 export default function SignIn() {
   const initialState = {
     email: "",
     password: ""
-  }
+  };
 
-  const classes = useStyles()
-  const [showPassword, setShowPassword] = useState(false)
+  const classes = useStyles();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     loading: { authLoading }
-  } = useContext(UserContext)
+  } = useContext(UserContext);
 
   const {
     handleLoginInput,
@@ -63,7 +63,7 @@ export default function SignIn() {
     validateLogin,
     loginErrors,
     loginValues
-  } = useFormValidation(initialState, loginValidation)
+  } = useFormValidation(initialState, loginValidation);
 
   return (
     <div className={classes.paper}>
@@ -151,5 +151,5 @@ export default function SignIn() {
         </Grid>
       </form>
     </div>
-  )
+  );
 }

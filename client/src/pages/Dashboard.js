@@ -1,11 +1,11 @@
-import React, { useContext } from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import Container from "@material-ui/core/Container"
-import Typography from "@material-ui/core/Typography"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import Navbar from "../components/Navbar"
-import ListsTable from "../components/ListTable/ListsTable"
-import { ListContext } from "../context/ListContext"
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Navbar from "../components/Layout/Navbar";
+import ListsTable from "../components/ListTable/ListsTable";
+import { ListContext } from "../context/ListContext";
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -32,14 +32,14 @@ export const useStyles = makeStyles(theme => ({
   "@media (max-width: 720px)": {
     main: { width: "100%" }
   }
-}))
+}));
 
 const Dashboard = () => {
-  const classes = useStyles()
+  const classes = useStyles();
   const {
     state: { lists },
     loading: { listLoading }
-  } = useContext(ListContext)
+  } = useContext(ListContext);
 
   return (
     <>
@@ -70,7 +70,7 @@ const Dashboard = () => {
         </Container>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

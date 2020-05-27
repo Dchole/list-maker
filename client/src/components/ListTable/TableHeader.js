@@ -1,9 +1,9 @@
-import React from "react"
-import TableHead from "@material-ui/core/TableHead"
-import TableRow from "@material-ui/core/TableRow"
-import TableCell from "@material-ui/core/TableCell"
-import Checkbox from "@material-ui/core/Checkbox"
-import Typography from "@material-ui/core/Typography"
+import React from "react";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import Checkbox from "@material-ui/core/Checkbox";
+import Typography from "@material-ui/core/Typography";
 
 const TableHeader = ({ selectAll, numSelected, rowCount, headLabels }) => {
   return (
@@ -27,7 +27,7 @@ const TableHeader = ({ selectAll, numSelected, rowCount, headLabels }) => {
         </TableCell>
       </TableRow>
     </TableHead>
-  )
-}
+  );
+};
 
-export default TableHeader
+export default TableHeader;

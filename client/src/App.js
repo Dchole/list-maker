@@ -1,7 +1,7 @@
-import React, { lazy, Suspense } from "react"
-import { Route } from "react-router-dom"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import LinearProgress from "@material-ui/core/LinearProgress"
+import React, { lazy, Suspense } from "react";
+import { Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const App = () => (
   <>
@@ -10,8 +10,8 @@ const App = () => (
       <Route
         path="/"
         render={() => {
-          const Homepage = lazy(() => import("./pages/Homepage"))
-          return <Homepage />
+          const Homepage = lazy(() => import("./pages/Homepage"));
+          return <Homepage />;
         }}
         exact
       />
@@ -20,8 +20,8 @@ const App = () => (
       <Route
         path="/dashboard"
         render={() => {
-          const Dashboard = lazy(() => import("./pages/Dashboard"))
-          return <Dashboard />
+          const Dashboard = lazy(() => import("./pages/Dashboard"));
+          return <Dashboard />;
         }}
         exact
       />
@@ -30,8 +30,8 @@ const App = () => (
       <Route
         path="/register"
         render={() => {
-          const RegisterPage = lazy(() => import("./pages/RegisterPage"))
-          return <RegisterPage />
+          const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+          return <RegisterPage />;
         }}
       />
     </Suspense>
@@ -39,8 +39,8 @@ const App = () => (
       <Route
         path="/login"
         render={() => {
-          const LoginPage = lazy(() => import("./pages/LoginPage"))
-          return <LoginPage />
+          const LoginPage = lazy(() => import("./pages/LoginPage"));
+          return <LoginPage />;
         }}
       />
     </Suspense>
@@ -48,8 +48,8 @@ const App = () => (
       <Route
         path="/lists/:id"
         render={() => {
-          const ListPage = lazy(() => import("./pages/ListPage"))
-          return <ListPage />
+          const ListPage = lazy(() => import("./pages/ListPage"));
+          return <ListPage />;
         }}
       />
     </Suspense>
@@ -57,12 +57,12 @@ const App = () => (
       <Route
         path="/add/:id"
         render={() => {
-          const InputPage = lazy(() => import("./pages/InputPage"))
-          return <InputPage />
+          const InputPage = lazy(() => import("./pages/InputPage"));
+          return <InputPage />;
         }}
       />
     </Suspense>
   </>
-)
+);
 
-export default App
+export default App;
