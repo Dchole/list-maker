@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { options } from "./util";
+import { options } from "./token.config";
 
 export const fetchUser = async token => {
   const res = await Axios.get("/api/user/", options(token));
