@@ -8,7 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { ListContext } from "../../context/ListContext";
-import { memberValidation } from "./formValidation";
+import { memberValidation } from "../FormValidation/formValidation";
 import Feedback from "../Feedback/Feedback";
 
 const useStyles = makeStyles(theme => ({
