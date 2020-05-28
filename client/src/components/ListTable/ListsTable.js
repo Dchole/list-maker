@@ -52,7 +52,6 @@ export default function ListsTable({ list }) {
   const { title, fields, members, active, _id } = list;
 
   const classes = useStyles();
-  // const [listMembers, setListMembers] = useState(members)
   const [status, setStatus] = useState(active);
   const [selected, setSelected] = React.useState([]);
   const [open, setOpen] = useState(false);

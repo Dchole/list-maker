@@ -8,7 +8,6 @@ import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
 import { Link as RouterLink } from "react-router-dom";
 import { ListContext } from "../../context/ListContext";
 
@@ -50,7 +49,6 @@ const ActiveCard = () => {
       <CardContent>
         {lists.length > 0 ? (
           <List className={classes.active}>
-            <Divider />
             {lists
               .filter(list => list.active)
               .slice(0, 4)

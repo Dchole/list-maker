@@ -23,12 +23,17 @@ const Dashboard = () => {
         </Typography>
         <Container maxWidth="md">
           {lists.length === 0 ? (
-            <Typography variant="h5" component="p" color="textSecondary">
+            <Typography
+              variant="h5"
+              component="p"
+              align="center"
+              color="textSecondary"
+            >
               Your lists are empty
             </Typography>
           ) : (
             lists.map(list => (
-              <Container
+              <div
                 key={list._id}
                 className={listLoading ? classes.loader : classes.list}
               >
@@ -37,7 +42,7 @@ const Dashboard = () => {
                 ) : (
                   <ListsTable list={list} />
                 )}
-              </Container>
+              </div>
             ))
           )}
         </Container>

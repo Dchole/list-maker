@@ -10,6 +10,8 @@ import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI";
 import { getRefreshToken } from "./api/UserAPI";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import { getAccessToken, setAccessToken } from "./api/token.config";
+import { checkTokenExpired } from "./api/checkTokenExpired";
 
 export const ListContext = createContext();
 
@@ -50,13 +52,23 @@ const ListContextProvider = ({ children }) => {
   const createNewList = async body => {
     try {
       setLoading({ ...loading, actionLoading: true });
+      const accessToken = getAccessToken();
 
-      const { accessToken } = await getRefreshToken();
-      const { savedList } = await createList(accessToken, body);
+      const newToken = await checkTokenExpired(accessToken);
+      let list;
 
-      dispatch({ type: "CREATE_LIST", payload: { list: savedList } });
+      if (newToken) {
+        const { savedList } = await createList(newToken, body);
+        setAccessToken(newToken);
+        list = savedList;
+      } else {
+        const { savedList } = await createList(accessToken, body);
+        list = savedList;
+      }
 
-      const route = `/lists/${savedList._id}`;
+      dispatch({ type: "CREATE_LIST", payload: { list } });
+
+      const route = `/lists/${list._id}`;
       history.push(route);
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response.data.message });
@@ -104,13 +116,25 @@ const ListContextProvider = ({ children }) => {
   const removeList = async id => {
     try {
       setLoading({ ...loading, actionLoading: true });
-      const { accessToken } = await getRefreshToken();
-      const { message } = await deleteList(accessToken, id);
+      const accessToken = getAccessToken();
+
+      const newToken = await checkTokenExpired(accessToken);
+      let successFeedback;
+
+      if (newToken) {
+        const { message } = await deleteList(newToken, id);
+        successFeedback = message;
+        setAccessToken(newToken);
+      } else {
+        const { message } = await deleteList(accessToken, id);
+        successFeedback = message;
+      }
 
       history.replace("/dashboard");
-      dispatch({ type: "DELETE_LIST", message, id });
+      dispatch({ type: "DELETE_LIST", message: successFeedback, id });
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message });
+      console.log(error);
+      dispatch({ type: "FAILURE", payload: error.response?.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }

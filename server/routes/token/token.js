@@ -2,7 +2,7 @@ const { sign } = require("jsonwebtoken");
 
 const createAccessToken = userId =>
   sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "5m"
+    expiresIn: "15s"
   });
 
 const createRefreshToken = userId =>

@@ -8,13 +8,13 @@ import {
   logout
 } from "./api/UserAPI";
 import { useHistory } from "react-router-dom";
+import { setAccessToken } from "./api/token.config";
 
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
   const history = useHistory();
   const initialState = {
-    token: null,
     isAuthenticated: false,
     user: {},
     feedback: {}
@@ -46,8 +46,8 @@ const UserContextProvider = ({ children }) => {
       const { accessToken, message } = await login(credentials);
       const { user } = await fetchUser(accessToken);
 
+      dispatch({ type: "SET_AUTHENTICATED", payload: true });
       dispatch({ type: "LOGIN_SUCCESSFUL", payload: message });
-      dispatch({ type: "SET_TOKEN", payload: accessToken });
       dispatch({ type: "FETCH_USER", payload: user });
 
       history.replace("/");
@@ -65,7 +65,7 @@ const UserContextProvider = ({ children }) => {
       const { message } = await logout();
       dispatch({ type: "LOGOUT", payload: message });
 
-      state.isAuthenticated = false;
+      dispatch({ type: "SET_AUTHENTICATED", payload: false });
       history.replace("/login");
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response.data.message });
@@ -80,9 +80,10 @@ const UserContextProvider = ({ children }) => {
         setLoading(l => ({ ...l, userLoading: true }));
 
         const { accessToken } = await getRefreshToken();
+        setAccessToken(accessToken);
         const { user } = await fetchUser(accessToken);
 
-        dispatch({ type: "SET_TOKEN", payload: accessToken });
+        dispatch({ type: "SET_AUTHENTICATED", payload: true });
         dispatch({ type: "FETCH_USER", payload: user });
       } catch (error) {
         dispatch({ type: "FAILURE", payload: error.response.data.message });

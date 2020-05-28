@@ -7,11 +7,10 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
     alignItems: "center"
   },
   head: {
-    marginTop: theme.spacing(10)
+    margin: theme.spacing(10, 0, 5)
   },
   loader: {
     display: "flex",

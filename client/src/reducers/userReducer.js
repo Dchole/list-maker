@@ -3,11 +3,10 @@ export const userReducer = (state, action) => {
     case "FETCH_USER":
       return { ...state, user: action.payload, feedback: {} };
 
-    case "SET_TOKEN":
+    case "SET_AUTHENTICATED":
       return {
         ...state,
-        token: action.payload,
-        isAuthenticated: true,
+        isAuthenticated: action.payload,
         feedback: {}
       };
 
