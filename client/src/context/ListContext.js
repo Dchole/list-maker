@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { listReducer } from "../reducers/listReducer";
 import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI";
-import { getRefreshToken } from "./api/UserAPI";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { getAccessToken, setAccessToken } from "./api/token.config";
@@ -36,10 +35,22 @@ const ListContextProvider = ({ children }) => {
         try {
           setLoading(l => ({ ...l, listLoading: true }));
 
-          const { accessToken } = await getRefreshToken();
-          const { lists } = await fetchLists(accessToken);
+          const accessToken = getAccessToken();
+          console.log(accessToken);
 
-          dispatch({ type: "FETCH_LISTS", payload: lists });
+          const newToken = await checkTokenExpired(accessToken);
+          let listsRes;
+
+          if (newToken) {
+            const { lists } = await fetchLists(newToken);
+            setAccessToken(newToken);
+            listsRes = lists;
+          } else {
+            const { lists } = await fetchLists(accessToken);
+            listsRes = lists;
+          }
+
+          dispatch({ type: "FETCH_LISTS", payload: listsRes });
         } catch (error) {
           dispatch({ type: "FAILURE", payload: error.response.data.message });
         } finally {
@@ -134,7 +145,7 @@ const ListContextProvider = ({ children }) => {
       dispatch({ type: "DELETE_LIST", message: successFeedback, id });
     } catch (error) {
       console.log(error);
-      dispatch({ type: "FAILURE", payload: error.response?.data.message });
+      dispatch({ type: "FAILURE", payload: error.response.data.message });
     } finally {
       setLoading({ ...loading, actionLoading: false });
     }
