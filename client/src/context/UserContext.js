@@ -44,6 +44,7 @@ const UserContextProvider = ({ children }) => {
       setLoading({ ...loading, authLoading: true });
 
       const { accessToken, message } = await login(credentials);
+      setAccessToken(accessToken);
       const { user } = await fetchUser(accessToken);
 
       dispatch({ type: "SET_AUTHENTICATED", payload: true });

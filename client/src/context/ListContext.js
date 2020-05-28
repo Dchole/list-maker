@@ -6,10 +6,10 @@ import React, {
   useContext
 } from "react";
 import { listReducer } from "../reducers/listReducer";
-import { fetchLists, createList, deleteList, updateList } from "./api/ListsAPI";
+import { createList, deleteList, updateList, fetchLists } from "./api/ListsAPI";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import { getAccessToken, setAccessToken } from "./api/token.config";
+import { getAccessToken } from "./api/token.config";
 import { checkTokenExpired } from "./api/checkTokenExpired";
 
 export const ListContext = createContext();
@@ -30,26 +30,20 @@ const ListContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    const accessToken = getAccessToken();
+
     (async () => {
-      if (state.lists.length === 0) {
+      if (accessToken && state.lists.length === 0) {
         try {
           setLoading(l => ({ ...l, listLoading: true }));
 
-          const accessToken = getAccessToken();
+          const { lists } = await checkTokenExpired(
+            accessToken,
+            null,
+            fetchLists
+          );
 
-          const newToken = await checkTokenExpired(accessToken);
-          let listsRes;
-
-          if (newToken) {
-            const { lists } = await fetchLists(newToken);
-            setAccessToken(newToken);
-            listsRes = lists;
-          } else {
-            const { lists } = await fetchLists(accessToken);
-            listsRes = lists;
-          }
-
-          dispatch({ type: "FETCH_LISTS", payload: listsRes });
+          dispatch({ type: "FETCH_LISTS", payload: lists });
         } catch (error) {
           dispatch({ type: "FAILURE", payload: error.response.data.message });
         } finally {
@@ -64,21 +58,15 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true });
       const accessToken = getAccessToken();
 
-      const newToken = await checkTokenExpired(accessToken);
-      let list;
+      const { savedList } = await checkTokenExpired(
+        accessToken,
+        body,
+        createList
+      );
 
-      if (newToken) {
-        const { savedList } = await createList(newToken, body);
-        setAccessToken(newToken);
-        list = savedList;
-      } else {
-        const { savedList } = await createList(accessToken, body);
-        list = savedList;
-      }
+      dispatch({ type: "CREATE_LIST", payload: savedList });
 
-      dispatch({ type: "CREATE_LIST", payload: { list } });
-
-      const route = `/lists/${list._id}`;
+      const route = `/lists/${savedList._id}`;
       history.push(route);
     } catch (error) {
       dispatch({ type: "FAILURE", payload: error.response.data.message });
@@ -128,20 +116,10 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true });
       const accessToken = getAccessToken();
 
-      const newToken = await checkTokenExpired(accessToken);
-      let successFeedback;
-
-      if (newToken) {
-        const { message } = await deleteList(newToken, id);
-        successFeedback = message;
-        setAccessToken(newToken);
-      } else {
-        const { message } = await deleteList(accessToken, id);
-        successFeedback = message;
-      }
+      const { message } = await checkTokenExpired(accessToken, id, deleteList);
 
       history.replace("/dashboard");
-      dispatch({ type: "DELETE_LIST", message: successFeedback, id });
+      dispatch({ type: "DELETE_LIST", message, id });
     } catch (error) {
       console.log(error);
       dispatch({ type: "FAILURE", payload: error.response.data.message });
