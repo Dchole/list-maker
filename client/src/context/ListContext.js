@@ -36,7 +36,6 @@ const ListContextProvider = ({ children }) => {
           setLoading(l => ({ ...l, listLoading: true }));
 
           const accessToken = getAccessToken();
-          console.log(accessToken);
 
           const newToken = await checkTokenExpired(accessToken);
           let listsRes;
