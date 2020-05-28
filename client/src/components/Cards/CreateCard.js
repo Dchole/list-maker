@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -8,31 +7,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
 import AdminForm from "../Forms/AdminForm";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: theme.breakpoints.values.sm * 0.6,
-    maxHeight: theme.spacing(10) * 8,
-    paddingBottom: theme.spacing(1),
-    margin: theme.spacing(6, 0)
-  },
-  actionHide: {
-    transform: "scale(0)",
-    transitionDuration: theme.transitions.duration.leavingScreen,
-    transitionTimingFunction: theme.transitions.easing.easeIn
-  },
-  actionShow: {
-    transform: "scale(1)",
-    transitionDuration: theme.transitions.duration.enteringScreen,
-    transitionTimingFunction: theme.transitions.easing.easeIn
-  },
-  "@media (max-height: 640px)": {
-    root: {
-      width: "100%",
-      padding: theme.spacing(2)
-    }
-  }
-}));
+import { useStyles } from "./styles/createCard";
 
 const CreateCard = () => {
   const classes = useStyles();

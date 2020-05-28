@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -12,26 +11,7 @@ import useFormValidation from "../FormValidation/useFormValidation";
 import { UserContext } from "../../context/UserContext";
 import { registerValidation } from "../FormValidation/validationAuth";
 import { Link as RouterLink } from "react-router-dom";
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(5),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
+import { useStyles } from "./styles/register";
 
 const initialState = {
   firstName: "",
@@ -142,7 +122,7 @@ export default function SignUp() {
               label="Confirm Password"
               type="password"
               id="confirm_password"
-              autoComplete="confirm password"
+              autoComplete="password"
               value={registerValues.confirmPassword}
               onChange={handleRegisterInput}
             />

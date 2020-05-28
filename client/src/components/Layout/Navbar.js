@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Avatar from "@material-ui/core/Avatar";
@@ -8,26 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { UserContext } from "../../context/UserContext";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-
-const useStyles = makeStyles(theme => ({
-  toolbar: {
-    padding: theme.spacing(0, 10)
-  },
-  title: {
-    flexGrow: 1,
-    color: "white",
-    textDecoration: "none"
-  },
-  avatar: {
-    backgroundColor: theme.palette.success.main,
-    textDecoration: "none"
-  },
-  "@media (max-width: 720px)": {
-    toolbar: {
-      padding: theme.spacing(0, 1)
-    }
-  }
-}));
+import { useStyles } from "./styles/navbar";
 
 const Navbar = () => {
   const location = useLocation();

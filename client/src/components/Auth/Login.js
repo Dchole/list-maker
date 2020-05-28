@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -23,26 +22,7 @@ import useFormValidation from "../FormValidation/useFormValidation";
 import { UserContext } from "../../context/UserContext";
 import { loginValidation } from "../FormValidation/validationAuth";
 import { Link as RouterLink } from "react-router-dom";
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    margin: theme.spacing(5),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
+import { useStyles } from "./styles/login";
 
 export default function SignIn() {
   const initialState = {
@@ -145,7 +125,7 @@ export default function SignIn() {
           </Grid>
           <Grid item>
             <Link component={RouterLink} to="/register" variant="body2">
-              Don't have an account? Sign Up
+              {"Don't have an account? Sign Up"}
             </Link>
           </Grid>
         </Grid>

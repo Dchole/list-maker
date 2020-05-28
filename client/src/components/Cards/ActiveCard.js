@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,22 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { Link as RouterLink } from "react-router-dom";
 import { ListContext } from "../../context/ListContext";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: theme.breakpoints.values.sm * 0.6,
-    padding: theme.spacing(1),
-    margin: theme.spacing(6, 0),
-    maxHeight: theme.breakpoints.values.sm * 0.6
-  },
-  active: { textTransform: "capitalize" },
-  link: { color: theme.palette.primary.main },
-  "@media (max-height: 640px)": {
-    root: {
-      width: theme.breakpoints.values.sm * 0.5
-    }
-  }
-}));
+import { useStyles } from "./styles/activeCard";
 
 const ActiveCard = () => {
   const classes = useStyles();

@@ -1,23 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Hidden from "@material-ui/core/Hidden";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: theme.breakpoints.values.sm * 0.6,
-    padding: theme.spacing(1),
-    margin: theme.spacing(6, 0)
-  },
-  "@media (max-height: 640px)": {
-    root: {
-      width: "100%"
-    }
-  }
-}));
+import { useStyles } from "./styles/aboutCard";
 
 const AboutCard = () => {
   const classes = useStyles();

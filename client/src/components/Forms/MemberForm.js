@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -10,26 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import { ListContext } from "../../context/ListContext";
 import { memberValidation } from "../FormValidation/formValidation";
 import Feedback from "../Feedback/Feedback";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    paddingTop: theme.spacing(10)
-  },
-  alert: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center"
-  },
-  paper: {
-    marginTop: theme.spacing(6),
-    padding: theme.spacing(4, 4, 6, 4)
-  },
-  form: {
-    display: "none"
-  }
-}));
+import { useStyles } from "./styles/memberForm";
 
 const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
   const classes = useStyles();

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles, lighten } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -9,41 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Feedback from "../Feedback/Feedback";
 import TableMenu from "./TableMenu";
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-    backgroundColor: theme.palette.grey[100]
-  },
-  highlight: {
-    color: theme.palette.secondary.main,
-    backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-  },
-  title: {
-    flexGrow: 1,
-    textTransform: "capitalize"
-  },
-  status: {
-    width: theme.spacing(1),
-    height: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    borderRadius: "50%"
-  },
-  active: {
-    backgroundColor: theme.palette.success.main
-  },
-  notActive: {
-    backgroundColor: theme.palette.error.main
-  },
-
-  "@media (max-width: 480px)": {
-    title: {
-      width: 90,
-      fontSize: "1.2rem"
-    }
-  }
-}));
+import { useStyles } from "./styles/tableToolbar";
 
 const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
   const classes = useStyles();
