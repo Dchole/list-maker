@@ -8,7 +8,10 @@ import { useStyles } from "./styles/registerPage";
 import { Redirect } from "react-router-dom";
 
 const RegisterPage = () => {
+  document.title = "List Makerr - Register";
+
   const classes = useStyles();
+
   const {
     state: { isAuthenticated }
   } = useContext(UserContext);

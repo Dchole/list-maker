@@ -8,6 +8,8 @@ import { useStyles } from "./styles/loginPage";
 import { Redirect } from "react-router-dom";
 
 const LoginPage = () => {
+  document.title = "List Makerr - Login";
+
   const classes = useStyles();
 
   const {

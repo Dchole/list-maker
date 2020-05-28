@@ -13,6 +13,8 @@ const socket =
     : io("localhost:5000");
 
 const InputPage = () => {
+  document.title = "List Makerr - Add to list";
+
   const params = useParams();
   const [list, setList] = useState({});
   const [form, setForm] = useState({});

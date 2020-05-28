@@ -8,6 +8,8 @@ import { useStyles } from "./styles/dashboard";
 import { ListContext } from "../context/ListContext";
 
 const Dashboard = () => {
+  document.title = "List Makerr - Dashboard";
+
   const classes = useStyles();
   const {
     state: { lists },

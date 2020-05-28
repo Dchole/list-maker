@@ -8,6 +8,8 @@ import { useStyles } from "./styles/homepage";
 import { UserContext } from "../context/UserContext";
 
 const Homepage = () => {
+  document.title = "List Makerr - Home";
+
   const classes = useStyles();
 
   const {

@@ -16,6 +16,8 @@ import { useStyles } from "./styles/listPage";
 import { Link as RouterLink } from "react-router-dom";
 
 const ListPage = () => {
+  document.title = "List Makerr - Control";
+
   const params = useParams();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
