@@ -119,7 +119,7 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!correctPassword)
-      return res.status(400).json({ message: "User doesn't exists" });
+      return res.status(400).json({ message: "Wrong Password" });
 
     const accessToken = createAccessToken(user._id);
     const refreshToken = createRefreshToken(user._id);
