@@ -49,15 +49,21 @@ app.use("/api/list", list);
     const users = await User.find();
 
     tokens.forEach(token => {
-      const daysInterval =
-        new Date().getDate() - new Date(token.createdAt).getDate();
-      if (Math.abs(daysInterval) >= 7) token.remove();
+      const time_posted = Date.parse(token.createdAt);
+      const now = Date.now();
+
+      const timeRange = now - time_posted;
+      const week = timeRange / 1000 / 60 / 24 / 7;
+      if (week >= 1) token.remove();
     });
 
     users.forEach(user => {
-      const daysInterval =
-        new Date().getDate() - new Date(user.createdAt).getDate();
-      if (Math.abs(daysInterval) >= 3 && !user.confirmed) user.remove();
+      const time_posted = Date.parse(user.createdAt);
+      const now = Date.now();
+
+      const timeRange = now - time_posted;
+      const week = timeRange / 1000 / 60 / 24 / 7;
+      if (week >= 1 && !user.confirmed) user.remove();
     });
   } catch (err) {
     console.log(err);
