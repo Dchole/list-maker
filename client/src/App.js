@@ -1,68 +1,27 @@
 import React, { lazy, Suspense } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
+const Homepage = lazy(() => import("./pages/Homepage"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const ListPage = lazy(() => import("./pages/ListPage"));
+const InputPage = lazy(() => import("./pages/InputPage"));
+
 const App = () => (
-  <>
+  <Suspense fallback={<LinearProgress />}>
     <CssBaseline />
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/"
-        render={() => {
-          const Homepage = lazy(() => import("./pages/Homepage"));
-          return <Homepage />;
-        }}
-        exact
-      />
-    </Suspense>
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/dashboard"
-        render={() => {
-          const Dashboard = lazy(() => import("./pages/Dashboard"));
-          return <Dashboard />;
-        }}
-        exact
-      />
-    </Suspense>
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/register"
-        render={() => {
-          const RegisterPage = lazy(() => import("./pages/RegisterPage"));
-          return <RegisterPage />;
-        }}
-      />
-    </Suspense>
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/login"
-        render={() => {
-          const LoginPage = lazy(() => import("./pages/LoginPage"));
-          return <LoginPage />;
-        }}
-      />
-    </Suspense>
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/lists/:id"
-        render={() => {
-          const ListPage = lazy(() => import("./pages/ListPage"));
-          return <ListPage />;
-        }}
-      />
-    </Suspense>
-    <Suspense fallback={<LinearProgress />}>
-      <Route
-        path="/add/:id"
-        render={() => {
-          const InputPage = lazy(() => import("./pages/InputPage"));
-          return <InputPage />;
-        }}
-      />
-    </Suspense>
-  </>
+    <Switch>
+      <Route path="/" component={Homepage} exact />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/register" component={RegisterPage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/lists/:id" component={ListPage} />
+      <Route path="/add/:id" component={InputPage} />
+    </Switch>
+  </Suspense>
 );
 
 export default App;
