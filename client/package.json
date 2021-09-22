@@ -56,5 +56,5 @@
     "@types/socket.io-client": "^3.0.0",
     "react-snap": "^1.23.0"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "https://list-makerr.herokuapp.com"
 }

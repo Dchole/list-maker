@@ -70,9 +70,9 @@ app.use("/api/list", list)
   }
 })()
 
-app.all("*", (_, res) =>
-  res.sendFile(path.join(__dirname, "build", "index.html"))
-)
+// app.all("*", (_, res) =>
+//   res.sendFile(path.join(__dirname, "build", "index.html"))
+// )
 
 io.on("connection", socket => {
   socket.on("addToList", list => {
