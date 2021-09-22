@@ -51,7 +51,7 @@ const UserContextProvider = ({ children }) => {
       const { message } = await register(credentials)
       dispatch({ type: "REGISTER_SUCCESSFUL", payload: message })
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, authLoading: false })
     }
@@ -71,7 +71,7 @@ const UserContextProvider = ({ children }) => {
 
       history.replace("/")
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, authLoading: false })
     }
@@ -87,7 +87,7 @@ const UserContextProvider = ({ children }) => {
       dispatch({ type: "SET_AUTHENTICATED", payload: false })
       history.replace("/login")
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, authLoading: false })
     }
@@ -101,11 +101,10 @@ const UserContextProvider = ({ children }) => {
         const { accessToken } = await getRefreshToken()
         setAccessToken(accessToken)
         const { user } = await fetchUser(accessToken)
-
         dispatch({ type: "SET_AUTHENTICATED", payload: true })
         dispatch({ type: "FETCH_USER", payload: user })
       } catch (error) {
-        dispatch({ type: "FAILURE", payload: error.response.data.message })
+        dispatch({ type: "FAILURE", payload: error.response?.data.message })
       } finally {
         setLoading(l => ({ ...l, userLoading: false }))
       }

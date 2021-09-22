@@ -29,8 +29,9 @@
     "eject": "react-scripts eject",
     "postbuild": "react-snap"
   },
+  "homepage": "/",
   "reactSnap": {
-    "inlineCss": true,
+    "skipThirdPartyRequests": true,
     "puppeteerArgs": [
       "--no-sandbox",
       "--disable-setuid-sandbox"

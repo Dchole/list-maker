@@ -66,7 +66,7 @@ const ListContextProvider = ({ children }) => {
 
           dispatch({ type: "FETCH_LISTS", payload: lists })
         } catch (error) {
-          dispatch({ type: "FAILURE", payload: error.response.data.message })
+          dispatch({ type: "FAILURE", payload: error.response?.data.message })
         } finally {
           setLoading(l => ({ ...l, listLoading: false }))
         }
@@ -90,7 +90,7 @@ const ListContextProvider = ({ children }) => {
       const route = `/lists/${savedList._id}`
       history.push(route)
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, actionLoading: false })
     }
@@ -101,7 +101,7 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true })
       await updateList(list)
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, actionLoading: false })
     }
@@ -115,7 +115,7 @@ const ListContextProvider = ({ children }) => {
       await updateList(list)
       dispatch({ type: "DELETE_MEMBER", payload: list })
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, actionLoading: false })
     }
@@ -126,7 +126,7 @@ const ListContextProvider = ({ children }) => {
       setLoading({ ...loading, actionLoading: true })
       await updateList(list)
     } catch (error) {
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, actionLoading: false })
     }
@@ -143,7 +143,7 @@ const ListContextProvider = ({ children }) => {
       dispatch({ type: "DELETE_LIST", message, id })
     } catch (error) {
       console.log(error)
-      dispatch({ type: "FAILURE", payload: error.response.data.message })
+      dispatch({ type: "FAILURE", payload: error.response?.data.message })
     } finally {
       setLoading({ ...loading, actionLoading: false })
     }

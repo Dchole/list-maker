@@ -24,6 +24,7 @@ export const getRefreshToken = async () => {
   const res = await Axios.post(`${api.baseURL}/api/user/token`, {
     withCredentials: true
   })
+
   const { data } = res
   return data
 }
