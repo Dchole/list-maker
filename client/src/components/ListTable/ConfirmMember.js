@@ -1,32 +1,38 @@
-import React, { useContext } from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { ListContext } from "../../context/ListContext";
+import PropTypes from "prop-types"
+import React, { useContext } from "react"
+import Button from "@material-ui/core/Button"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import DialogTitle from "@material-ui/core/DialogTitle"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { ListContext } from "../../context/ListContext"
 
+/**
+ *
+ * @param {import("prop-types").InferProps<ConfirmMember.propTypes>} props
+ * @returns
+ */
 const ConfirmMember = ({ open, setOpen, selected, list, setSelected }) => {
   const {
     loading: { actionLoading },
     removeMember
-  } = useContext(ListContext);
+  } = useContext(ListContext)
 
-  const handleClose = _ => setOpen(false);
+  const handleClose = () => setOpen(false)
 
   const handleDelete = () => {
     selected.forEach(selectedId => {
       const selectedMember = list.members.find(
         member => member._id === selectedId
-      );
-      list.members.splice(list.members.indexOf(selectedMember), 1);
-    });
-    removeMember(list);
-    setSelected([]);
-    setOpen(false);
-  };
+      )
+      list.members.splice(list.members.indexOf(selectedMember), 1)
+    })
+    removeMember(list)
+    setSelected([])
+    setOpen(false)
+  }
 
   return (
     <div>
@@ -66,7 +72,17 @@ const ConfirmMember = ({ open, setOpen, selected, list, setSelected }) => {
         </DialogActions>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default ConfirmMember;
+ConfirmMember.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  list: PropTypes.shape({
+    members: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired
+  }).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  setSelected: PropTypes.func.isRequired
+}
+
+export default ConfirmMember

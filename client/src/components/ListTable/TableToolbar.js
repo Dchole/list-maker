@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import clsx from "clsx";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Feedback from "../Feedback/Feedback";
-import TableMenu from "./TableMenu";
-import { useStyles } from "./styles/tableToolbar";
+import PropTypes from "prop-types"
+import React, { useState } from "react"
+import clsx from "clsx"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
+import Button from "@material-ui/core/Button"
+import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from "@material-ui/core/IconButton"
+import DeleteIcon from "@material-ui/icons/Delete"
+import Feedback from "../Feedback/Feedback"
+import TableMenu from "./TableMenu"
+import { useStyles } from "./styles/tableToolbar"
 
 const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const classes = useStyles()
+  const [open, setOpen] = useState(false)
 
   const copy = () => {
-    navigator.clipboard.writeText(`${window.location.origin}/add/${id}`);
-    setOpen(true);
-  };
+    navigator.clipboard.writeText(`${window.location.origin}/add/${id}`)
+    setOpen(true)
+  }
 
   return (
     <Toolbar
@@ -67,7 +68,15 @@ const TableToolbar = ({ numSelected, title, active, id, handleDelete }) => {
         <TableMenu id={id} />
       )}
     </Toolbar>
-  );
-};
+  )
+}
 
-export default TableToolbar;
+TableToolbar.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  handleDelete: PropTypes.func.isRequired
+}
+
+export default TableToolbar

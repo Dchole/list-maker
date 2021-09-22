@@ -1,32 +1,30 @@
-import React, { useContext } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import useFormValidation from "../FormValidation/useFormValidation";
-import { UserContext } from "../../context/UserContext";
-import { registerValidation } from "../FormValidation/validationAuth";
-import { Link as RouterLink } from "react-router-dom";
-import { useStyles } from "./styles/register";
+import React, { useContext } from "react"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import Link from "@material-ui/core/Link"
+import Grid from "@material-ui/core/Grid"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Typography from "@material-ui/core/Typography"
+import useFormValidation from "../FormValidation/useFormValidation"
+import { UserContext } from "../../context/UserContext"
+import { registerValidation } from "../FormValidation/validationAuth"
+import { Link as RouterLink } from "react-router-dom"
+import { useStyles } from "./styles/register"
 
-const initialState = {
+export const initialState = {
   firstName: "",
   lastName: "",
   email: "",
   password: "",
   confirmPassword: ""
-};
+}
 
 export default function SignUp() {
-  const classes = useStyles();
+  const classes = useStyles()
 
   const {
     loading: { authLoading }
-  } = useContext(UserContext);
+  } = useContext(UserContext)
 
   const {
     handleRegisterInput,
@@ -34,23 +32,26 @@ export default function SignUp() {
     validateRegister,
     registerErrors,
     registerValues
-  } = useFormValidation(initialState, registerValidation);
+    // @ts-ignore
+  } = useFormValidation(initialState, registerValidation)
 
   return (
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <form className={classes.form} onSubmit={handleRegisterSubmit}>
+      <form
+        id="sign-up"
+        name="sign-up"
+        className={classes.form}
+        onSubmit={handleRegisterSubmit}
+      >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={registerErrors.firstname ? true : false}
-              helperText={registerErrors.firstname}
-              autoComplete="first name"
+              error={Boolean(registerErrors.firstName)}
+              helperText={registerErrors.firstName}
+              autoComplete="given-name"
               name="firstName"
               variant="outlined"
               type="text"
@@ -59,15 +60,16 @@ export default function SignUp() {
               id="firstName"
               label="First Name"
               autoFocus
+              autoCapitalize="word"
               value={registerValues.firstName}
               onChange={handleRegisterInput}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              error={registerErrors.lastname ? true : false}
-              helperText={registerErrors.lastname}
-              autoComplete="last name"
+              error={Boolean(registerErrors.lastName)}
+              helperText={registerErrors.lastName}
+              autoComplete="family-name"
               name="lastName"
               variant="outlined"
               type="text"
@@ -75,18 +77,19 @@ export default function SignUp() {
               fullWidth
               id="lastName"
               label="Last Name"
+              autoCapitalize="word"
               value={registerValues.lastName}
               onChange={handleRegisterInput}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              error={registerErrors.email ? true : false}
+              error={Boolean(registerErrors.email)}
               helperText={registerErrors.email}
               autoComplete="email"
               name="email"
               variant="outlined"
-              type="text"
+              type="email"
               required
               fullWidth
               id="email"
@@ -97,7 +100,7 @@ export default function SignUp() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              error={registerErrors.password ? true : false}
+              error={Boolean(registerErrors.password)}
               helperText={registerErrors.password}
               variant="outlined"
               required
@@ -106,14 +109,14 @@ export default function SignUp() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="password"
+              autoComplete="new-password"
               value={registerValues.password}
               onChange={handleRegisterInput}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              error={registerErrors.confirmPassword ? true : false}
+              error={Boolean(registerErrors.confirmPassword)}
               helperText={registerErrors.confirmPassword}
               variant="outlined"
               required
@@ -122,7 +125,7 @@ export default function SignUp() {
               label="Confirm Password"
               type="password"
               id="confirm_password"
-              autoComplete="password"
+              autoComplete="new-password"
               value={registerValues.confirmPassword}
               onChange={handleRegisterInput}
             />
@@ -139,7 +142,7 @@ export default function SignUp() {
         >
           {authLoading ? <CircularProgress size={25} /> : "Sign Up"}
         </Button>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <Grid item>
             <Link component={RouterLink} to="/login" variant="body2">
               Already have an account? Sign in
@@ -148,5 +151,5 @@ export default function SignUp() {
         </Grid>
       </form>
     </div>
-  );
+  )
 }

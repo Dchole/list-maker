@@ -6,12 +6,11 @@ import {
   Paragraph,
   VerticalAlign,
   HeadingLevel
-} from "docx";
-import { jsonData } from "./jsonData";
+} from "docx"
+import { jsonData } from "./jsonData"
 
 export default list => {
-  const doc = new Document();
-  const json = jsonData(list);
+  const json = jsonData(list)
 
   const table = new Table({
     rows: [
@@ -25,7 +24,7 @@ export default list => {
                   heading: HeadingLevel.HEADING_3
                 })
               ],
-              verticalAlign: VerticalAlign.center
+              verticalAlign: VerticalAlign.CENTER
             })
         )
       }),
@@ -40,23 +39,27 @@ export default list => {
                       text: String(value)
                     })
                   ],
-                  verticalAlign: VerticalAlign.center
+                  verticalAlign: VerticalAlign.CENTER
                 })
             )
           })
       )
     ]
-  });
+  })
 
-  doc.addSection({
-    children: [
-      new Paragraph({
-        text: list.title,
-        heading: HeadingLevel.HEADING_1
-      }),
-      table
+  const doc = new Document({
+    sections: [
+      {
+        children: [
+          new Paragraph({
+            text: list.title,
+            heading: HeadingLevel.HEADING_1
+          }),
+          table
+        ]
+      }
     ]
-  });
+  })
 
-  return doc;
-};
+  return doc
+}
