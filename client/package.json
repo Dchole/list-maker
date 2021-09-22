@@ -55,6 +55,5 @@
     "@types/file-saver": "^2.0.3",
     "@types/socket.io-client": "^3.0.0",
     "react-snap": "^1.23.0"
-  },
-  "proxy": "https://list-makerr.herokuapp.com"
+  }
 }

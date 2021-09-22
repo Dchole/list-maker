@@ -70,6 +70,10 @@ app.use("/api/list", list)
   }
 })()
 
+app.route("/", (_req, res) => {
+  res.redirect("")
+})
+
 // app.all("*", (_, res) =>
 //   res.sendFile(path.join(__dirname, "build", "index.html"))
 // )
