@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Typography from "@material-ui/core/Typography";
-import AdminForm from "../Forms/AdminForm";
-import { useStyles } from "./styles/createCard";
+import React, { useState } from "react"
+import Button from "@material-ui/core/Button"
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
+import CardContent from "@material-ui/core/CardContent"
+import CardActions from "@material-ui/core/CardActions"
+import Collapse from "@material-ui/core/Collapse"
+import Typography from "@material-ui/core/Typography"
+import AdminForm from "../Forms/AdminForm"
+// import { useStyles } from "./styles/createCard"
 
 const CreateCard = () => {
-  const classes = useStyles();
-  const [expanded, setExpanded] = useState(false);
-  const [display, setDisplay] = useState(true);
+  // const classes = useStyles()
+  const [expanded, setExpanded] = useState(false)
+  const [display, setDisplay] = useState(true)
 
   return (
-    <Card className={classes.root} id="create-card">
+    <Card /* className={classes.root} */ id="create-card">
       <CardHeader
         title={
           <Typography variant="h6" component="h2">
@@ -40,15 +40,15 @@ const CreateCard = () => {
           <Typography variant="body1" align="center">
             List your requirements in field labelled{" "}
             <span style={{ color: "#d50000" }}>fields</span>.<br />
-            Separate your list with comma(,). No need to ask for members' names.
-            Full name field is provided by default
+            Separate your list with comma(,). No need to ask for members&apos;
+            names. Full name field is provided by default
           </Typography>
         )}
       </CardContent>
       <CardActions>
         <div
           style={{ margin: "auto" }}
-          className={expanded ? classes.actionHide : classes.actionShow}
+          // className={expanded ? classes.actionHide : classes.actionShow}
         >
           <Button
             variant="contained"
@@ -56,8 +56,8 @@ const CreateCard = () => {
             color="primary"
             style={{ display: display ? "block" : "none" }}
             onClick={() => {
-              setExpanded(true);
-              setTimeout(() => setDisplay(false), 195);
+              setExpanded(true)
+              setTimeout(() => setDisplay(false), 195)
             }}
           >
             Create List
@@ -70,7 +70,7 @@ const CreateCard = () => {
         </CardContent>
       </Collapse>
     </Card>
-  );
-};
+  )
+}
 
-export default CreateCard;
+export default CreateCard

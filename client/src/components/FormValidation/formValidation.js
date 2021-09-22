@@ -1,30 +1,38 @@
+/**
+ * @param {string} title
+ */
 export const adminValidation = title => {
-  let error = "";
+  let error = ""
 
   if (!title) {
-    error = "Title is required";
+    error = "Title is required"
   }
-  return error;
-};
+  return error
+}
 
-export const memberValidation = (form, firstname, lastname) => {
-  let errors = {};
+/**
+ * @param {Record<string, any>} form
+ * @param {string} firstName
+ * @param {string} lastName
+ */
+export const memberValidation = (form, firstName, lastName) => {
+  let errors = {}
 
-  const values = Object.keys(form);
+  const values = Object.keys(form)
 
-  if (!firstname) {
-    errors.firstname = "First Name is required";
+  if (!firstName) {
+    errors.firstName = "First Name is required"
   }
 
-  if (!lastname) {
-    errors.lastname = "Last Name is required";
+  if (!lastName) {
+    errors.lastName = "Last Name is required"
   }
 
   for (const value of values) {
     if (!form[value]) {
-      errors[value] = `${value} is Required`;
+      errors[value] = `${value} is Required`
     }
   }
 
-  return errors;
-};
+  return errors
+}

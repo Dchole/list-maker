@@ -1,55 +1,56 @@
-import React, { useState, useEffect, useContext } from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { ListContext } from "../../context/ListContext";
-import { adminValidation } from "../FormValidation/formValidation";
+import PropTypes from "prop-types"
+import React, { useState, useEffect, useContext } from "react"
+import TextField from "@material-ui/core/TextField"
+import Button from "@material-ui/core/Button"
+import Chip from "@material-ui/core/Chip"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { ListContext } from "../../context/ListContext"
+import { adminValidation } from "../FormValidation/formValidation"
 
 const AdminForm = ({ setExpanded, setDisplay }) => {
-  const [fields, setFields] = useState("");
-  const [title, setTitle] = useState("");
-  const [error, setError] = useState("");
-  const [addedFields, setAddedFields] = useState([]);
+  const [fields, setFields] = useState("")
+  const [title, setTitle] = useState("")
+  const [error, setError] = useState("")
+  const [addedFields, setAddedFields] = useState([])
 
   const {
     loading: { actionLoading },
     createNewList
-  } = useContext(ListContext);
+  } = useContext(ListContext)
 
   useEffect(() => {
     const handleAdd = () => {
       setAddedFields([
         "Full Name",
         ...fields.split(",").map(field => field.trim())
-      ]);
-    };
-    if (!fields.endsWith(",")) {
-      handleAdd();
+      ])
     }
-  }, [fields]);
+    if (!fields.endsWith(",")) {
+      handleAdd()
+    }
+  }, [fields])
 
   const handleCancel = () => {
-    setFields("");
-    setExpanded(false);
-    setDisplay(true);
-  };
+    setFields("")
+    setExpanded(false)
+    setDisplay(true)
+  }
 
-  const validateForm = () => setError(adminValidation(title));
+  const validateForm = () => setError(adminValidation(title))
 
   const handleSubmit = event => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (!error) {
-      const nonEmptyFields = addedFields.filter(field => field !== "");
+      const nonEmptyFields = addedFields.filter(field => field !== "")
       createNewList({
         _id: Math.random() + Date.now(),
         title,
         fields: nonEmptyFields,
         members: []
-      });
+      })
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -107,7 +108,12 @@ const AdminForm = ({ setExpanded, setDisplay }) => {
         </Button>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default AdminForm;
+AdminForm.propTypes = {
+  setExpanded: PropTypes.func.isRequired,
+  setDisplay: PropTypes.func.isRequired
+}
+
+export default AdminForm

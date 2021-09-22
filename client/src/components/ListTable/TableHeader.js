@@ -1,10 +1,14 @@
-import React from "react";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
+import PropTypes from "prop-types"
+import React from "react"
+import TableHead from "@material-ui/core/TableHead"
+import TableRow from "@material-ui/core/TableRow"
+import TableCell from "@material-ui/core/TableCell"
+import Checkbox from "@material-ui/core/Checkbox"
+import Typography from "@material-ui/core/Typography"
 
+/**
+ * @param {import("prop-types").InferProps<TableHeader.propTypes>} props
+ */
 const TableHeader = ({ selectAll, numSelected, rowCount, headLabels }) => {
   return (
     <TableHead>
@@ -27,7 +31,14 @@ const TableHeader = ({ selectAll, numSelected, rowCount, headLabels }) => {
         </TableCell>
       </TableRow>
     </TableHead>
-  );
-};
+  )
+}
 
-export default TableHeader;
+TableHeader.propTypes = {
+  selectAll: PropTypes.func.isRequired,
+  numSelected: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired,
+  headLabels: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+}
+
+export default TableHeader

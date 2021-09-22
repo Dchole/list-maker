@@ -1,41 +1,38 @@
-import React, { useState, useContext } from "react";
-import clsx from "clsx";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import IconButton from "@material-ui/core/IconButton";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import useFormValidation from "../FormValidation/useFormValidation";
-import { UserContext } from "../../context/UserContext";
-import { loginValidation } from "../FormValidation/validationAuth";
-import { Link as RouterLink } from "react-router-dom";
-import { useStyles } from "./styles/login";
+import React, { useState, useContext } from "react"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import Link from "@material-ui/core/Link"
+import Grid from "@material-ui/core/Grid"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Typography from "@material-ui/core/Typography"
+import FormControl from "@material-ui/core/FormControl"
+import FormHelperText from "@material-ui/core/FormHelperText"
+import InputLabel from "@material-ui/core/InputLabel"
+import InputAdornment from "@material-ui/core/InputAdornment"
+import IconButton from "@material-ui/core/IconButton"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
+import Visibility from "@material-ui/icons/Visibility"
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
+import useFormValidation from "../FormValidation/useFormValidation"
+import { UserContext } from "../../context/UserContext"
+import { loginValidation } from "../FormValidation/validationAuth"
+import { Link as RouterLink } from "react-router-dom"
+import { useStyles } from "./styles/login"
+
+export const initialState = {
+  email: "",
+  password: ""
+}
 
 export default function SignIn() {
-  const initialState = {
-    email: "",
-    password: ""
-  };
-
-  const classes = useStyles();
-  const [showPassword, setShowPassword] = useState(false);
+  const classes = useStyles()
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     loading: { authLoading }
-  } = useContext(UserContext);
+  } = useContext(UserContext)
 
   const {
     handleLoginInput,
@@ -43,19 +40,16 @@ export default function SignIn() {
     validateLogin,
     loginErrors,
     loginValues
-  } = useFormValidation(initialState, loginValidation);
+  } = useFormValidation(initialState, loginValidation)
 
   return (
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
       <form className={classes.form} onSubmit={handleLoginSubmit}>
         <TextField
-          error={loginErrors.email ? true : false}
+          error={Boolean(loginErrors.email)}
           helperText={loginErrors.email}
           variant="outlined"
           margin="normal"
@@ -70,7 +64,7 @@ export default function SignIn() {
           onChange={handleLoginInput}
         />
         <FormControl
-          className={clsx(classes.margin, classes.textField)}
+          // className={clsx(classes.margin, classes.textField)}
           variant="outlined"
           fullWidth
         >
@@ -81,7 +75,7 @@ export default function SignIn() {
             Password*
           </InputLabel>
           <OutlinedInput
-            error={loginErrors.password ? true : false}
+            error={Boolean(loginErrors.password)}
             id="password"
             name="password"
             type={showPassword ? "text" : "password"}
@@ -131,5 +125,5 @@ export default function SignIn() {
         </Grid>
       </form>
     </div>
-  );
+  )
 }

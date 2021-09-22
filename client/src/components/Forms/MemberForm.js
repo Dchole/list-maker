@@ -1,48 +1,52 @@
-import React, { useState, useContext } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { ListContext } from "../../context/ListContext";
-import { memberValidation } from "../FormValidation/formValidation";
-import Feedback from "../Feedback/Feedback";
-import { useStyles } from "./styles/memberForm";
+import PropTypes from "prop-types"
+import React, { useState, useContext } from "react"
+import Button from "@material-ui/core/Button"
+import TextField from "@material-ui/core/TextField"
+import Paper from "@material-ui/core/Paper"
+import Typography from "@material-ui/core/Typography"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Container from "@material-ui/core/Container"
+import Grid from "@material-ui/core/Grid"
+import { ListContext } from "../../context/ListContext"
+import { memberValidation } from "../FormValidation/formValidation"
+import Feedback from "../Feedback/Feedback"
+import { useStyles } from "./styles/memberForm"
 
-const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
-  const classes = useStyles();
+/**
+ * @param {import("prop-types").InferType<MemberForm.propTypes>} props
+ */
+const MemberForm = ({ fullName, form, setForm, list, socket, setFullName }) => {
+  const classes = useStyles()
 
   const {
     loading: { actionLoading },
     addToList
-  } = useContext(ListContext);
+  } = useContext(ListContext)
 
-  const [sent, setSent] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [open, setOpen] = useState(false);
+  const [sent, setSent] = useState(false)
+  const [errors, setErrors] = useState(fullName)
+  const [open, setOpen] = useState(false)
 
-  const handlefullnameInput = event => {
-    setFullname({ ...fullname, [event.target.name]: event.target.value });
-  };
+  const handlefullNameInput = event => {
+    setFullName({ ...fullName, [event.target.name]: event.target.value })
+  }
 
   const handleInput = event => {
-    setForm({ ...form, [event.target.name]: event.target.value });
-  };
+    setForm({ ...form, [event.target.name]: event.target.value })
+  }
 
   const validateMember = () => {
     const validation = memberValidation(
       form,
-      fullname.firstname,
-      fullname.lastname
-    );
-    setErrors(validation);
-  };
+      fullName.firstName,
+      fullName.lastName
+    )
+    setErrors(validation)
+  }
 
   const handleSubmit = event => {
-    event.preventDefault();
-    const noErrors = Object.keys(errors).length === 0;
+    event.preventDefault()
+    const noErrors = Object.keys(errors).length === 0
     if (noErrors) {
       const socketMembers = [
         ...list.members,
@@ -51,19 +55,19 @@ const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
           info: Object.values(form),
           time: new Date()
         }
-      ];
+      ]
 
       list.members.push({
         info: Object.values(form),
         time: new Date()
-      });
+      })
 
-      addToList(list);
-      socket.emit("addToList", socketMembers);
-      setSent(true);
-      setOpen(true);
+      addToList(list)
+      socket.emit("addToList", socketMembers)
+      setSent(true)
+      setOpen(true)
     }
-  };
+  }
 
   return (
     <Container component="main" maxWidth="sm" className={classes.root}>
@@ -86,30 +90,30 @@ const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
               <Grid container>
                 <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
                   <TextField
-                    error={Boolean(errors.firstname)}
-                    helperText={errors.firstname}
-                    id="firstname"
-                    name="firstname"
+                    error={Boolean(errors.firstName)}
+                    helperText={errors.firstName}
+                    id="firstName"
+                    name="firstName"
                     type="text"
                     label="First Name"
                     style={{ textTransform: "capitalize" }}
-                    value={fullname.firstname}
-                    onChange={handlefullnameInput}
+                    value={fullName.firstName}
+                    onChange={handlefullNameInput}
                     fullWidth
                     autoFocus
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} style={{ marginBottom: 20 }}>
                   <TextField
-                    error={Boolean(errors.lastname)}
-                    helperText={errors.lastname}
-                    id="lastname"
-                    name="lastname"
+                    error={Boolean(errors.lastName)}
+                    helperText={errors.lastName}
+                    id="lastName"
+                    name="lastName"
                     type="text"
                     label="Last Name"
                     style={{ textTransform: "capitalize" }}
-                    value={fullname.lastname}
-                    onChange={handlefullnameInput}
+                    value={fullName.lastName}
+                    onChange={handlefullNameInput}
                     fullWidth
                   />
                 </Grid>
@@ -134,7 +138,12 @@ const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
                     </Grid>
                   ))}
               </Grid>
-              <div style={{ float: "right" }}>
+              <div
+                style={{
+                  // @ts-ignore
+                  cssFloat: "right"
+                }}
+              >
                 <Button
                   variant="contained"
                   color="primary"
@@ -156,7 +165,24 @@ const MemberForm = ({ fullname, form, setForm, list, socket, setFullname }) => {
         message="Your info was sent succesfully ✔"
       />
     </Container>
-  );
-};
+  )
+}
 
-export default MemberForm;
+MemberForm.propTypes = {
+  fullName: PropTypes.exact({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired
+  }).isRequired,
+  form: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+  setForm: PropTypes.func.isRequired,
+  list: PropTypes.shape({
+    active: PropTypes.bool.isRequired,
+    fields: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    members: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string.isRequired))
+      .isRequired
+  }),
+  socket: PropTypes.any,
+  setFullName: PropTypes.func.isRequired
+}
+
+export default MemberForm
