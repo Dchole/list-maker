@@ -48,7 +48,7 @@ const InputPage = () => {
           const createdFieldName = field
           setForm(prevForm => ({ ...prevForm, [createdFieldName]: "" }))
 
-          user.fullName &&
+          user?.fullName &&
             setFullName({
               firstName: user.fullName.split(" ")[0],
               lastName: user.fullName.split(" ")[1]
@@ -62,7 +62,7 @@ const InputPage = () => {
     }
 
     initialRequest()
-  }, [params.id, user.fullName])
+  }, [params.id, user?.fullName])
 
   useEffect(() => {
     socket.on("statusChanged", () => {

@@ -1,21 +1,21 @@
-import React, { useContext } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { UserContext } from "../../context/UserContext";
-import { Link as RouterLink, useLocation } from "react-router-dom";
-import { useStyles } from "./styles/navbar";
+import React, { useContext } from "react"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Avatar from "@material-ui/core/Avatar"
+import IconButton from "@material-ui/core/IconButton"
+import Typography from "@material-ui/core/Typography"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import { UserContext } from "../../context/UserContext"
+import { Link as RouterLink, useLocation } from "react-router-dom"
+import { useStyles } from "./styles/navbar"
 
 const Navbar = () => {
-  const location = useLocation();
-  const classes = useStyles();
+  const location = useLocation()
+  const classes = useStyles()
   const {
     state: { user },
     exitApp
-  } = useContext(UserContext);
+  } = useContext(UserContext)
 
   return (
     <AppBar position="fixed">
@@ -47,13 +47,13 @@ const Navbar = () => {
               to="/dashboard"
               aria-label="Dashboard"
             >
-              {user.fullName?.charAt()}
+              {user?.fullName?.charAt()}
             </Avatar>
           )}
         </div>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
