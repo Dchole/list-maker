@@ -70,7 +70,7 @@ app.use("/api/list", list)
   }
 })()
 
-app.route("/", (_req, res) => {
+app.get("/", (_req, res) => {
   res.redirect("https://list-maker.vercel.app/")
 })
 
