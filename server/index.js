@@ -71,7 +71,7 @@ app.use("/api/list", list)
 })()
 
 app.route("/", (_req, res) => {
-  res.redirect("")
+  res.redirect("https://list-maker.vercel.app/")
 })
 
 // app.all("*", (_, res) =>
