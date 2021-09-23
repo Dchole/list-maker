@@ -28,6 +28,7 @@ const rootElement = document.getElementById("root")
 
 if (rootElement.hasChildNodes()) {
   ReactDOM.hydrate(<RootComponent />, rootElement)
+  ReactDOM.render(<RootComponent />, rootElement)
 } else {
   ReactDOM.render(<RootComponent />, rootElement)
 }

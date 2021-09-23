@@ -1,3 +1,5 @@
+import "@fontsource/roboto"
+
 import React, { lazy, Suspense } from "react"
 import { Route, Switch } from "react-router-dom"
 import CssBaseline from "@material-ui/core/CssBaseline"
